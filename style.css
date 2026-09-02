@@ -32,3 +32,169 @@
 
 .brand-mark{overflow:hidden;padding:3px;background:#fff;}
 .brand-mark img{width:100%;height:100%;object-fit:contain;border-radius:50%;}
+
+/* =========================================================
+   MOBILE RESPONSIVE FIXES - Shri Kshetra Renuka Darbar
+   Keeps desktop layout unchanged and optimizes phones/tablets
+   ========================================================= */
+@media (max-width: 760px) {
+  body { overflow-x: hidden; }
+
+  /* Compact top information area */
+  .topbar {
+    padding: 10px 14px !important;
+    gap: 7px !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    text-align: center !important;
+    font-size: 12px !important;
+    line-height: 1.35;
+  }
+  .topbar > span:first-child { width: 100%; }
+  .topbar-right {
+    width: 100%;
+    margin-left: 0 !important;
+    gap: 9px !important;
+    flex-direction: column;
+    justify-content: center !important;
+  }
+  .top-social-icons { gap: 12px !important; margin-top: 2px; }
+  .top-social-icons .social-icon {
+    width: 34px !important;
+    height: 34px !important;
+    padding: 0 !important;
+  }
+
+  /* Compact Sansthan heading */
+  .masthead {
+    min-height: 0 !important;
+    padding: 15px 16px 16px !important;
+    gap: 0 !important;
+    text-align: center;
+    justify-content: center;
+  }
+  .masthead:after { width: 190px; height: 190px; right: -85px; top: -95px; }
+  .brand-mark, .masthead > .donate { display: none !important; }
+  .brand-copy { width: 100%; flex: none; }
+  .brand-copy p {
+    font-size: 12px !important;
+    line-height: 1.45;
+    margin: 0 0 5px !important;
+  }
+  .brand-copy h1 {
+    font-size: clamp(23px, 7vw, 30px) !important;
+    line-height: 1.22 !important;
+    margin: 2px 0 5px !important;
+  }
+  .brand-copy h2 {
+    font-size: clamp(15px, 4.7vw, 19px) !important;
+    line-height: 1.35 !important;
+    margin: 0 !important;
+  }
+
+  /* Mobile navigation */
+  .nav {
+    position: sticky;
+    top: 0;
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    padding: 6px 10px;
+  }
+  #menuBtn {
+    display: inline-flex !important;
+    width: 48px;
+    height: 40px;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 10px !important;
+    font-size: 20px;
+  }
+  #navLinks {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    width: 100%;
+    max-height: calc(100vh - 54px);
+    overflow-y: auto;
+    background: linear-gradient(180deg,#79090d,#5b0508);
+    box-shadow: 0 12px 22px rgba(61,2,4,.28);
+  }
+  #navLinks.open { display: flex !important; }
+  #navLinks a {
+    width: 100%;
+    padding: 11px 16px !important;
+    border-bottom: 1px solid rgba(240,201,103,.22);
+  }
+
+  /* Homepage image: natural aspect ratio, edge to edge */
+  .hero.home-main-image {
+    width: 100% !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-bottom-width: 2px;
+  }
+  .hero.home-main-image .home-main-background {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100% !important;
+    object-fit: contain !important;
+    object-position: center top !important;
+  }
+
+  /* Quick links */
+  .quick {
+    width: calc(100% - 24px) !important;
+    margin: 12px auto 14px !important;
+    grid-template-columns: repeat(2, minmax(0,1fr)) !important;
+    border-radius: 14px;
+  }
+  .quick a {
+    min-width: 0;
+    padding: 14px 7px !important;
+    font-size: 22px !important;
+  }
+  .quick b { font-size: 14px !important; }
+  .quick small { font-size: 11px !important; line-height: 1.35; }
+  .quick a:nth-child(2n) { border-right: 0; }
+  .quick a:last-child { grid-column: 1 / -1; }
+
+  /* Main content cards */
+  .section, .cards {
+    width: calc(100% - 24px) !important;
+    margin: 14px auto !important;
+  }
+  .section { padding: 16px 13px !important; border-radius: 14px; }
+  .section h2 { font-size: 22px !important; line-height: 1.35; margin-bottom: 13px; }
+  .history-copy { font-size: .96rem; line-height: 1.8; text-align: left; }
+  .info-card, .service-grid article { padding: 18px 14px; }
+
+  .gurus { grid-template-columns: repeat(2,minmax(0,1fr)) !important; gap: 9px !important; }
+  .gurus img { height: 190px !important; }
+  .gurus h3 { min-height: 58px; font-size: 12px !important; line-height: 1.35; padding: 8px 5px; }
+
+  .guru-detail { padding: 14px !important; gap: 14px !important; }
+  .guru-detail img { width: min(190px,70vw); height: auto; aspect-ratio: 190/220; }
+  .guru-detail h3 { font-size: 1.15rem; }
+  .guru-detail p { line-height: 1.75; text-align: left; }
+
+  .cards, .event-grid, .contact, .social-links { grid-template-columns: 1fr !important; }
+  .cards article { padding: 15px; }
+  .contact { padding: 20px 12px !important; gap: 12px; }
+  .social-section { padding: 26px 12px; }
+  .social-section h2 { font-size: 23px; }
+  footer { padding: 22px 14px; text-align: center; }
+}
+
+@media (max-width: 390px) {
+  .brand-copy h1 { font-size: 22px !important; }
+  .brand-copy h2 { font-size: 14px !important; }
+  .brand-copy p { font-size: 11px !important; }
+  .quick { grid-template-columns: 1fr !important; }
+  .quick a { border-right: 0 !important; }
+  .quick a:last-child { grid-column: auto; }
+  .gurus img { height: 170px !important; }
+}
