@@ -1,7 +1,20 @@
-Shri Renuka Darbar Website
+Shri Kshetra Renuka Darbar — Creative V2
 
-1. Open index.html in Chrome/Edge to preview.
-2. Original supplied photos are referenced directly from assets/; CSS does not alter faces.
-3. Main files: index.html, style.css, script.js.
-4. Update phone/email/event details in index.html when official final details are confirmed.
-5. Sansthan logo can be added later as assets/sansthan-logo.png and inserted in the masthead without changing the layout.
+Upload these items together to GitHub Pages:
+- index.html
+- style.css
+- script.js
+- assets/
+
+V2 additions:
+- scroll progress indicator
+- elegant hero glass ribbon
+- sacred devotional keyword ribbon
+- desktop floating quick-action rail
+- expanded responsive photo gallery using existing original images only
+- click-to-open gallery lightbox
+- YouTube button connected to the official channel URL already used in the site
+- fixed mobile quick-action dock for Darshan, Events, Directions and YouTube
+- performance improvements with lazy loading for below-the-fold images
+
+No original person/deity/temple image was edited or replaced in this version.
