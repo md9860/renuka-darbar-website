@@ -1028,7 +1028,7 @@ html{scroll-behavior:smooth}
     font-size:clamp(16px,4.8vw,21px) !important;
     line-height:1.35 !important;
     letter-spacing:0 !important;
-    text-align:left !important;
+    text-align:center !important;
     margin:0 !important;
   }
 }
@@ -1039,6 +1039,214 @@ html{scroll-behavior:smooth}
     white-space:normal !important;
     font-size:15px !important;
     line-height:1.35 !important;
+  }
+}
+</style>
+
+
+<style>
+/* ===== FINAL LOGO DESIGN: attractive, aligned, NOT round ===== */
+.brand-mark{
+  width:148px !important;
+  height:118px !important;
+  flex:0 0 148px !important;
+  padding:10px !important;
+  border-radius:18px !important;
+  border:1px solid rgba(181,126,36,.42) !important;
+  background:linear-gradient(145deg,#fffdf7,#fff5df) !important;
+  overflow:visible !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  box-sizing:border-box !important;
+  box-shadow:
+    0 12px 30px rgba(73,17,13,.14),
+    inset 0 0 0 1px rgba(255,255,255,.75) !important;
+}
+.brand-mark::before{
+  content:"" !important;
+  position:absolute !important;
+  inset:5px !important;
+  border:1px solid rgba(191,139,45,.28) !important;
+  border-radius:13px !important;
+  pointer-events:none !important;
+}
+.brand-mark img{
+  width:100% !important;
+  height:100% !important;
+  max-width:126px !important;
+  max-height:96px !important;
+  object-fit:contain !important;
+  object-position:center !important;
+  border-radius:0 !important;
+  display:block !important;
+  filter:drop-shadow(0 4px 6px rgba(87,32,18,.14)) !important;
+}
+.masthead{
+  align-items:center !important;
+}
+.brand-copy{
+  align-self:center !important;
+}
+
+/* Tablet */
+@media(max-width:1050px) and (min-width:761px){
+  .brand-mark{
+    width:126px !important;
+    height:104px !important;
+    flex-basis:126px !important;
+    padding:8px !important;
+  }
+  .brand-mark img{
+    max-width:108px !important;
+    max-height:86px !important;
+  }
+}
+
+/* Mobile: logo above title for a clean, centered devotional header */
+@media(max-width:760px){
+  .masthead{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:center !important;
+    text-align:center !important;
+    gap:8px !important;
+    padding:14px 12px 12px !important;
+  }
+  .brand-mark{
+    width:112px !important;
+    height:92px !important;
+    min-width:112px !important;
+    flex:0 0 92px !important;
+    margin:0 auto 2px !important;
+    padding:7px !important;
+    border-radius:15px !important;
+  }
+  .brand-mark::before{
+    inset:4px !important;
+    border-radius:11px !important;
+  }
+  .brand-mark img{
+    width:100% !important;
+    height:100% !important;
+    max-width:96px !important;
+    max-height:76px !important;
+    object-fit:contain !important;
+    border-radius:0 !important;
+  }
+  .brand-copy{
+    width:100% !important;
+    text-align:center !important;
+  }
+  .masthead-donate{
+    margin-top:4px !important;
+  }
+}
+
+@media(max-width:390px){
+  .brand-mark{
+    width:102px !important;
+    height:84px !important;
+    min-width:102px !important;
+    flex-basis:84px !important;
+  }
+  .brand-mark img{
+    max-width:88px !important;
+    max-height:70px !important;
+  }
+}
+</style>
+
+
+<style>
+/* ===== FINAL LOGO: no frame, no shape, clean natural alignment ===== */
+.brand-mark{
+  width:170px !important;
+  height:145px !important;
+  flex:0 0 170px !important;
+  min-width:170px !important;
+  padding:0 !important;
+  margin:0 !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  overflow:visible !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+.brand-mark::before,
+.brand-mark::after{
+  display:none !important;
+  content:none !important;
+}
+.brand-mark img{
+  width:100% !important;
+  height:100% !important;
+  max-width:none !important;
+  max-height:none !important;
+  padding:0 !important;
+  margin:0 !important;
+  object-fit:contain !important;
+  object-position:center !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  filter:drop-shadow(0 5px 8px rgba(80,24,15,.16)) !important;
+}
+.masthead{
+  align-items:center !important;
+}
+.brand-copy{
+  align-self:center !important;
+}
+
+/* Tablet */
+@media(max-width:1050px) and (min-width:761px){
+  .brand-mark{
+    width:145px !important;
+    height:124px !important;
+    min-width:145px !important;
+    flex-basis:145px !important;
+  }
+}
+
+/* Mobile */
+@media(max-width:760px){
+  .masthead{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+    justify-content:center !important;
+    text-align:center !important;
+    gap:7px !important;
+  }
+  .brand-mark{
+    width:135px !important;
+    height:115px !important;
+    min-width:135px !important;
+    flex:0 0 115px !important;
+    margin:0 auto !important;
+  }
+  .brand-mark img{
+    object-fit:contain !important;
+    border-radius:0 !important;
+  }
+  .brand-copy{
+    width:100% !important;
+    text-align:center !important;
+  }
+}
+
+@media(max-width:390px){
+  .brand-mark{
+    width:120px !important;
+    height:102px !important;
+    min-width:120px !important;
+    flex-basis:102px !important;
   }
 }
 </style>
@@ -1070,7 +1278,7 @@ html{scroll-behavior:smooth}
   </header>
 
   <header class="masthead">
-    <div class="brand-mark"><img src="assets/sansthan-logo.jpg" alt="श्री क्षेत्र रेणुका दरबार संस्थान लोगो"></div>
+    <div class="brand-mark"><img src="assets/sansthan-logo.png" alt="श्री क्षेत्र रेणुका दरबार संस्थान लोगो"></div>
     <div class="brand-copy">
       <p>प. पू. माता प्रेमानंदीनाथ महाराज पब्लिक चॅरिटेबल ट्रस्ट संचालित</p>
       <h1 class="brand-title">श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ काचमंदीर सोनई</h1>
@@ -1441,7 +1649,7 @@ html{scroll-behavior:smooth}
   </section>
 
   <footer>
-    <img src="assets/sansthan-logo.jpg" alt="श्री क्षेत्र रेणुका दरबार लोगो" class="footer-logo">
+    <img src="assets/sansthan-logo.png" alt="श्री क्षेत्र रेणुका दरबार लोगो" class="footer-logo">
     <div class="footer-copy"><strong>॥ श्री क्षेत्र रेणुका दरबार ॥</strong><span>सद्गुरू शक्तिपीठ काचमंदीर सोनई</span><small>© 2026 श्री क्षेत्र रेणुका दरबार, सोनई. सर्व हक्क राखीव.</small></div>
   </footer>
 
