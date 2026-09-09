@@ -129,3 +129,58 @@ body.scrolled .nav{box-shadow:0 10px 28px rgba(35,0,2,.30)}
   .mobile-action-dock{position:fixed;left:8px;right:8px;bottom:8px;z-index:98;display:grid;grid-template-columns:repeat(4,1fr);background:rgba(64,2,5,.96);border:1px solid rgba(242,217,143,.65);border-radius:18px;box-shadow:0 12px 32px rgba(0,0,0,.35);backdrop-filter:blur(10px);overflow:hidden}.mobile-action-dock a{min-height:58px;color:#ffe9b5;text-decoration:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;border-right:1px solid rgba(242,217,143,.18)}.mobile-action-dock a:last-child{border-right:0}.mobile-action-dock span{font-size:17px}.mobile-action-dock b{font-size:9px}.back-to-top{bottom:80px}
 }
 @media(max-width:390px){.gallery-mosaic{grid-auto-rows:135px}.hero-glass{font-size:8px}}
+
+/* ===== Samadhi Sthan + Yogapithasan + Sahitya (Sep 2026) ===== */
+.samadhi-section{position:relative;background:linear-gradient(180deg,#fffaf0 0%,#f8ead0 100%);border-radius:28px;margin-top:42px;margin-bottom:42px;box-shadow:0 20px 55px rgba(83,25,15,.10);overflow:hidden}
+.samadhi-section:before{content:"ॐ";position:absolute;right:-18px;top:-42px;font-size:180px;font-weight:900;color:rgba(128,36,25,.045);pointer-events:none}
+.samadhi-list{display:grid;gap:34px;margin-top:30px}
+.samadhi-profile{display:grid;grid-template-columns:minmax(280px,38%) 1fr;gap:34px;align-items:stretch;background:rgba(255,255,255,.78);border:1px solid rgba(151,95,30,.25);border-radius:24px;padding:18px;box-shadow:0 14px 34px rgba(73,17,13,.08)}
+.samadhi-profile.reverse{grid-template-columns:1fr minmax(280px,38%)}
+.samadhi-profile.reverse figure{order:2}.samadhi-profile.reverse .samadhi-copy{order:1}
+.samadhi-profile figure{margin:0;min-height:430px;border-radius:18px;overflow:hidden;position:relative;background:#6d1d17}
+.samadhi-profile figure img{width:100%;height:100%;min-height:430px;display:block;object-fit:cover}
+.samadhi-profile figure figcaption{position:absolute;left:0;right:0;bottom:0;padding:16px 14px;background:linear-gradient(transparent,rgba(55,10,8,.92));color:#fff;text-align:center;font-weight:900;font-size:18px}
+.samadhi-copy{padding:18px 16px;align-self:center}
+.samadhi-label{display:inline-block;padding:7px 12px;border-radius:999px;background:#7a2018;color:#fff4d7;font-weight:800;font-size:13px;margin-bottom:10px}
+.samadhi-copy h3{margin:2px 0 15px;color:#6f1b15;font-size:clamp(23px,2.2vw,34px);line-height:1.25}
+.samadhi-copy p{font-size:17px;line-height:1.9;color:#4a342b;text-align:justify}
+.samadhi-copy .samadhi-mantra{text-align:center;font-weight:900;color:#7a2018;border-top:1px solid rgba(151,95,30,.25);padding-top:14px;margin-top:16px}
+.samadhi-source{text-align:center;font-size:13px;color:#73584a;margin:24px 0 0}
+.sacred-placeholder{margin-top:34px;margin-bottom:34px;border:1px solid rgba(151,95,30,.22);border-radius:26px;background:#fffaf0;box-shadow:0 12px 34px rgba(73,17,13,.07)}
+.sahitya-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+.sahitya-grid article{padding:22px 16px;border-radius:16px;background:#7a2018;color:#fff5db;text-align:center;font-weight:900;box-shadow:0 8px 18px rgba(73,17,13,.12)}
+@media(max-width:860px){.samadhi-profile,.samadhi-profile.reverse{grid-template-columns:1fr}.samadhi-profile.reverse figure,.samadhi-profile.reverse .samadhi-copy{order:initial}.samadhi-profile figure,.samadhi-profile figure img{min-height:0}.samadhi-profile figure img{height:auto;max-height:620px;object-fit:contain;background:#6d1d17}.samadhi-copy{padding:10px 8px}.samadhi-copy p{font-size:16px;line-height:1.8}.sahitya-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.samadhi-section{border-radius:18px}.samadhi-profile{padding:10px;gap:12px;border-radius:18px}.samadhi-copy h3{font-size:22px}.samadhi-copy p{font-size:15px;text-align:left}.sahitya-grid{grid-template-columns:1fr}}
+
+/* ===== Yogapithasan Swayambhu Ambabai ===== */
+.yogapithasan-section{position:relative;background:radial-gradient(circle at 92% 5%,rgba(214,163,58,.18),transparent 28%),linear-gradient(180deg,#fffaf0,#f7e6c6);border:1px solid rgba(151,95,30,.28);border-radius:28px;box-shadow:0 20px 55px rgba(83,25,15,.10);overflow:hidden}
+.yogapithasan-section:before{content:"श्री";position:absolute;left:-22px;bottom:-68px;font-size:190px;font-weight:900;color:rgba(122,32,24,.035);pointer-events:none}
+.yogapithasan-hero{display:grid;grid-template-columns:minmax(300px,40%) 1fr;gap:34px;align-items:center;margin-top:28px}
+.yogapithasan-hero figure{margin:0;position:relative;border-radius:24px;overflow:hidden;background:#43100d;border:1px solid rgba(214,163,58,.65);box-shadow:0 18px 40px rgba(66,12,9,.18)}
+.yogapithasan-hero img{width:100%;height:auto;display:block;max-height:720px;object-fit:contain}
+.yogapithasan-hero figcaption{position:absolute;left:0;right:0;bottom:0;padding:34px 15px 15px;background:linear-gradient(transparent,rgba(52,8,6,.94));color:#fff1c7;text-align:center;font-size:18px;font-weight:900}
+.yogapithasan-intro h3,.yoga-info-card h3{color:#721b16;font-size:clamp(22px,2vw,31px);margin:8px 0 15px}
+.yogapithasan-intro p,.yoga-info-card p{color:#4a342b;font-size:16.5px;line-height:1.9;text-align:justify}
+.yogapithasan-content{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
+.yoga-info-card{position:relative;padding:26px;border-radius:20px;background:rgba(255,255,255,.76);border:1px solid rgba(151,95,30,.25);box-shadow:0 12px 28px rgba(73,17,13,.07)}
+.yoga-info-card blockquote{margin:20px 0;padding:18px 20px;border-left:4px solid #a66c1f;border-radius:0 14px 14px 0;background:#fff3d5;color:#6d1d17;font-weight:900;font-size:17px;line-height:1.9;text-align:center}
+.yoga-wide{grid-column:1/-1}
+@media(max-width:860px){.yogapithasan-hero{grid-template-columns:1fr}.yogapithasan-hero figure{max-width:620px;margin:0 auto}.yogapithasan-content{grid-template-columns:1fr}.yoga-wide{grid-column:auto}.yogapithasan-intro p,.yoga-info-card p{font-size:15.5px;line-height:1.8}.yoga-info-card{padding:20px}.yoga-info-card blockquote{font-size:15px}}
+@media(max-width:520px){.yogapithasan-section{border-radius:18px}.yogapithasan-hero{gap:18px}.yogapithasan-hero figcaption{font-size:14px}.yogapithasan-intro p,.yoga-info-card p{text-align:left;font-size:15px}.yoga-info-card{padding:16px}.yoga-info-card blockquote{padding:14px 12px;font-size:14px}}
+
+/* Featured original literature photographs */
+.sahitya-featured{display:grid;grid-template-columns:1fr 1fr;gap:26px;max-width:980px;margin:0 auto 30px;align-items:stretch}
+.sahitya-photo{margin:0;min-height:310px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#fffaf0;border-radius:18px;padding:10px}
+.sahitya-photo img{width:100%;height:100%;max-height:430px;object-fit:contain;display:block;border-radius:12px}
+@media(max-width:760px){.sahitya-featured{grid-template-columns:1fr;gap:18px}.sahitya-photo{min-height:0}.sahitya-photo img{height:auto;max-height:none}}
+
+/* ===== पूजा व अभिषेक सेवा : final two-card layout ===== */
+#seva-info .service-grid{
+  max-width:900px;
+  margin-left:auto;
+  margin-right:auto;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+}
+@media(max-width:760px){
+  #seva-info .service-grid{grid-template-columns:1fr;}
+}

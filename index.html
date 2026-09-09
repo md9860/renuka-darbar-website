@@ -91,6 +91,520 @@
   .brand-copy p{font-size:10px !important}
   .brand-title{font-size:10px !important}
 }
+
+/* ===== Main navigation: larger words + more spacing ===== */
+@media (min-width:761px){
+  .nav-inner{
+    max-width:1500px !important;
+    padding-left:28px !important;
+    padding-right:28px !important;
+  }
+
+  .nav-links{
+    width:100% !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    gap:clamp(30px,3vw,52px) !important;
+  }
+
+  .nav-links > a{
+    font-size:20px !important;
+    font-weight:900 !important;
+    line-height:1.2 !important;
+    padding:17px 2px 15px !important;
+    white-space:nowrap !important;
+  }
+}
+
+/* Keep navigation comfortable on tablets/mobile */
+@media (max-width:1100px) and (min-width:761px){
+  .nav-links{
+    gap:clamp(16px,2vw,28px) !important;
+  }
+  .nav-links > a{
+    font-size:17px !important;
+  }
+}
+
+</style>
+
+
+<style>
+/* ===== सद्गुरू परंपरेचे पाईक ===== */
+#parampara-paik .guru-detail{
+  max-width:1120px;
+  margin:28px auto 0;
+  display:grid;
+  grid-template-columns:minmax(280px, 390px) 1fr;
+  gap:38px;
+  align-items:center;
+  padding:30px;
+  border-radius:24px;
+  background:linear-gradient(145deg, rgba(255,250,240,.98), rgba(255,244,220,.94));
+  border:1px solid rgba(128,32,32,.18);
+  box-shadow:0 14px 38px rgba(75,30,18,.10);
+}
+#parampara-paik .guru-detail > img{
+  width:100%;
+  max-width:380px;
+  height:auto;
+  aspect-ratio:4/5;
+  object-fit:cover;
+  object-position:center top;
+  display:block;
+  margin:auto;
+  padding:7px;
+  background:#fffaf0;
+  border:2px solid rgba(139,88,34,.45);
+  border-radius:20px;
+  box-shadow:0 10px 26px rgba(72,34,20,.18);
+}
+#parampara-paik .guru-detail > div{
+  min-width:0;
+}
+#parampara-paik .guru-detail h3{
+  margin:0 0 18px;
+  font-size:clamp(22px,2.2vw,30px);
+  line-height:1.45;
+  color:#7a1f1f;
+}
+#parampara-paik .guru-detail p{
+  margin:0 0 14px;
+  font-size:17px;
+  line-height:1.9;
+  text-align:justify;
+}
+@media(max-width:760px){
+  #parampara-paik .guru-detail{
+    grid-template-columns:1fr;
+    gap:22px;
+    padding:18px;
+  }
+  #parampara-paik .guru-detail > img{
+    max-width:330px;
+  }
+  #parampara-paik .guru-detail h3{
+    text-align:center;
+  }
+  #parampara-paik .guru-detail p{
+    font-size:16px;
+    line-height:1.8;
+    text-align:left;
+  }
+}
+</style>
+
+
+<style>
+/* ===== लक्ष्मीदेवी आईसाहेब : गुरूपरंपरा ===== */
+#parampara + .lakshmidevi-profile,
+.lakshmidevi-profile{
+  max-width:1120px;
+  margin:34px auto;
+  display:grid;
+  grid-template-columns:minmax(270px,360px) 1fr;
+  gap:38px;
+  align-items:center;
+  padding:28px;
+  border-radius:24px;
+  background:linear-gradient(145deg,rgba(255,250,240,.98),rgba(255,244,220,.94));
+  border:1px solid rgba(128,32,32,.18);
+  box-shadow:0 14px 38px rgba(75,30,18,.10);
+}
+.lakshmidevi-profile > img{
+  width:100%;
+  max-width:350px;
+  height:auto;
+  aspect-ratio:4/5;
+  object-fit:cover;
+  object-position:center top;
+  display:block;
+  margin:auto;
+  padding:7px;
+  border-radius:20px;
+  background:#fffaf0;
+  border:2px solid rgba(139,88,34,.45);
+  box-shadow:0 10px 26px rgba(72,34,20,.18);
+}
+.lakshmidevi-profile h3{
+  margin:0 0 12px;
+  font-size:clamp(21px,2vw,29px);
+  line-height:1.5;
+  color:#7a1f1f;
+}
+.lakshmidevi-profile .guru-relation{
+  color:#8a5a28;
+  margin-bottom:16px;
+}
+.lakshmidevi-profile p{
+  font-size:17px;
+  line-height:1.9;
+  margin:0 0 14px;
+  text-align:justify;
+}
+@media(max-width:760px){
+  .lakshmidevi-profile{
+    grid-template-columns:1fr;
+    gap:22px;
+    padding:18px;
+  }
+  .lakshmidevi-profile > img{max-width:320px}
+  .lakshmidevi-profile h3,.lakshmidevi-profile .guru-relation{text-align:center}
+  .lakshmidevi-profile p{font-size:16px;line-height:1.8;text-align:left}
+}
+</style>
+
+
+<style>
+/* ===== सद्गुरू परंपरा : balanced 4 + 3 layout ===== */
+@media (min-width: 1100px){
+  #parampara .guru-path{
+    display:grid !important;
+    grid-template-columns:repeat(8,minmax(0,1fr)) !important;
+    gap:34px 18px !important;
+    max-width:1380px !important;
+    margin:34px auto 0 !important;
+    align-items:start !important;
+  }
+  #parampara .guru-step{
+    grid-column:span 2 !important;
+    width:100% !important;
+    min-width:0 !important;
+  }
+  #parampara .guru-step:nth-child(5){grid-column:2 / span 2 !important;}
+  #parampara .guru-step:nth-child(6){grid-column:4 / span 2 !important;}
+  #parampara .guru-step:nth-child(7){grid-column:6 / span 2 !important;}
+  #parampara .guru-step img{
+    width:100% !important;
+    height:265px !important;
+    object-fit:cover !important;
+    object-position:center top !important;
+  }
+  #parampara .guru-step h3{
+    min-height:52px;
+    margin-top:12px;
+    line-height:1.45;
+  }
+}
+@media (min-width:761px) and (max-width:1099px){
+  #parampara .guru-path{
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:28px 22px !important;
+  }
+  #parampara .guru-step:last-child{
+    grid-column:1 / -1 !important;
+    max-width:320px;
+    justify-self:center;
+  }
+}
+@media (max-width:760px){
+  #parampara .guru-path{
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:22px 12px !important;
+  }
+  #parampara .guru-step:last-child{
+    grid-column:1 / -1 !important;
+    max-width:250px;
+    justify-self:center;
+  }
+  #parampara .guru-step img{
+    width:100% !important;
+    height:auto !important;
+    aspect-ratio:4/5;
+    object-fit:cover !important;
+    object-position:center top !important;
+  }
+}
+</style>
+
+
+<style>
+/* ===== सद्गुरू परंपरा : show complete original photos ===== */
+@media (min-width:1100px){
+  #parampara .guru-path{
+    display:grid !important;
+    grid-template-columns:repeat(8,minmax(0,1fr)) !important;
+    gap:38px 24px !important;
+    max-width:1420px !important;
+    margin:36px auto 0 !important;
+    align-items:start !important;
+  }
+  #parampara .guru-step{
+    grid-column:span 2 !important;
+    width:100% !important;
+    min-width:0 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+  }
+  #parampara .guru-step:nth-child(5){grid-column:2 / span 2 !important;}
+  #parampara .guru-step:nth-child(6){grid-column:4 / span 2 !important;}
+  #parampara .guru-step:nth-child(7){grid-column:6 / span 2 !important;}
+
+  #parampara .guru-step img{
+    width:100% !important;
+    height:360px !important;
+    object-fit:contain !important;
+    object-position:center center !important;
+    display:block !important;
+    padding:7px !important;
+    box-sizing:border-box !important;
+    background:#4d0005 !important;
+    border-radius:18px !important;
+  }
+  #parampara .guru-step h3{
+    width:100% !important;
+    min-height:58px !important;
+    margin:12px 0 0 !important;
+    padding:0 5px !important;
+    text-align:center !important;
+    line-height:1.45 !important;
+  }
+}
+@media (min-width:761px) and (max-width:1099px){
+  #parampara .guru-path{
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:30px 24px !important;
+  }
+  #parampara .guru-step:last-child{
+    grid-column:1/-1 !important;
+    width:min(100%,380px) !important;
+    justify-self:center !important;
+  }
+  #parampara .guru-step img{
+    width:100% !important;
+    height:390px !important;
+    object-fit:contain !important;
+    object-position:center !important;
+    padding:6px !important;
+    box-sizing:border-box !important;
+    background:#4d0005 !important;
+  }
+}
+@media (max-width:760px){
+  #parampara .guru-path{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:28px !important;
+    max-width:390px !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+  }
+  #parampara .guru-step,
+  #parampara .guru-step:last-child{
+    width:100% !important;
+    max-width:360px !important;
+    justify-self:center !important;
+  }
+  #parampara .guru-step img{
+    width:100% !important;
+    height:auto !important;
+    max-height:480px !important;
+    aspect-ratio:auto !important;
+    object-fit:contain !important;
+    object-position:center !important;
+    padding:6px !important;
+    box-sizing:border-box !important;
+    background:#4d0005 !important;
+  }
+  #parampara .guru-step h3{
+    min-height:0 !important;
+    margin-top:10px !important;
+    text-align:center !important;
+  }
+}
+</style>
+
+
+<style>
+/* ===== Refined site animations ===== */
+html{scroll-behavior:smooth}
+
+.reveal{
+  opacity:0;
+  transform:translateY(24px);
+  transition:
+    opacity .75s cubic-bezier(.22,.61,.36,1),
+    transform .75s cubic-bezier(.22,.61,.36,1);
+  will-change:opacity,transform;
+}
+.reveal.show,
+.reveal.visible,
+.reveal.is-visible{
+  opacity:1;
+  transform:none;
+}
+
+.guru-step,
+.story-card,
+.service-grid article,
+.sahitya-grid article,
+.quick-card{
+  transition:transform .32s ease,box-shadow .32s ease,border-color .32s ease;
+}
+@media (hover:hover){
+  .guru-step:hover,
+  .story-card:hover,
+  .service-grid article:hover,
+  .sahitya-grid article:hover,
+  .quick-card:hover{
+    transform:translateY(-6px);
+  }
+  #parampara .guru-step img{
+    transition:transform .45s ease,filter .45s ease;
+  }
+  #parampara .guru-step:hover img{
+    transform:scale(1.018);
+    filter:brightness(1.03);
+  }
+}
+
+.hero-content{
+  animation:heroSoftEntry .95s cubic-bezier(.22,.61,.36,1) both;
+}
+@keyframes heroSoftEntry{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+  .reveal{opacity:1 !important;transform:none !important}
+}
+</style>
+
+
+<style>
+/* ===== सद्गुरू परंपरा content flow ===== */
+#parampara-paik{scroll-margin-top:110px}
+#guru-info{scroll-margin-top:110px}
+
+#guru-info .guru-accordions{
+  max-width:1120px;
+  margin:30px auto 0;
+  display:grid;
+  gap:14px;
+}
+#guru-info details.guru-detail{
+  overflow:hidden;
+  border-radius:18px;
+  border:1px solid rgba(125,72,28,.22);
+  background:rgba(255,250,240,.96);
+  box-shadow:0 7px 20px rgba(74,31,18,.07);
+  transition:box-shadow .3s ease,transform .3s ease,border-color .3s ease;
+}
+#guru-info details.guru-detail[open]{
+  border-color:rgba(128,32,32,.35);
+  box-shadow:0 12px 28px rgba(74,31,18,.12);
+}
+#guru-info details.guru-detail summary{
+  cursor:pointer;
+  list-style:none;
+  display:flex;
+  align-items:center;
+  gap:18px;
+  padding:14px 20px;
+  user-select:none;
+}
+#guru-info details.guru-detail summary::-webkit-details-marker{display:none}
+#guru-info details.guru-detail summary img{
+  width:82px;
+  height:82px;
+  object-fit:contain;
+  object-position:center;
+  flex:0 0 82px;
+  border-radius:14px;
+  background:#5a080b;
+  padding:3px;
+}
+#guru-info details.guru-detail summary span{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+#guru-info details.guru-detail summary b{
+  color:#741b1b;
+  font-size:18px;
+  line-height:1.45;
+}
+#guru-info details.guru-detail summary small{
+  color:#9a672f;
+  font-weight:700;
+}
+#guru-info details.guru-detail summary::after{
+  content:"＋";
+  font-size:25px;
+  font-weight:700;
+  color:#8b572a;
+  transition:transform .25s ease;
+}
+#guru-info details.guru-detail[open] summary::after{
+  content:"−";
+}
+#guru-info .guru-body{
+  padding:2px 22px 20px 120px;
+  animation:guruBodyIn .32s ease both;
+}
+#guru-info .guru-body p{
+  margin:8px 0;
+  line-height:1.85;
+}
+#guru-info .guru-note{
+  font-weight:700;
+  color:#7a1f1f;
+}
+@keyframes guruBodyIn{
+  from{opacity:0;transform:translateY(-6px)}
+  to{opacity:1;transform:none}
+}
+@media(max-width:760px){
+  #guru-info details.guru-detail summary{
+    gap:12px;
+    padding:12px;
+  }
+  #guru-info details.guru-detail summary img{
+    width:66px;
+    height:74px;
+    flex-basis:66px;
+  }
+  #guru-info details.guru-detail summary b{font-size:16px}
+  #guru-info .guru-body{padding:2px 15px 17px}
+}
+</style>
+
+
+<style>
+/* ===== गुरूपरंपरा : सर्व माहिती थेट दिसण्यासाठी ===== */
+#guru-info details.guru-detail{
+  display:block !important;
+}
+#guru-info details.guru-detail summary{
+  cursor:default !important;
+  pointer-events:none !important;
+}
+#guru-info details.guru-detail summary::after{
+  display:none !important;
+  content:none !important;
+}
+#guru-info details.guru-detail .guru-body{
+  display:block !important;
+  opacity:1 !important;
+  transform:none !important;
+  animation:none !important;
+}
+#guru-info details.guru-detail summary span{
+  justify-content:center;
+}
 </style>
 
 </head>
@@ -133,13 +647,13 @@
       <button id="menuBtn" class="menu-btn" aria-label="मेनू उघडा" aria-expanded="false">☰</button>
       <div id="navLinks" class="nav-links">
         <a href="#home">मुखपृष्ठ</a>
-        <a href="#darshan">आजचे दर्शन</a>
         <a href="#about">आश्रम</a>
+        <a href="#samadhi">समाधी स्थान</a>
+        <a href="#yogapithasan">योगपीठासन</a>
+        <a href="#sahitya">साहित्य</a>
         <a href="#parampara">सद्गुरू परंपरा</a>
-        <a href="#daily">दैनंदिन कार्यक्रम</a>
-        <a href="#seva-info">पूजा व सेवा</a>
-        <a href="#events">उत्सव व कार्यक्रम</a>
-        <a href="#gallery">गॅलरी</a>
+        <a href="#seva-info">पूजा व अभिषेक सेवा</a>
+        <a href="#gallery">छायाचित्र संग्रह</a>
         <a href="#contact">संपर्क</a>
       </div>
     </div>
@@ -212,6 +726,104 @@
       </div>
     </section>
 
+    <section class="samadhi-section section-wrap reveal" id="samadhi">
+      <div class="section-heading">
+        <span>सद्गुरू चरणी वंदन</span>
+        <h2>॥ पवित्र समाधी स्थान ॥</h2>
+        <p>श्री क्षेत्र रेणुका दरबार, सोनई येथील सद्गुरूंच्या पवित्र समाधीस्थानांचे दर्शन व गुरूपरंपरेचा सविस्तर परिचय.</p>
+      </div>
+
+      <div class="samadhi-list">
+        <article class="samadhi-profile">
+          <figure><img src="assets/samadhi-krishnanand.png" loading="lazy" decoding="async" alt="प. पू. कृष्णानंद सरस्वती स्वामी महाराज समाधी स्थान"><figcaption>प. पू. कृष्णानंद सरस्वती स्वामी महाराज</figcaption></figure>
+          <div class="samadhi-copy"><span class="samadhi-label">समाधी स्थान • श्री क्षेत्र सोनई</span><h3>प. पू. कृष्णानंद सरस्वती स्वामी महाराज</h3>
+            <p>प. पू. योगीराज हंसतीर्थ स्वामी महाराजांचे प्रत्यक्ष पिता आणि सद्गुरू म्हणून प. पू. कृष्णानंद सरस्वती स्वामी महाराजांचे गुरूपरंपरेत अत्यंत महत्त्वाचे स्थान आहे. प. पू. सद्गुरू सिद्धनाथ महाराजांच्या आज्ञेनुसार साधना व उपासना प्रत्यक्ष जीवनात आचरणात आणताना त्यांनी वेळोवेळी मार्गदर्शन केले. त्यांनी ‘कुटीचक’ संन्यास स्वीकारला होता. आयुर्वेदाचे ज्ञान, भागवतादी ग्रंथांचा गाढा अभ्यास आणि आई भगवतीची नित्य उपासना ही त्यांच्या जीवनाची वैशिष्ट्ये होती.</p>
+            <p>भाद्रपद वद्य एकादशी, इ.स. १९६६ रोजी ते समाधिस्थ होऊन ओंकारात विलीन झाले. त्यांचे पवित्र समाधिस्थळ श्री रेणुका दरबार, श्री क्षेत्र सोनई, ता. नेवासा येथे आहे.</p>
+            <p class="samadhi-mantra">॥ सिद्धाय सिद्ध पुरुषाय परमानंद मूर्तये साक्षात ब्रह्मरूपाय कृष्णानंदाय नमो नमः ॥</p>
+          </div>
+        </article>
+
+        <article class="samadhi-profile reverse">
+          <figure><img src="assets/samadhi-yogiraj.png" loading="lazy" decoding="async" alt="प. पू. योगीराज हंसतीर्थ स्वामी महाराज समाधी स्थान"><figcaption>प. पू. योगीराज हंसतीर्थ स्वामी महाराज</figcaption></figure>
+          <div class="samadhi-copy"><span class="samadhi-label">समाधी स्थान • श्री क्षेत्र सोनई</span><h3>प. पू. योगीराज हंसतीर्थ स्वामी महाराज</h3>
+            <p>पूर्वाश्रमीचे प. पू. हरिहरानंदनाथ महाराज, म्हणजेच सोनईचे प. पू. अण्णा महाराज, हे शिवशक्ती उपासनेच्या या परंपरेचे प्रमुख अध्वर्यु होते. जन्मापासून असलेली आध्यात्मिक वृत्ती सद्गुरुकृपेने अधिक दृढ झाली. सद्गुरू आज्ञेने त्यांनी अत्यंत तीव्र उपासना व साधना केली. या साधनेच्या परिपाकातून आई भगवती श्री रेणुका मातेची अनुभूती प्राप्त झाल्याचे परंपरेत सांगितले जाते. पुढे त्यांनी अनेक शिष्यांना संसारात राहून परमार्थ साधण्याचा मार्ग दाखविला.</p>
+            <p>श्री रेणुका मातेची सगुण उपासना, कुंकवाचा प्रसाद, संगीतोपासना, कीर्तन, प्रवचन, मूर्तिकला आणि अखंड पायी प्रवास ही त्यांच्या कार्याची वैशिष्ट्ये होती. त्यांनी संन्यासपरंपरेतील ‘हंस दीक्षा’ स्वीकारली. पौष वद्य एकादशी, इ.स. १९९९ रोजी ते समाधिस्थ झाले. त्यांचे समाधिस्थळ श्री रेणुका दरबार, श्री क्षेत्र सोनई येथे आहे.</p>
+            <p class="samadhi-mantra">॥ ॐ नमो नारायणाय सिद्ध पुरुषाय ब्रह्मीभूत योगीराज हंसतीर्थ स्वामी महाराजाय नमो नमः ॥</p>
+          </div>
+        </article>
+
+        <article class="samadhi-profile">
+          <figure><img src="assets/samadhi-premanandinath.png" loading="lazy" decoding="async" alt="प. पू. सौ. प्रेमानंदिनाथ महाराज समाधी स्थान"><figcaption>प. पू. सौ. प्रेमानंदिनाथ महाराज</figcaption></figure>
+          <div class="samadhi-copy"><span class="samadhi-label">समाधी स्थान • श्री क्षेत्र सोनई</span><h3>प. पू. सौ. प्रेमानंदिनाथ महाराज (सौ. आईसाहेब)</h3>
+            <p>प. पू. योगीराज हंसतीर्थ स्वामी महाराजांच्या पूर्वाश्रमातील सहधर्मचारिणी म्हणजे सौ. आईसाहेब. पूर्वाश्रमात हरी–रमा या नावांनी परिचित असलेल्या या दांपत्याच्या जीवनात सद्गुरुनिष्ठा, साधना आणि संसारातून परमार्थाकडे जाणारा मार्ग स्पष्टपणे दिसतो. सद्गुरुकृपेने ‘मृतदीक्षा संस्कार’ झाल्यानंतर त्यांना प. पू. हरिहरानंदनाथ आणि प. पू. प्रेमानंदिनाथ अशी नावे प्राप्त झाली.</p>
+            <p>अश्वत्थ सेवा, प्रदक्षिणा, सद्गुरू आज्ञेनुसार नियमित जप-अनुष्ठान आणि कठोर तपश्चर्या यांमधून त्यांच्या साधनेचा विस्तार झाला. शिष्यपरिवारावर मातृवत प्रेम करणाऱ्या सौ. आईसाहेबांना अन्नपूर्णास्वरूप मानले जाते. भाद्रपद वद्य चतुर्थी, इ.स. १९७८ रोजी त्यांचे महानिर्वाण झाले. त्यांचे पवित्र समाधिस्थळ श्री रेणुका दरबार, श्री क्षेत्र सोनई येथे आहे.</p>
+            <p class="samadhi-mantra">॥ ॐ नमो नारायणी ब्रह्मीभूत माता प्रेमानंदिनाथ महाराजाय नमो नमः ॥</p>
+          </div>
+        </article>
+
+        <article class="samadhi-profile reverse">
+          <figure><img src="assets/samadhi-nana.png" loading="lazy" decoding="async" alt="सद्गुरू नाना महाराज समाधी स्थान"><figcaption>प. पू. सद्गुरू श्री नाना महाराज</figcaption></figure>
+          <div class="samadhi-copy"><span class="samadhi-label">पवित्र स्मृतिस्थान • श्री रेणुका दरबार</span><h3>प. पू. सद्गुरू श्री नाना महाराज</h3>
+            <p>प. पू. योगीराज हंसतीर्थ स्वामी महाराजांच्या ‘प्रपंचातून परमार्थ’ या जीवनदृष्टीतून पुढे आलेल्या परंपरेतील ज्येष्ठ पुत्र राधेश्याम म्हणजे प. पू. नाना महाराज. प. पू. स्वामी महाराजांच्या आज्ञेने त्यांनी वेदांचा अभ्यास केला आणि पुढे पाठशाळेत अनेक विद्यार्थ्यांना वेदाध्ययन दिले.</p>
+            <p>अमृत महोत्सवाच्या प्रसंगी प. पू. स्वामी महाराजांनी स्वतःचा मुकुट प. पू. नाना महाराजांना देऊन श्री शक्तीपीठ योगपीठासनाची उपासना आणि श्री रेणुका माता मंदिर संस्थान गादीचा अधिकार दिल्याचे गुरूपरंपरेत नमूद आहे. भक्तीसेवा, श्रींची सेवा आणि धर्माचरण त्यांनी नियमितपणे सुरू ठेवले. काही काळ वानप्रस्थाश्रमात राहिल्यानंतर वैशाख शुक्ल चतुर्थी, शनिवार दि. १५ मे २०२१ रोजी ते शिवस्वरूप झाले. आजही त्यांच्या आज्ञेनुसार परंपरेतील कार्य पुढे सुरू असल्याचे संदर्भात नमूद आहे.</p>
+            <p class="samadhi-mantra">॥ प. पू. सद्गुरू श्री नाना महाराज की जय ॥</p>
+          </div>
+        </article>
+      </div>
+     </section>
+
+    <section class="section-wrap yogapithasan-section reveal" id="yogapithasan">
+      <div class="section-heading">
+        <span>शक्ती उपासना • श्री क्षेत्र सोनई</span>
+        <h2>॥ योगपीठासन स्वयंभू अंबाबाई ॥</h2>
+        <p>श्री क्षेत्र रेणुका दरबारातील योगपीठासन, भगवती उपासना आणि काचमंदिराचा पवित्र इतिहास.</p>
+      </div>
+
+      <div class="yogapithasan-hero">
+        <figure>
+          <img src="assets/yogapithasan-swayambhu-ambabai.png" loading="lazy" decoding="async" alt="योगपीठासन स्वयंभू अंबाबाई, श्री क्षेत्र रेणुका दरबार सोनई">
+          <figcaption>॥ योगपीठासनस्थित स्वयंभू श्री रेणुका माता ॥</figcaption>
+        </figure>
+        <div class="yogapithasan-intro">
+          <span class="samadhi-label">श्री रेणुका दरबार • सद्गुरू शक्तिपीठ</span>
+          <h3>योगपीठासनाची स्थापना</h3>
+          <p>महाराष्ट्र ही संतांची भूमी आहे. अशाच संतांच्या वास्तव्याने पावन झालेले स्थान म्हणजे श्री क्षेत्र सोनई येथील रेणुका दरबार. प. पू. योगीराज हंसतीर्थ स्वामी महाराज (हरिहरानंद महाराज) यांनी येथे श्री रेणुका मातेचे भव्य काचमंदिर उभारले. गाभाऱ्यात योगपीठासनावर श्री रेणुका मातेची स्थापना करून या पवित्र स्थानाला “शक्तीपीठ” म्हणून गौरविण्यात आले.</p>
+          <p>प. पू. स्वामी महाराज आणि प. पू. प्रेमानंदीनाथ महाराज यांनी प्रारंभी अत्यंत साध्या परिस्थितीत राहून भगवतीची रात्रंदिवस उपासना केली. पुढे नित्य उपासना, प. पू. स्वामींची खडतर साधना, विविध उत्सव, अन्नदान आणि वाढत गेलेला शिष्यपरिवार यांमुळे रेणुका दरबार आश्रमाचा विस्तार होत गेला.</p>
+          <p>सद्गुरू आज्ञेने आणि प. पू. कृष्णानंद स्वामी महाराजांच्या मार्गदर्शनाखाली हे कार्य सुरू होते. इ.स. १९६६ मध्ये प. पू. कृष्णानंद स्वामी महाराज ॐकार स्वरूपात समाधिस्थ झाल्यानंतर प. पू. योगीराज हंसतीर्थ स्वामी महाराजांनी सद्गुरू आज्ञेने ॐकार योगपीठासन व भगवती मंदिर स्थापण्याचा निर्णय घेतला. पुढे योगपीठासनावर भगवतीची स्थापना झाली आणि आजचे काचमंदिर उभे राहिले.</p>
+        </div>
+      </div>
+
+      <div class="yogapithasan-content">
+        <article class="yoga-info-card">
+          <h3>॥ योगपीठासनाचे आध्यात्मिक महत्त्व ॥</h3>
+          <p>प. पू. स्वामी महाराजांनी योगपीठासनाचे आगळे आध्यात्मिक महत्त्व सांगितले आहे. या उपासनेचा भाव अधिक स्पष्ट व्हावा म्हणून त्यांनी योगपीठासन स्तोत्र आणि अभंगांची रचना केली. या रचनांमध्ये योगपीठासनाचा ॐकार, प्रकृती-पुरुष ऐक्यभाव आणि आत्मसाक्षात्काराशी असलेला आध्यात्मिक संबंध व्यक्त होतो.</p>
+          <blockquote>“हे ओंकार स्वरूप पीठासन प्रकृती पुरुष ऐक्य भाव जाण |<br>शिव शिवा स्वरूप प्रगट करून | आत्मसाक्षात्कार देते पहा ||”</blockquote>
+          <p>योगपीठासन अभंगाच्या फलश्रुतीत नित्य स्मरणातून भवचिंता दूर होणे, निर्विचार स्थितीकडे वाटचाल होणे आणि अंतःकरण निर्विकार होण्याचा भाव व्यक्त केला आहे.</p>
+        </article>
+
+        <article class="yoga-info-card">
+          <h3>॥ काचमंदिर आणि शक्तीपीठ ॥</h3>
+          <p>इ.स. १९९१ मध्ये काचमंदिर पूर्ण होऊन कळसाची स्थापना झाली. काचमहालात उत्सवमूर्तीची स्थापना करण्यात आली. रेणुका दरबार परिसरात श्री कालभैरव, शेषनाग, सप्तजल योगिनी, दत्तात्रेय, दक्षिणाभिमुख मारुती, चतुराई देवी, कार्तिकेय, शीतलादेवी, मल्हारी म्हाळसा कांत आणि श्रीकृष्ण चक्र अशा विविध देवतांची आवाहनपूर्वक स्थापना करण्यात आल्याचे संदर्भात नमूद आहे.</p>
+          <p>रेणुका दरबारचे माहात्म्य प. पू. स्वामी महाराजांनी ५१ ओव्यांमध्ये शब्दबद्ध केले. त्यामध्ये रेणुकामाता, योगपीठासन आणि ॐकार यांचा आध्यात्मिक संबंध अधोरेखित केला आहे.</p>
+          <blockquote>“रेणुकाई माझे कुलदैवत असून योगपीठासनी स्थापियले ।<br>ओंकार हे यंत्र जीवनाचे सूत्र होई ब्रम्हरत्न सर्वकाळ ।।”</blockquote>
+        </article>
+
+        <article class="yoga-info-card yoga-wide">
+          <h3>॥ १९९३ चा अमृत महोत्सव ॥</h3>
+          <p>इ.स. १९९३ मध्ये श्री रेणुका दरबार येथे अमृत महोत्सव सोहळा संपन्न झाला आणि मोठ्या संख्येने भाविकांनी दर्शनाचा लाभ घेतला. या प्रसंगी करवीरपीठाच्या प. पू. शंकराचार्यांनी प. पू. हंसतीर्थ स्वामी महाराजांच्या साधनेमुळे माहूरगडची रेणुकाई या स्थानीही वास करीत असल्याचा भाव व्यक्त केल्याचे मूळ संदर्भात नमूद आहे. प. पू. योगीराज हंसतीर्थ स्वामी महाराजांच्या वास्तव्याने आणि साधनेने श्री रेणुका दरबार हे पवित्र शक्तीपीठ म्हणून भाविकांच्या श्रद्धेचे केंद्र बनले.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-wrap sacred-placeholder reveal" id="sahitya">
+      <div class="section-heading"><span>अध्यात्मिक वाङ्मय</span><h2>॥ साहित्य ॥</h2><p>श्री रेणुका माता, सद्गुरू परंपरा आणि उपासनेशी संबंधित पवित्र ग्रंथ व आध्यात्मिक साहित्य.</p></div>
+      <div class="sahitya-featured">
+        <figure class="sahitya-photo devotional-frame"><img src="assets/sahitya/sahitya-books.png" loading="lazy" decoding="async" alt="श्री रेणुका दरबार साहित्य व ग्रंथ"></figure>
+        <figure class="sahitya-photo devotional-frame"><img src="assets/sahitya/renuka-darbar-granth.png" loading="lazy" decoding="async" alt="श्री योगपीठासनस्थित भगवती उपासना ग्रंथ"></figure>
+      </div>
+      <div class="sahitya-grid"><article>ग्रंथ / पुस्तके</article><article>स्तोत्र</article><article>आरती</article><article>भजन / पदे</article><article>सद्गुरू साहित्य</article><article>PDF / ई-पुस्तके</article></div>
+    </section>
+
     <section class="parampara-section reveal" id="parampara">
       <div class="section-heading light">
         <span>गुरुचरणी वंदन</span>
@@ -224,11 +836,75 @@
         <article class="guru-step"><div class="guru-index">३</div><img src="assets/yogiraj.jpeg" loading="lazy" decoding="async" alt="प. पू. योगीराज हंसतीर्थ स्वामी महाराज"><h3>प. पू. योगीराज हंसतीर्थ स्वामी महाराज</h3></article>
         <article class="guru-step"><div class="guru-index">४</div><img src="assets/premanandinath.jpeg" loading="lazy" decoding="async" alt="प. पू. माता प्रेमानंदीनाथ महाराज"><h3>प. पू. माता प्रेमानंदीनाथ महाराज</h3></article>
         <article class="guru-step"><div class="guru-index">५</div><img src="assets/nana.jpeg" loading="lazy" decoding="async" alt="सद्गुरू नाना महाराज"><h3>सद्गुरू नाना महाराज</h3></article>
-        <article class="guru-step"><div class="guru-index">६</div><img src="assets/appa.jpeg" loading="lazy" decoding="async" alt="सद्गुरू आप्पा महाराज"><h3>सद्गुरू आप्पा महाराज</h3></article>
+        <article class="guru-step"><div class="guru-index">६</div><img src="assets/lakshmidevi-aisaheb.png" loading="lazy" decoding="async" alt="प. पू. अखंड सौभाग्यवर्धिनी दरबार मातोश्री सौ. लक्ष्मीदेवी आईसाहेब"><h3> दरबार मातोश्री सौ.लक्ष्मीदेवी आईसाहेब</h3></article>
+        <article class="guru-step"><div class="guru-index">७</div><img src="assets/appa.jpeg" loading="lazy" decoding="async" alt="सद्गुरू आप्पा महाराज"><h3>सद्गुरू आप्पा महाराज</h3></article>
       </div>
     </section>
 
-    <section class="section-wrap history-section reveal" id="history">
+    <section class="section-wrap reveal" id="parampara-paik">
+      <div class="section-heading">
+        <span>सेवा • श्रद्धा • परंपरा</span>
+        <h2>॥ सद्गुरू परंपरेचे पाईक ॥</h2>
+      </div>
+
+      <article class="guru-detail">
+        <img src="assets/yadneshwar-vedwati.png" loading="lazy" decoding="async"
+             alt="प. पू. यज्ञेश्वर महाराज (गुरुजी) व प. पू. वेदवती आईसाहेब">
+        <div>
+          <h3>प. पू. यज्ञेश्वर महाराज (गुरुजी) व प. पू. वेदवती आईसाहेब</h3>
+          <p>प. पू. सद्गुरू श्री नाना महाराज हे <strong>वैशाख शुक्ल चतुर्थी, दि. १५ मे २०२१ रोजी शिवस्वरूप झाल्यानंतर</strong>, त्यांच्या कार्याचा आणि सेवेचा वारसा त्यांचे <strong>ज्येष्ठ सुपुत्र प. पू. यज्ञेश्वर महाराज (गुरुजी)</strong> श्रद्धापूर्वक पुढे चालवीत आहेत.</p>
+          <p><strong>सद्गुरू परंपरेचे पाईक म्हणून</strong>, प. पू. यज्ञेश्वर महाराज श्री क्षेत्र रेणुका दरबार येथील <strong>नित्योपासना, विविध धार्मिक उत्सव, आश्रमाची देखरेख तसेच व्यवस्थापनाची जबाबदारी</strong> सेवाभावाने सांभाळत आहेत.</p>
+          <p>त्यांच्या धर्मपत्नी <strong>प. पू. वेदवती आईसाहेब</strong> याही या सेवाकार्यात समर्पित भावनेने सहभागी असून, <strong>सद्गुरू परंपरेची सेवा, भक्ती आणि उपासनेचा वारसा जपण्याच्या कार्यात मोलाचे योगदान</strong> देत आहेत.</p>
+          <p>दोघांच्या सेवाभावी कार्यातून <strong>श्री रेणुका मातेची उपासना आणि सद्गुरू परंपरेचा आध्यात्मिक वारसा अखंडपणे पुढे चालत आहे.</strong></p>
+        </div>
+      </article>
+    </section>
+
+    <section class="section-wrap guru-info-section reveal" id="guru-info">
+      <div class="section-heading">
+        <span>परंपरेचा परिचय</span>
+        <h2>॥ गुरूपरंपरा ॥</h2>
+        <p>नाथपरंपरा, सद्गुरू आज्ञा आणि श्री रेणुका मातेची उपासना यांचा सुंदर संगम.</p>
+      </div>
+      <div class="guru-accordions">
+        <details class="guru-detail" open>
+          <summary><img src="assets/siddhanath.jpeg" loading="lazy" decoding="async" alt="सद्गुरू सिद्धनाथ महाराज"><span><b>प. पू. सद्गुरू सिद्धनाथ महाराज</b></span></summary>
+          <div class="guru-body"><p>आदिनाथ-शिवापासून भगवान दत्तात्रेय, नवनाथ, निवृत्तीनाथ आणि ज्ञानेश्वर माऊलीपर्यंत चालत आलेल्या नाथपरंपरेतील सिद्धपरंपरेशी सद्गुरू सिद्धनाथ महाराजांचे स्थान जोडले जाते. त्यांनी प. पू. योगीराज हंसतीर्थ स्वामी महाराजांना उपासना, साधना आणि परंपरेविषयी वेळोवेळी मार्गदर्शन केले.</p></div>
+        </details>
+
+        <details class="guru-detail" open>
+          <summary><img src="assets/krishnanand.jpeg" loading="lazy" decoding="async" alt="कृष्णानंद सरस्वती स्वामी महाराज"><span><b>प. पू. कृष्णानंद सरस्वती स्वामी महाराज</b></span></summary>
+          <div class="guru-body"><p>प. पू. योगीराज हंसतीर्थ स्वामी महाराजांचे प्रत्यक्ष पिता आणि सद्गुरू. आयुर्वेदाचे ज्ञान, भागवतादी ग्रंथांचा अभ्यास आणि भगवतीची नित्य उपासना ही त्यांची वैशिष्ट्ये सांगितली जातात. त्यांनी कुटीचक संन्यास स्वीकारला होता.</p><p class="guru-note">भाद्रपद वद्य एकादशी, इ.स. १९६६ — समाधी; समाधिस्थळ: श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ काचमंदीर सोनई.</p></div>
+        </details>
+
+        <details class="guru-detail" open>
+          <summary><img src="assets/yogiraj.jpeg" loading="lazy" decoding="async" alt="योगीराज हंसतीर्थ स्वामी महाराज"><span><b>प. पू. योगीराज हंसतीर्थ स्वामी महाराज</b></span></summary>
+          <div class="guru-body"><p>पूर्वाश्रमीचे हरिहरानंदनाथ महाराज, सोनईचे अण्णा महाराज. तीव्र उपासना व साधना, श्री रेणुका मातेची सगुण उपासना, कुंकवाचा प्रसाद, संगीतोपासना, कीर्तन-प्रवचन, मूर्तिकला आणि पायी प्रवास ही त्यांच्या कार्याची वैशिष्ट्ये होती. त्यांनी अनेक शिष्यांना संसारात राहून परमार्थ साधण्याचे मार्गदर्शन केले आणि हंस दीक्षा स्वीकारली होती.</p><p class="guru-note">पौष वद्य एकादशी, इ.स. १९९९ — समाधी; समाधिस्थळ: श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ काचमंदीर सोनई.</p></div>
+        </details>
+
+        <details class="guru-detail" open>
+          <summary><img src="assets/premanandinath.jpeg" loading="lazy" decoding="async" alt="माता प्रेमानंदीनाथ महाराज"><span><b>प. पू. माता प्रेमानंदीनाथ महाराज (सौ. आईसाहेब)</b></span></summary>
+          <div class="guru-body"><p>प. पू. योगीराज हंसतीर्थ स्वामी महाराजांच्या पूर्वाश्रमातील सहधर्मचारिणी. सद्गुरूनिष्ठा, तपश्चर्या, जप-अनुष्ठान, अश्वत्थ सेवा आणि शिष्यपरिवारावरील मातृवत प्रेम यासाठी त्यांचे स्मरण केले जाते. सद्गुरुकृपेने त्यांच्या आध्यात्मिक साधनेला उच्च अवस्था प्राप्त झाल्याचे परंपरेत वर्णन आहे.</p><p class="guru-note">भाद्रपद वद्य चतुर्थी, इ.स. १९७८ — महानिर्वाण; समाधिस्थळ: श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ काचमंदीर सोनई.</p></div>
+        </details>
+
+        <details class="guru-detail" open>
+          <summary><img src="assets/nana.jpeg" loading="lazy" decoding="async" alt="सद्गुरू नाना महाराज"><span><b>प. पू. सद्गुरू श्री नाना महाराज</b></span></summary>
+          <div class="guru-body"><p>प. पू. योगीराज हंसतीर्थ स्वामी महाराजांचे ज्येष्ठ पुत्र राधेश्याम, म्हणजे प. पू. नाना महाराज. त्यांनी वेदांचा अभ्यास करून विद्यार्थ्यांना वेदाध्ययन दिले. अमृत महोत्सवाच्या वेळी प. पू. स्वामी महाराजांनी त्यांना श्री शक्तीपीठ योगपीठासनाची उपासना आणि श्री रेणुकामाता मंदिर संस्थान गादीचा अधिकार दिल्याचे परंपरेत नमूद आहे.</p><p class="guru-note">वैशाख शुक्ल चतुर्थी, १५ मे २०२१ — शिवस्वरूप समाधिस्थळ: श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ काचमंदीर सोनई.</p></div>
+        </details>
+
+        <details class="guru-detail" open>
+          <summary><img src="assets/lakshmidevi-aisaheb.png" loading="lazy" decoding="async" alt="प. पू. अखंड सौभाग्यवर्धिनी दरबार मातोश्री सौ. लक्ष्मीदेवी आईसाहेब"><span><b>प. पू. अखंड सौभाग्यवर्धिनी दरबार मातोश्री सौ. लक्ष्मीदेवी आईसाहेब</b></span></summary>
+          <div class="guru-body"><p><strong>प. पू. सद्गुरू श्री नाना महाराज यांच्या धर्मपत्नी.</strong></p><p>प. पू. अखंड सौभाग्यवर्धिनी दरबार मातोश्री सौ. लक्ष्मीदेवी आईसाहेब या प. पू. सद्गुरू श्री नाना महाराज यांच्या धर्मपत्नी होत्या. श्री क्षेत्र रेणुका दरबारच्या सद्गुरू परंपरेशी त्यांचे जीवन श्रद्धा, भक्ती आणि सेवाभावाने जोडलेले होते.</p><p class="guru-note">इ.स. २०१५ मध्ये त्यांचे महानिर्वाण झाले समाधिस्थळ: श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ काचमंदीर सोनई.</p></div>
+        </details>
+
+        <details class="guru-detail" open>
+          <summary><img src="assets/appa.jpeg" loading="lazy" decoding="async" alt="सद्गुरू आप्पा महाराज"><span><b>प. पू. सद्गुरू श्री आप्पा महाराज</b></span></summary>
+          <div class="guru-body"><p>प. पू. योगीराज हंसतीर्थ स्वामी महाराजांचे द्वितीय चिरंजीव, उमाकांत जोशी. जप, अनुष्ठान, गायत्री पुरश्चरण, यज्ञ-याग, गायन-वादन, मूर्तिकला तसेच स्तोत्र, आरती व काव्यरचना या क्षेत्रांत त्यांचे योगदान आहे. अमृत महोत्सवाच्या वेळी त्यांना श्रीशक्ती दंड देऊन शिष्यांना गुरुमंत्र देण्याचा आणि नाथपरंपरा पुढे चालविण्याचा अधिकार दिल्याचे संदर्भात नमूद आहे.</p><p class="guru-note">मार्गशीर्ष शुक्ल द्वितीया — देव दीपावली, दि. २१ नोव्हेंबर २०२६ रोजी शिवस्वरूप | समाधिस्थळ : श्री हरिहर सद्गुरू शक्तीपीठ ,छत्रपती संभाजीनगर</p></div>
+        </details>
+      </div>
+    </section>
+
+<section class="section-wrap history-section reveal" id="history">
       <div class="section-heading">
         <span>आश्रमाची कथा</span>
         <h2>॥ इतिहास व महात्म्य ॥</h2>
@@ -255,18 +931,6 @@
       <div class="samadhi-ribbon"><span>प. पू. कृष्णानंद सरस्वती स्वामी महाराज समाधी</span><span>प. पू. माता प्रेमानंदीनाथ महाराज समाधी</span><span>प. पू. योगीराज हंसतीर्थ स्वामी महाराज समाधी</span><span>योगपीठासनस्थित श्री रेणुका माता</span></div>
     </section>
 
-    <section class="section-wrap guru-info-section reveal" id="guru-info">
-      <div class="section-heading"><span>परंपरेचा परिचय</span><h2>॥ गुरूपरंपरा ॥</h2><p>नाथपरंपरा, सद्गुरू आज्ञा आणि श्री रेणुका मातेची उपासना यांचा सुंदर संगम.</p></div>
-      <div class="guru-accordions">
-        <details class="guru-detail"><summary><img src="assets/siddhanath.jpeg" loading="lazy" decoding="async" alt="सद्गुरू सिद्धनाथ महाराज"><span><b>प. पू. सद्गुरू सिद्धनाथ महाराज</b><small>परिचय वाचा</small></span></summary><div class="guru-body"><p>आदिनाथ-शिवापासून भगवान दत्तात्रेय, नवनाथ, निवृत्तीनाथ आणि ज्ञानेश्वर माऊलीपर्यंत चालत आलेल्या नाथपरंपरेतील सिद्धपरंपरेशी सद्गुरू सिद्धनाथ महाराजांचे स्थान जोडले जाते. त्यांनी प. पू. योगीराज हंसतीर्थ स्वामी महाराजांना उपासना, साधना आणि परंपरेविषयी वेळोवेळी मार्गदर्शन केले.</p></div></details>
-        <details class="guru-detail"><summary><img src="assets/krishnanand.jpeg" loading="lazy" decoding="async" alt="कृष्णानंद सरस्वती स्वामी महाराज"><span><b>प. पू. कृष्णानंद सरस्वती स्वामी महाराज</b><small>परिचय वाचा</small></span></summary><div class="guru-body"><p>प. पू. योगीराज हंसतीर्थ स्वामी महाराजांचे प्रत्यक्ष पिता आणि सद्गुरू. आयुर्वेदाचे ज्ञान, भागवतादी ग्रंथांचा अभ्यास आणि भगवतीची नित्य उपासना ही त्यांची वैशिष्ट्ये सांगितली जातात. त्यांनी कुटीचक संन्यास स्वीकारला होता.</p><p class="guru-note">भाद्रपद वद्य एकादशी, इ.स. १९६६ — समाधी; समाधिस्थळ: श्री रेणुका दरबार, सोनई.</p></div></details>
-        <details class="guru-detail" open><summary><img src="assets/yogiraj.jpeg" loading="lazy" decoding="async" alt="योगीराज हंसतीर्थ स्वामी महाराज"><span><b>प. पू. योगीराज हंसतीर्थ स्वामी महाराज</b><small>परिचय वाचा</small></span></summary><div class="guru-body"><p>पूर्वाश्रमीचे हरिहरानंदनाथ महाराज, सोनईचे अण्णा महाराज. तीव्र उपासना व साधना, श्री रेणुका मातेची सगुण उपासना, कुंकवाचा प्रसाद, संगीतोपासना, कीर्तन-प्रवचन, मूर्तिकला आणि पायी प्रवास ही त्यांच्या कार्याची वैशिष्ट्ये होती. त्यांनी अनेक शिष्यांना संसारात राहून परमार्थ साधण्याचे मार्गदर्शन केले आणि हंस दीक्षा स्वीकारली होती.</p><p class="guru-note">पौष वद्य एकादशी, इ.स. १९९९ — समाधी; समाधिस्थळ: श्री रेणुका दरबार, सोनई.</p></div></details>
-        <details class="guru-detail"><summary><img src="assets/premanandinath.jpeg" loading="lazy" decoding="async" alt="माता प्रेमानंदीनाथ महाराज"><span><b>प. पू. माता प्रेमानंदीनाथ महाराज (सौ. आईसाहेब)</b><small>परिचय वाचा</small></span></summary><div class="guru-body"><p>प. पू. योगीराज हंसतीर्थ स्वामी महाराजांच्या पूर्वाश्रमातील सहधर्मचारिणी. सद्गुरूनिष्ठा, तपश्चर्या, जप-अनुष्ठान, अश्वत्थ सेवा आणि शिष्यपरिवारावरील मातृवत प्रेम यासाठी त्यांचे स्मरण केले जाते. सद्गुरुकृपेने त्यांच्या आध्यात्मिक साधनेला उच्च अवस्था प्राप्त झाल्याचे परंपरेत वर्णन आहे.</p><p class="guru-note">भाद्रपद वद्य चतुर्थी, इ.स. १९७८ — महानिर्वाण; समाधिस्थळ: श्री रेणुका दरबार, सोनई.</p></div></details>
-        <details class="guru-detail"><summary><img src="assets/nana.jpeg" loading="lazy" decoding="async" alt="सद्गुरू नाना महाराज"><span><b>प. पू. सद्गुरू श्री नाना महाराज</b><small>परिचय वाचा</small></span></summary><div class="guru-body"><p>प. पू. योगीराज हंसतीर्थ स्वामी महाराजांचे ज्येष्ठ पुत्र राधेश्याम, म्हणजे प. पू. नाना महाराज. त्यांनी वेदांचा अभ्यास करून विद्यार्थ्यांना वेदाध्ययन दिले. अमृत महोत्सवाच्या वेळी प. पू. स्वामी महाराजांनी त्यांना श्री शक्तीपीठ योगपीठासनाची उपासना आणि श्री रेणुकामाता मंदिर संस्थान गादीचा अधिकार दिल्याचे परंपरेत नमूद आहे.</p><p class="guru-note">वैशाख शुक्ल चतुर्थी, १५ मे २०२१ — शिवस्वरूप.</p></div></details>
-        <details class="guru-detail"><summary><img src="assets/appa.jpeg" loading="lazy" decoding="async" alt="सद्गुरू आप्पा महाराज"><span><b>प. पू. सद्गुरू श्री आप्पा महाराज</b><small>परिचय वाचा</small></span></summary><div class="guru-body"><p>प. पू. योगीराज हंसतीर्थ स्वामी महाराजांचे द्वितीय चिरंजीव, उमाकांत जोशी. जप, अनुष्ठान, गायत्री पुरश्चरण, यज्ञ-याग, गायन-वादन, मूर्तिकला तसेच स्तोत्र, आरती व काव्यरचना या क्षेत्रांत त्यांचे योगदान आहे. अमृत महोत्सवाच्या वेळी त्यांना श्रीशक्ती दंड देऊन शिष्यांना गुरुमंत्र देण्याचा आणि नाथपरंपरा पुढे चालविण्याचा अधिकार दिल्याचे संदर्भात नमूद आहे.</p></div></details>
-      </div>
-    </section>
-
     <section class="feature-band reveal" id="daily">
       <article><div class="feature-icon">🪔</div><h2>दैनंदिन कार्यक्रम</h2><p>काकड आरती • सकाळची पूजा • आरती • सायंकाळची आरती</p><button type="button" class="btn btn-outline-light">वेळापत्रक पहा</button></article>
       <article id="live" class="feature-image-card"><img src="assets/temple.jpeg" loading="lazy" decoding="async" alt="लाईव्ह दर्शन"><div><div class="live-badge">● LIVE</div><h2>लाईव्ह दर्शन</h2><a class="btn btn-gold" href="https://youtube.com/@shrirenukadarbarsonai" target="_blank" rel="noopener">YouTube वर पहा</a></div></article>
@@ -275,11 +939,10 @@
     </section>
 
     <section class="section-wrap reveal" id="seva-info">
-      <div class="section-heading"><span>भक्तिसेवा</span><h2>॥ पूजा व सेवा ॥</h2><p>श्री रेणुका दरबार येथे भक्तांना विविध धार्मिक पूजा व सेवांमध्ये सहभागी होता येते.</p></div>
+      <div class="section-heading"><span>भक्तिसेवा</span><h2>॥ पूजा व अभिषेक सेवा ॥</h2><p>श्री रेणुका दरबार येथे भक्तांना श्रद्धापूर्वक पूजा व अभिषेक सेवांमध्ये सहभागी होता येते.</p></div>
       <div class="service-grid">
         <article><span class="service-icon">🪷</span><h3>श्री रेणुकामाता अभिषेक</h3><p>भगवती श्री रेणुका मातेच्या चरणी अभिषेक व पूजन सेवा.</p></article>
-        <article class="service-featured"><span class="service-icon">🙏</span><h3>प. पू. स्वामी समाधी अभिषेक</h3><p>प. पू. स्वामी महाराजांच्या पवित्र समाधीस्थळी श्रद्धापूर्वक अभिषेक सेवा.</p></article>
-        <article><span class="service-icon">🪔</span><h3>धार्मिक सेवा</h3><p>आश्रमातील विविध पूजा व धार्मिक सेवांमध्ये भक्तांना सहभागी होता येते.</p></article>
+        <article class="service-featured"><span class="service-icon">🙏</span><h3>प. पू. स्वामी महाराज समाधी अभिषेक</h3><p>प. पू. स्वामी महाराजांच्या पवित्र समाधीस्थळी श्रद्धापूर्वक अभिषेक सेवा.</p></article>
       </div>
     </section>
 
