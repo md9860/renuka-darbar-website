@@ -1654,11 +1654,11 @@ html{scroll-behavior:smooth}
             <div class="copy-row"><strong id="donationUpi">anjanijoshi0804@okhdfcbank</strong><button type="button" class="copy-btn" data-copy="anjanijoshi0804@okhdfcbank">कॉपी</button></div>
             <div class="upi-actions payment-brand-actions">
               <a class="btn btn-maroon upi-pay" href="#" aria-label="UPI ने Pay करा"><span class="upi-mark">UPI</span><span>UPI ने Pay करा</span></a>
-              <a class="btn btn-outline upi-pay brand-pay gpay-btn" href="#" aria-label="Google Pay ने Pay करा">
+              <a id="googlePayBtn" class="btn btn-outline upi-pay brand-pay gpay-btn" href="#" aria-label="Google Pay ने Pay करा">
                 <svg class="pay-brand-icon" viewBox="0 0 32 32" aria-hidden="true"><path fill="#4285F4" d="M16 13.1v5.5h7.7c-.3 1.8-2.1 5.2-7.7 5.2A8.7 8.7 0 1 1 16 6.4c3.2 0 5.3 1.4 6.5 2.5l4.4-4.2A15 15 0 1 0 31 16c0-1-.1-2-.3-2.9H16z"/><path fill="#34A853" d="M3.1 9.1A15 15 0 0 0 3.1 23l5-3.9A9 9 0 0 1 8.1 13l-5-3.9z"/><path fill="#FBBC05" d="M16 31c4.1 0 7.6-1.4 10.1-3.8l-4.9-3.8c-1.4.9-3.1 1.5-5.2 1.5-4 0-7.3-2.7-8.5-6.3l-5 3.9A15.2 15.2 0 0 0 16 31z"/><path fill="#EA4335" d="M7.5 13.4C8.7 9.8 12 7.1 16 7.1c2.3 0 4.4.8 6 2.4l4.5-4.4A15 15 0 0 0 2.5 9.5l5 3.9z"/></svg>
                 <span>Google Pay</span>
               </a>
-              <a class="btn btn-outline upi-pay brand-pay phonepe-btn" href="#" aria-label="PhonePe ने Pay करा">
+              <a id="phonePeBtn" class="btn btn-outline upi-pay brand-pay phonepe-btn" href="#" aria-label="PhonePe ने Pay करा">
                 <svg class="pay-brand-icon phonepe-mark" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="#5f259f"/><path fill="#fff" d="M11 8h11v3h-4.2c2.1 1.5 3.2 3.6 3.2 6.1 0 4.2-3.2 7.4-7.9 7.9l-.4-3c3.2-.4 5.2-2.2 5.2-4.9 0-2.5-1.9-4.3-5-4.3H11V8z"/></svg>
                 <span>PhonePe</span>
               </a>
@@ -1747,5 +1747,59 @@ html{scroll-behavior:smooth}
   <button id="backToTop" class="back-to-top" aria-label="वर जा">↑</button>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="script.js"></script>
+
+<script>
+(function () {
+  const UPI_ID = "anjanijoshi0804@okhdfcbank";
+  const PAYEE_NAME = "Shri Renuka Darbar";
+
+  function getQuery() {
+    const amountInput = document.getElementById("donationAmount");
+    const amount = amountInput && Number(amountInput.value) > 0
+      ? Number(amountInput.value).toFixed(2) : "";
+
+    const params = new URLSearchParams({
+      pa: UPI_ID,
+      pn: PAYEE_NAME,
+      cu: "INR",
+      tn: "Donation - Shri Renuka Darbar"
+    });
+    if (amount) params.set("am", amount);
+    return params.toString();
+  }
+
+  const android = /Android/i.test(navigator.userAgent);
+  const ios = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  document.getElementById("googlePayBtn")?.addEventListener("click", function(e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    const q = getQuery();
+    if (android) {
+      location.href = "intent://pay?" + q +
+        "#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;end";
+    } else if (ios) {
+      location.href = "gpay://upi/pay?" + q;
+    } else {
+      alert("Google Pay मोबाइलवर उघडा. Desktop वर QR Scan & Pay वापरा.");
+    }
+  }, true);
+
+  document.getElementById("phonePeBtn")?.addEventListener("click", function(e) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    const q = getQuery();
+    if (android) {
+      location.href = "intent://pay?" + q +
+        "#Intent;scheme=upi;package=com.phonepe.app;end";
+    } else if (ios) {
+      location.href = "phonepe://pay?" + q;
+    } else {
+      alert("PhonePe मोबाइलवर उघडा. Desktop वर QR Scan & Pay वापरा.");
+    }
+  }, true);
+})();
+</script>
+
 </body>
 </html>
