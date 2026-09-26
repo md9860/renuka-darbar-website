@@ -202,3 +202,31 @@ body.scrolled .nav{box-shadow:0 10px 28px rgba(35,0,2,.30)}
 /* Payment & social brand icon polish */
 .payment-brand-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}.brand-pay{display:inline-flex!important;align-items:center;justify-content:center;gap:8px}.pay-brand-icon{width:24px;height:24px;flex:0 0 24px}.phonepe-btn{border-color:#5f259f!important}.phonepe-btn span:last-child{color:#5f259f;font-weight:900}.gpay-btn span:last-child{font-weight:900}.upi-mark{font-size:11px;font-weight:950;letter-spacing:.3px;background:#fff;color:#4b0a0e;border-radius:5px;padding:2px 5px}.social-logo{width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center}.social-logo svg{width:34px;height:34px}.social.instagram .social-logo{color:#c52b78}.social.facebook .social-logo{color:#1877f2}
 @media(max-width:760px){.payment-brand-actions{display:grid;grid-template-columns:1fr 1fr}.payment-brand-actions .btn:first-child{grid-column:1/-1}.brand-pay{min-height:46px}.social-logo,.social-logo svg{width:30px;height:30px}}
+
+/* Final donation receipt polish */
+.receipt-head{display:block!important;text-align:center!important;padding:18px 0 22px!important;border-bottom:1px solid #dcc8a0!important}
+.receipt-head img{display:block!important;width:auto!important;height:auto!important;max-width:180px!important;max-height:180px!important;margin:0 auto 14px!important;object-fit:contain!important;border-radius:0!important;box-shadow:none!important;background:transparent!important}
+.receipt-head div{display:block!important}
+.receipt-head strong,.receipt-head span,.receipt-head small{display:block!important}
+.receipt-head strong{font-size:1.45rem!important}
+.receipt-head small{margin-top:5px;color:#68151b;font-weight:800}
+.receipt-legal-note{display:none!important}
+.receipt-download-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:20px}
+.receipt-download-actions button:disabled{opacity:.65;cursor:wait}
+@media(max-width:620px){.receipt-head img{max-width:135px!important;max-height:135px!important}.receipt-download-actions button{width:100%}}
+
+.receipt-generation-error{min-height:1.2em;margin-top:12px;text-align:center;color:#8a241f;font-weight:800}.receipt-generation-error:empty{display:none}
+
+/* Printed-receipt style: match the supplied reference — centered Marathi header */
+.donation-receipt{background:#fff!important;border:1px solid #b8b8b8!important;border-radius:0!important;padding:28px!important;box-shadow:none!important;color:#2f2520!important}
+.donation-receipt .receipt-head{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:8px!important;text-align:center!important;padding:0 0 18px!important;border-bottom:1px solid #b98a42!important}
+.donation-receipt .receipt-head img{display:block!important;width:125px!important;height:125px!important;max-width:125px!important;max-height:125px!important;margin:0 auto!important;object-fit:contain!important;border-radius:0!important;box-shadow:none!important;background:transparent!important}
+.donation-receipt .receipt-head div{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;padding-top:0!important;width:100%!important}
+.donation-receipt .receipt-head strong{font-size:1.55rem!important;color:#68151b!important;text-align:center!important}
+.donation-receipt .receipt-head span{font-size:1rem!important;color:#3b332f!important;text-align:center!important}
+.donation-receipt .receipt-jay{font-size:1.05rem!important;color:#8a641f!important;text-align:center!important}
+.donation-receipt .receipt-head small{font-size:.95rem!important;color:#8a641f!important;font-weight:800!important;margin-top:0!important;text-align:center!important}
+.donation-receipt .receipt-data{margin:18px 0!important;gap:0 28px!important}
+.donation-receipt .receipt-data p{padding:11px 0!important;border-bottom:1px dotted #d8b982!important}
+.donation-receipt .receipt-note{grid-column:1/-1!important;line-height:1.55!important}
+@media(max-width:620px){.donation-receipt .receipt-head img{width:90px!important;height:90px!important;max-width:90px!important;max-height:90px!important}.donation-receipt .receipt-head strong{font-size:1.1rem!important}.donation-receipt .receipt-head span,.donation-receipt .receipt-head small,.donation-receipt .receipt-jay{font-size:.82rem!important}}

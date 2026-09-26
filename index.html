@@ -1686,16 +1686,19 @@ html{scroll-behavior:smooth}
           <label>Payment Method<select id="paymentMethod" required><option value="">निवडा</option><option>UPI</option><option>Google Pay</option><option>PhonePe</option><option>Direct Bank Transfer</option></select></label>
           <label>Transaction / UTR No.<input id="transactionId" required placeholder="पेमेंटनंतर UTR / Transaction ID भरा"></label>
           <button class="btn btn-gold" type="button" id="paymentCompletedBtn">पेमेंट पूर्ण झाले — पावती मिळवा</button>
-          <p class="manual-payment-warning"><strong>महत्त्वाची सूचना:</strong> ही वेबसाइट बँकेकडून व्यवहाराची स्वतंत्र पडताळणी करत नाही. UTR/Transaction ID नोंदवल्यानंतर तयार होणारा दस्तऐवज <strong>देणगी व्यवहार Acknowledgement</strong> आहे. अंतिम प्राप्ती/हिशोबी नोंद संस्थेकडून व्यवहार पडताळणीनंतर ग्राह्य धरली जाईल.</p>
+          <p class="manual-payment-warning">पेमेंट पूर्ण झाल्यानंतर तुमचा Transaction / UTR No. येथे भरा आणि पावती तयार करा.</p>
         </div>
       </div>
 
       <div class="donation-receipt" id="donationReceipt" hidden>
-        <div class="receipt-head"><img src="assets/sansthan-logo.png" alt="संस्थान लोगो"><div><strong>॥ श्री क्षेत्र रेणुका दरबार ॥</strong><span>सद्गुरू शक्तिपीठ काचमंदीर सोनई</span><small>देणगी व्यवहार Acknowledgement • व्यवहार पडताळणी प्रलंबित</small></div></div>
+        <div class="receipt-head"><img src="assets/sansthan-logo.png" alt="संस्थान लोगो"><div><strong>॥ श्री क्षेत्र रेणुका दरबार ॥</strong><span>सद्गुरू शक्तिपीठ काचमंदीर सोनई</span><b class="receipt-jay">॥ जय जगदंब ॥</b><small>देणगी पावती</small></div></div>
         <div id="receiptDetails"></div>
         <p class="prasad-message">आपल्या देणगीबद्दल मनःपूर्वक धन्यवाद. श्री क्षेत्र रेणुका दरबारचा प्रसाद आपण दिलेल्या पत्त्यावर घरपोच पाठविण्यात येईल.</p>
-        <p class="receipt-legal-note"><strong>कर सवलत सूचना:</strong> हा दस्तऐवज स्वतःहून आयकर कलम 80G अंतर्गत कर-सवलत प्रमाणपत्र नाही. लागू असल्यास अधिकृत कर-सवलत प्रमाणपत्र संस्थेच्या वैध नोंदणी व लागू आयकर प्रक्रियेनुसार स्वतंत्रपणे दिले जाईल.</p>
-        <button class="btn btn-maroon" type="button" id="printDonationReceipt">Acknowledgement प्रिंट / Save PDF</button>
+        <div id="receiptGenerationError" class="receipt-generation-error" role="status" aria-live="polite"></div>
+        <div class="receipt-download-actions">
+          <button class="btn btn-maroon" type="button" id="downloadReceiptPdf">PDF पावती डाउनलोड करा</button>
+          <button class="btn btn-outline" type="button" id="downloadReceiptImage">पावती फोटो डाउनलोड करा</button>
+        </div>
       </div>
     <div class="donation-legal-box">
         <h3>देणगी व गोपनीयता सूचना</h3>
@@ -1753,51 +1756,42 @@ html{scroll-behavior:smooth}
   const UPI_ID = "anjanijoshi0804@okhdfcbank";
   const PAYEE_NAME = "Shri Renuka Darbar";
 
-  function getQuery() {
+  function getQuery(includeAmount) {
     const amountInput = document.getElementById("donationAmount");
     const amount = amountInput && Number(amountInput.value) > 0
       ? Number(amountInput.value).toFixed(2) : "";
-
     const params = new URLSearchParams({
       pa: UPI_ID,
       pn: PAYEE_NAME,
       cu: "INR",
       tn: "Donation - Shri Renuka Darbar"
     });
-    if (amount) params.set("am", amount);
+    // Google Pay / PhonePe: do not force an app-specific package or pre-fill amount.
+    // This lets Android open the installed UPI app normally and avoids package-specific intent errors.
+    if (includeAmount && amount) params.set("am", amount);
     return params.toString();
   }
 
-  const android = /Android/i.test(navigator.userAgent);
-  const ios = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-  document.getElementById("googlePayBtn")?.addEventListener("click", function(e) {
+  function openUpiApp(e, type) {
     e.preventDefault();
     e.stopImmediatePropagation();
-    const q = getQuery();
-    if (android) {
-      location.href = "intent://pay?" + q +
-        "#Intent;scheme=upi;package=com.google.android.apps.nbu.paisa.user;end";
-    } else if (ios) {
-      location.href = "gpay://upi/pay?" + q;
-    } else {
-      alert("Google Pay मोबाइलवर उघडा. Desktop वर QR Scan & Pay वापरा.");
-    }
-  }, true);
+    const android = /Android/i.test(navigator.userAgent);
+    const ios = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const q = getQuery(false);
 
-  document.getElementById("phonePeBtn")?.addEventListener("click", function(e) {
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    const q = getQuery();
     if (android) {
-      location.href = "intent://pay?" + q +
-        "#Intent;scheme=upi;package=com.phonepe.app;end";
+      // Generic Android UPI intent: Android/installed UPI apps choose the handler.
+      window.location.href = "intent://pay?" + q + "#Intent;scheme=upi;end";
     } else if (ios) {
-      location.href = "phonepe://pay?" + q;
+      const scheme = type === "phonepe" ? "phonepe://pay?" : "gpay://upi/pay?";
+      window.location.href = scheme + q;
     } else {
-      alert("PhonePe मोबाइलवर उघडा. Desktop वर QR Scan & Pay वापरा.");
+      alert("Google Pay / PhonePe मोबाइलवर उघडा. Desktop वर QR Scan & Pay वापरा.");
     }
-  }, true);
+  }
+
+  document.getElementById("googlePayBtn")?.addEventListener("click", e => openUpiApp(e, "gpay"), true);
+  document.getElementById("phonePeBtn")?.addEventListener("click", e => openUpiApp(e, "phonepe"), true);
 })();
 </script>
 
