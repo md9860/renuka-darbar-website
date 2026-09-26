@@ -21,39 +21,23 @@ const closeLightbox=()=>{if(!lightbox)return;lightbox.classList.remove('open');l
 document.querySelectorAll('.gallery-item').forEach(item=>item.addEventListener('click',()=>{if(!lightbox||!lightboxImage||!lightboxCaption)return;lastGalleryTrigger=item;lightboxImage.src=item.dataset.gallerySrc||'';lightboxImage.alt=item.dataset.galleryAlt||'';lightboxCaption.textContent=item.dataset.galleryAlt||'';lightbox.classList.add('open');lightbox.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';lightboxClose?.focus();}));
 lightboxClose?.addEventListener('click',closeLightbox); lightbox?.addEventListener('click',e=>{if(e.target===lightbox)closeLightbox();}); document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lightbox?.classList.contains('open'))closeLightbox();});
 
-// Central temple records (Supabase). The public site can INSERT only; the private
-// admin page is the only place that can READ/UPDATE these records through RLS.
-let rdSupabase = null;
-try {
-  const cfg = window.RENUKA_SUPABASE_CONFIG || {};
-  if (window.supabase && cfg.url && cfg.anonKey) rdSupabase = window.supabase.createClient(cfg.url, cfg.anonKey);
-} catch (e) { console.warn('Supabase initialization skipped:', e); }
-
-async function rdSaveCentralRecord(record) {
-  if (!rdSupabase) return {ok:false, reason:'not-configured'};
-  const payload = {
-    registration_type: record.kind,
-    name: record.name,
-    mobile: record.mobile,
-    email: record.email || null,
-    address: record.address || null,
-    city: record.city || null,
-    pin: record.pin || null,
-    amount: Number(record.amount) || 0,
-    utr: record.utr,
-    receipt_no: record.receiptNo,
-    payment_method: record.payment || null,
-    service_type: record.service || null,
-    service_date: record.serviceDate || null,
-    gotra: record.gotra || null,
-    note: record.note || null
-  };
-  const {error} = await rdSupabase.from('renuka_registrations').insert(payload);
-  if (error) {
-    console.error('Central registration save failed:', error);
-    return {ok:false, reason:error.message || 'save-failed'};
+// Central temple records (Google Sheets via Apps Script).
+let rdSheetsConfig = window.RENUKA_SHEETS_CONFIG || {};
+async function rdSheetsRequest(body){
+  const url=String(rdSheetsConfig.webAppUrl||'').trim();
+  if(!url) return {ok:false,reason:'not-configured'};
+  try{
+    const response=await fetch(url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({...body,publicWriteToken:rdSheetsConfig.publicWriteToken||''})});
+    const data=await response.json();
+    if(!response.ok || data.ok===false) return {ok:false,reason:data.error||('HTTP '+response.status),duplicate:!!data.duplicate};
+    return data;
+  }catch(e){
+    console.error('Google Sheets request failed:',e);
+    return {ok:false,reason:e.message||'network-error'};
   }
-  return {ok:true};
+}
+async function rdSaveCentralRecord(record){
+  return rdSheetsRequest({action:'insert',record});
 }
 
 // Donation / UPI / receipt flow
@@ -284,7 +268,7 @@ async function createReceipt(){
     const files=await buildReceiptFiles();
     setReceiptDownload(pdfBtn,files.pdf,receiptFileName('pdf'));
     setReceiptDownload(imgBtn,files.png,receiptFileName('png'));
-    existing[utr]=donorData.receiptNo;localStorage.setItem('renukaDarbarReceiptUTRs_v2',JSON.stringify(existing));rdSaveDonationRecord(utr,method.value);
+    const saveResult=await rdSaveDonationRecord(utr,method.value);if(!saveResult.ok)throw new Error(saveResult.reason||'Google Sheet save failed');existing[utr]=donorData.receiptNo;localStorage.setItem('renukaDarbarReceiptUTRs_v2',JSON.stringify(existing));
     pdfBtn.textContent='PDF पावती डाउनलोड करा';imgBtn.textContent='पावती फोटो डाउनलोड करा';const generationMsg2=document.getElementById('receiptGenerationError');if(generationMsg2)generationMsg2.textContent='';
   }catch(err){
     console.error('Receipt generation failed:',err);
@@ -342,7 +326,7 @@ async function createServiceReceipt(){
   const details=document.getElementById('serviceReceiptDetails');if(details)details.innerHTML=`<div class="receipt-data receipt-reference-layout"><div class="receipt-row"><p><b>पावती क्र.:</b> ${esc(serviceData.receiptNo)}</p><p><b>दिनांक:</b> ${esc(date)}</p></div><div class="receipt-row"><p><b>सेवाग्राही:</b> ${esc(serviceData.name)}</p><p><b>मोबाईल:</b> ${esc(serviceData.mobile)}</p></div><div class="receipt-row"><p><b>ई-मेल:</b> ${esc(serviceData.email)}</p><p><b>पेमेंट:</b> ${esc(method.value)}</p></div><div class="receipt-row"><p><b>सेवा प्रकार:</b> ${esc(serviceData.service)}</p><p><b>सेवेची तारीख:</b> ${esc(serviceData.date)}</p></div><div class="receipt-row"><p><b>दक्षिणा:</b> ₹${esc(Number(serviceData.amount).toLocaleString('en-IN'))}</p><p><b>स्थिती:</b> पेमेंट पूर्ण झाले</p></div><p class="wide"><b>व्यवहार क्रमांक / UTR:</b> ${esc(utr)}</p><p class="wide"><b>गोत्र / संकल्प:</b> ${esc(serviceData.gotra)}</p><p class="wide"><b>विशेष माहिती:</b> ${esc(serviceData.note)}</p><p class="wide"><b>पत्ता:</b> ${esc(serviceData.address)}, ${esc(serviceData.city)} - ${esc(serviceData.pin)}</p></div>`;
   const receipt=document.getElementById('serviceReceipt');if(receipt)receipt.hidden=false;receipt?.scrollIntoView({behavior:'smooth',block:'start'});
   const pdfBtn=document.getElementById('downloadServiceReceiptPdf'),imgBtn=document.getElementById('downloadServiceReceiptImage'),msg=document.getElementById('serviceReceiptGenerationError');pdfBtn.disabled=true;imgBtn.disabled=true;pdfBtn.textContent='पावती तयार होत आहे…';imgBtn.textContent='पावती तयार होत आहे…';if(msg)msg.textContent='';
-  try{const files=await buildServiceReceiptFiles();setReceiptDownload(pdfBtn,files.pdf,serviceReceiptFileName('pdf'));setReceiptDownload(imgBtn,files.png,serviceReceiptFileName('png'));existing[utr]=serviceData.receiptNo;localStorage.setItem(key,JSON.stringify(existing));rdSaveServiceRecord(utr,method.value);pdfBtn.textContent='PDF पावती डाउनलोड करा';imgBtn.textContent='पावती फोटो डाउनलोड करा';}catch(err){console.error('Service receipt generation failed:',err);pdfBtn.disabled=false;imgBtn.disabled=false;pdfBtn.textContent='पावती तयार करा';imgBtn.textContent='पावती फोटो तयार करा';if(msg)msg.textContent='पावती तयार करण्यात अडचण आली. कृपया पुन्हा प्रयत्न करा.';}finally{serviceReceiptBusy=false;}
+  try{const files=await buildServiceReceiptFiles();setReceiptDownload(pdfBtn,files.pdf,serviceReceiptFileName('pdf'));setReceiptDownload(imgBtn,files.png,serviceReceiptFileName('png'));const saveResult=await rdSaveServiceRecord(utr,method.value);if(!saveResult.ok)throw new Error(saveResult.reason||'Google Sheet save failed');existing[utr]=serviceData.receiptNo;localStorage.setItem(key,JSON.stringify(existing));pdfBtn.textContent='PDF पावती डाउनलोड करा';imgBtn.textContent='पावती फोटो डाउनलोड करा';}catch(err){console.error('Service receipt generation failed:',err);pdfBtn.disabled=false;imgBtn.disabled=false;pdfBtn.textContent='पावती तयार करा';imgBtn.textContent='पावती फोटो तयार करा';if(msg)msg.textContent='पावती तयार करण्यात अडचण आली. कृपया पुन्हा प्रयत्न करा.';}finally{serviceReceiptBusy=false;}
 }
 document.getElementById('servicePaymentCompletedBtn')?.addEventListener('click',async()=>{if(!serviceData)return;const method=document.getElementById('servicePaymentMethod'),txn=document.getElementById('serviceTransactionId');if(!method.value){method.focus();return;}if(!txn.value.trim()){txn.focus();return;}const utr=txn.value.trim().replace(/\s+/g,'').toUpperCase();const key='renukaDarbarServiceUTRs_v1';const existing=JSON.parse(localStorage.getItem(key)||'{}');if(existing[utr]){alert(`हा Transaction ID / UTR आधीच सेवा नोंदणीसाठी वापरला आहे. संदर्भ: ${existing[utr]}`);return;}await createServiceReceipt();});
 
@@ -376,3 +360,38 @@ function rdSaveTracking(key,value){const rows=rdReadRecords();rows.forEach(r=>{c
 function rdExportCsv(){const rows=rdReadRecords(), groups=new Map();rows.forEach(r=>{const k=rdNorm(r.mobile)||rdNorm(r.email)||rdNorm(r.name);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(r);});const out=[['नाव','मोबाईल','ई-मेल','नोंद','रक्कम','UTR','पावती क्र.','पत्ता','शहर','PIN','प्रसाद स्थिती','Tracking No.']];groups.forEach(rs=>{const d=rs.find(r=>r.kind==='donation'),v=rs.find(r=>r.kind==='service'),b=v||d;out.push([b.name,b.mobile,b.email,[d?'देणगी':'',v?'पूजा / अभिषेक':''].filter(Boolean).join(' + '),rs.reduce((a,r)=>a+(Number(r.amount)||0),0),[d?.utr,v?.utr].filter(Boolean).join(' / '),[d?.receiptNo,v?.receiptNo].filter(Boolean).join(' / '),b.address,b.city,b.pin,rs.every(r=>r.prasadSent)?'पाठवला':'पाठवायचा आहे',rs.map(r=>r.trackingNo).filter(Boolean).join(' / ')]);});const csv='\\ufeff'+out.map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\\r\\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='renuka-darbar-prasad-list.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
 document.addEventListener('click',e=>{const t=e.target.closest('[data-prasad-key]');if(t)rdTogglePrasad(decodeURIComponent(t.dataset.prasadKey));const s=e.target.closest('[data-track-save]');if(s){const input=document.querySelector(`[data-track-key="${CSS.escape(s.dataset.trackSave)}"]`);rdSaveTracking(decodeURIComponent(s.dataset.trackSave),input?.value||'');}});
 document.getElementById('adminSearch')?.addEventListener('input',renderPrasadAdmin);document.getElementById('adminFilter')?.addEventListener('change',renderPrasadAdmin);document.getElementById('adminRefresh')?.addEventListener('click',renderPrasadAdmin);document.getElementById('adminExport')?.addEventListener('click',rdExportCsv);window.addEventListener('storage',renderPrasadAdmin);renderPrasadAdmin();
+
+
+// Gurumantra registration (no payment required). Gurumantra acknowledgement is generated on index.html.
+let guruAcknowledgementData=null;
+function guruAckFileName(){return `${String(guruAcknowledgementData?.receiptNo||'gurumantra-acknowledgement').replace(/[^a-zA-Z0-9_-]+/g,'-')}.pdf`;}
+async function renderGuruAcknowledgementCanvas(){
+  const d=guruAcknowledgementData;if(!d)throw new Error('Acknowledgement data is not available');
+  const W=1240,H=1754,canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)throw new Error('Canvas is not supported');
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.strokeStyle='#b8b8b8';ctx.lineWidth=2;ctx.strokeRect(8,8,W-16,H-16);
+  const logo=await loadReceiptLogo();ctx.textAlign='center';if(logo){const scale=Math.min(145/logo.naturalWidth,125/logo.naturalHeight),lw=logo.naturalWidth*scale,lh=logo.naturalHeight*scale;ctx.drawImage(logo,(W-lw)/2,30,lw,lh);}
+  ctx.fillStyle='#7b4a37';ctx.font='bold 20px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('प. पू. माता प्रेमानंदीनाथ महाराज पब्लिक चॅरिटेबल ट्रस्ट संचालित',W/2,182);
+  ctx.fillStyle='#68151b';ctx.font='bold 36px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ काचमंदीर सोनई',W/2,232);
+  ctx.fillStyle='#8a641f';ctx.font='bold 22px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('॥ गुरुमंत्र नोंदणी  ॥',W/2,278);
+  ctx.strokeStyle='#b98a42';ctx.beginPath();ctx.moveTo(42,300);ctx.lineTo(W-42,300);ctx.stroke();
+  const rows=[['नोंदणी क्र.',d.receiptNo],['नोंदणी दिनांक',d.createdLabel],['भक्ताचे पूर्ण नाव',d.name],['मोबाईल नंबर',d.mobile],['ई-मेल',d.email||'—'],['गुरुमंत्र घेतल्याची तारीख',d.guruDate],['गुरुमंत्र ठिकाण / कार्यक्रम',d.guruPlace||'—'],['पत्ता',[d.address,d.city,d.pin].filter(Boolean).join(', ')],['विशेष नोंद',d.note||'—']];
+  let y=365;ctx.textAlign='left';for(const [label,value] of rows){ctx.fillStyle='#2f2520';ctx.font='bold 21px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText(label,55,y);ctx.font='21px Noto Sans Devanagari, Noto Sans, Arial';drawWrapped(ctx,String(value),355,y,W-410,30,3);ctx.strokeStyle='#e0c99f';ctx.beginPath();ctx.moveTo(55,y+42);ctx.lineTo(W-55,y+42);ctx.stroke();y+=86;}
+  ctx.textAlign='center';ctx.fillStyle='#68151b';ctx.font='bold 23px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('आपली गुरुमंत्र नोंदणी यशस्वीरीत्या नोंदविण्यात आली आहे.',W/2,1240);
+  ctx.fillStyle='#51433c';ctx.font='20px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('ही संगणकीय पोचपावती आहे.',W/2,1285);return canvas;
+}
+async function downloadGuruAcknowledgement(){const btn=document.getElementById('downloadGuruAcknowledgement'),err=document.getElementById('guruAcknowledgementError');try{btn.disabled=true;btn.textContent='Acknowledgement तयार होत आहे…';if(err)err.textContent='';const canvas=await renderGuruAcknowledgementCanvas();const jpg=canvas.toDataURL('image/jpeg',0.94);const pdf=await makeSinglePagePdf(jpg);downloadBlob(pdf,guruAckFileName());}catch(e){console.error(e);if(err){err.style.display='block';err.textContent='Acknowledgement तयार करण्यात अडचण आली. कृपया पुन्हा प्रयत्न करा.';}}finally{btn.disabled=false;btn.textContent='Acknowledgement PDF डाउनलोड करा';}}
+document.getElementById('downloadGuruAcknowledgement')?.addEventListener('click',downloadGuruAcknowledgement);
+const gurumantraRegistrationForm=document.getElementById('gurumantraRegistrationForm');
+gurumantraRegistrationForm?.addEventListener('submit',async event=>{
+  event.preventDefault(); if(!gurumantraRegistrationForm.reportValidity())return;
+  const msg=document.getElementById('guruRegistrationMsg'),submit=gurumantraRegistrationForm.querySelector('button[type="submit"]');
+  const guruPlace='श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ काचमंदीर सोनई',guruNote=document.getElementById('guruNote').value.trim();
+  const record={kind:'gurumantra',name:document.getElementById('guruName').value.trim(),mobile:document.getElementById('guruMobile').value.trim(),email:document.getElementById('guruEmail').value.trim(),address:document.getElementById('guruAddress').value.trim(),city:document.getElementById('guruCity').value.trim(),pin:document.getElementById('guruPin').value.trim(),amount:0,utr:'',receiptNo:'GM/'+Date.now(),payment:'',service:'गुरुमंत्र नोंदणी',serviceDate:document.getElementById('guruDate').value,gotra:'',note:[guruPlace?('ठिकाण: '+guruPlace):'',guruNote].filter(Boolean).join(' | ')};
+  try{submit.disabled=true;submit.textContent='नोंदणी जतन होत आहे…';if(msg){msg.style.display='block';msg.textContent='नोंदणी जतन होत आहे…';msg.classList.remove('danger');}
+    const result=await rdSaveCentralRecord(record); if(!result.ok)throw new Error(result.reason||'Google Sheet save failed');
+    guruAcknowledgementData={...record,guruDate:record.serviceDate,guruPlace,note:guruNote,createdLabel:new Intl.DateTimeFormat('mr-IN',{dateStyle:'long',timeStyle:'short'}).format(new Date())};
+    const details=document.getElementById('guruAcknowledgementDetails');if(details)details.innerHTML=`<div class="receipt-data receipt-reference-layout"><div class="receipt-row"><p><b>नोंदणी क्र.:</b> ${esc(record.receiptNo)}</p><p><b>दिनांक:</b> ${esc(guruAcknowledgementData.createdLabel)}</p></div><div class="receipt-row"><p><b>भक्त:</b> ${esc(record.name)}</p><p><b>मोबाईल:</b> ${esc(record.mobile)}</p></div><p class="wide"><b>गुरुमंत्र तारीख:</b> ${esc(record.serviceDate)}</p><p class="wide"><b>ठिकाण / कार्यक्रम:</b> ${esc(guruPlace||'—')}</p><p class="wide"><b>पत्ता:</b> ${esc([record.address,record.city,record.pin].filter(Boolean).join(', '))}</p></div>`;
+    const ack=document.getElementById('guruAcknowledgement');if(ack){ack.hidden=false;ack.scrollIntoView({behavior:'smooth',block:'start'});}gurumantraRegistrationForm.reset();if(msg)msg.textContent='गुरुमंत्र नोंदणी यशस्वीरीत्या जतन झाली. खालील Acknowledgement डाउनलोड करा.';
+  }catch(err){console.error(err);if(msg){msg.style.display='block';msg.textContent='नोंदणी जतन झाली नाही. कृपया पुन्हा प्रयत्न करा.';msg.classList.add('danger');}}
+  finally{submit.disabled=false;submit.textContent='गुरुमंत्र नोंदणी जतन करा';}
+});

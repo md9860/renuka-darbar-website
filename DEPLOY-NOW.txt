@@ -1,0 +1,35 @@
+RENUKA DARBAR - FINAL GOOGLE SHEETS CONNECTION
+==============================================
+
+Website Web App URL is already configured in google-sheets-config.js.
+Admin username: admin
+Admin password: admin
+
+IMPORTANT: Your currently deployed Apps Script contains the earlier simple test code.
+For the website + Admin + Prasad Management to work, replace it with the FULL Code.gs included here:
+
+  google-apps-script/Code.gs
+
+Google Apps Script steps:
+1. Open the same Apps Script project connected to your Google Sheet.
+2. Open Code.gs, Select All, and delete the current code.
+3. Copy ALL code from google-apps-script/Code.gs in this website package and paste it into Code.gs.
+4. Save.
+5. Run the setup function once from the function dropdown, and authorize if Google asks.
+6. Deploy > Manage deployments.
+7. Edit the existing Web App deployment (pencil icon).
+8. Version: New version.
+9. Execute as: Me.
+10. Who has access: Anyone.
+11. Click Deploy.
+
+The Web App URL should remain the same. If Google gives you a different /exec URL,
+replace webAppUrl in google-sheets-config.js with that new URL.
+
+After deployment test:
+A. Open the website and complete one donation/service registration with a unique UTR.
+B. Confirm a row appears in the Registrations sheet.
+C. Open admin.html and log in with admin / admin.
+D. Confirm the record appears and Prasad/Tracking updates save back to the Sheet.
+
+Do not publish the Google Sheet itself. The website talks to it through Apps Script.

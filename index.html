@@ -1301,6 +1301,7 @@ html{scroll-behavior:smooth}
         <a href="#sahitya">साहित्य</a>
         <a href="#parampara">सद्गुरू परंपरा</a>
         <a href="#seva-info">पूजा व अभिषेक सेवा</a>
+        <a href="#gurumantra-nondani">गुरुमंत्र नोंदणी</a>
         <a href="#gallery">छायाचित्र संग्रह</a>
         <a href="#contact">संपर्क</a>
       </div>
@@ -1327,6 +1328,7 @@ html{scroll-behavior:smooth}
         <a href="#darshan"><span class="quick-icon">🛕</span><b>आजचे दर्शन</b><small>देवीचे नित्य दर्शन</small></a>
         <a href="#daily"><span class="quick-icon">🪔</span><b>दैनंदिन कार्यक्रम</b><small>काकड आरती ते शेज आरती</small></a>
         <a href="#events"><span class="quick-icon">📅</span><b>उत्सव व कार्यक्रम</b><small>विशेष धार्मिक पर्व</small></a>
+        <a href="#gurumantra-nondani"><span class="quick-icon">📿</span><b>गुरुमंत्र नोंदणी</b><small>भक्त नोंदणी करा</small></a>
         <a href="#seva"><span class="quick-icon">🙏</span><b>देणगी / सेवा</b><small>संस्थेसाठी आपले सहकार्य</small></a>
         <a href="#live"><span class="quick-icon live-dot">●</span><b>लाईव्ह दर्शन</b><small>ऑनलाईन दर्शन</small></a>
       </div>
@@ -1745,6 +1747,36 @@ html{scroll-behavior:smooth}
       <p class="gallery-note">छायाचित्रे फक्त मांडणीसाठी वापरली आहेत; मूळ प्रतिमा बदललेल्या नाहीत.</p>
     </section>
 
+    <section class="section-wrap reveal" id="gurumantra-nondani">
+      <div class="section-heading"><span>सद्गुरू कृपा</span><h2>॥ गुरुमंत्र नोंदणी ॥</h2><p>गुरुमंत्र घेतलेल्या भक्तांनी मंदिराच्या नोंदीसाठी खालील माहिती भरावी.</p></div>
+      <div class="service-registration-panel">
+        <form class="donation-form service-form" id="gurumantraRegistrationForm">
+          <div class="donation-fields">
+            <label>भक्ताचे पूर्ण नाव<input id="guruName" required autocomplete="name"></label>
+            <label>मोबाईल नंबर<input id="guruMobile" required inputmode="tel" autocomplete="tel"></label>
+            <label>ईमेल (ऐच्छिक)<input id="guruEmail" type="email" autocomplete="email"></label>
+            <label>गुरुमंत्र घेतल्याची तारीख<input id="guruDate" type="date" required></label>
+            <div class="full-field"><strong>गुरुमंत्र ठिकाण / कार्यक्रम</strong><p style="margin:8px 0 0;padding:12px 14px;border:1px solid #d7c2b7;border-radius:10px;background:#fff8ed;font-weight:700;color:#68151b">श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ काचमंदीर सोनई</p></div>
+            <label class="full-field">पूर्ण पत्ता<textarea id="guruAddress" rows="3" required autocomplete="street-address"></textarea></label>
+            <label>शहर<input id="guruCity" required autocomplete="address-level2"></label>
+            <label>पिन कोड<input id="guruPin" required inputmode="numeric" autocomplete="postal-code"></label>
+            <label class="full-field">विशेष नोंद (ऐच्छिक)<textarea id="guruNote" rows="3" placeholder="आवश्यक असल्यास अतिरिक्त माहिती लिहा"></textarea></label>
+            <label class="full-field donation-consent"><input id="guruConsent" type="checkbox" required><span>मी दिलेली माहिती गुरुमंत्र नोंदणी व मंदिराच्या अंतर्गत नोंदीसाठी वापरण्यास संमती देतो / देते.</span></label>
+          </div>
+          <button class="btn btn-gold" type="submit">गुरुमंत्र नोंदणी जतन करा</button>
+          <div class="msg" id="guruRegistrationMsg" style="margin-top:12px"></div>
+          <div id="guruAcknowledgement" class="receipt-box" hidden style="margin-top:18px">
+            <h3>॥ गुरुमंत्र नोंदणी  ॥</h3>
+            <div id="guruAcknowledgementDetails"></div>
+            <div class="receipt-actions" style="margin-top:12px">
+              <button class="btn btn-maroon" id="downloadGuruAcknowledgement" type="button">Acknowledgement PDF डाउनलोड करा</button>
+            </div>
+            <div class="msg danger" id="guruAcknowledgementError" style="margin-top:10px"></div>
+          </div>
+        </form>
+      </div>
+    </section>
+
     <section class="donation-panel reveal" id="seva">
       <div class="donation-heading">
         <span>सेवा • श्रद्धा • सहकार्य</span>
@@ -1871,8 +1903,7 @@ html{scroll-behavior:smooth}
 
 
   <button id="backToTop" class="back-to-top" aria-label="वर जा">↑</button>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase-config.js"></script>
+  <script src="google-sheets-config.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="script.js"></script>
 

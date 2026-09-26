@@ -14,26 +14,28 @@ body.admin-page{background:#f7efe3;color:#351a16}.admin-shell{max-width:1400px;m
 <div class="admin-shell">
   <div class="admin-card admin-head">
     <img src="assets/sansthan-logo.png" alt="श्री क्षेत्र रेणुका दरबार लोगो">
-    <div><h1>॥ श्री क्षेत्र रेणुका दरबार ॥</h1><p>Temple Associate — भक्त नोंदणी व प्रसाद व्यवस्थापन</p></div>
+    <div><p style="margin:0 0 4px;font-weight:700;color:#7b4a37">प. पू. माता प्रेमानंदीनाथ महाराज पब्लिक चॅरिटेबल ट्रस्ट संचालित</p><h1>श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ काचमंदीर सोनई</h1></div>
   </div>
 
-  <section id="loginCard" class="admin-card login-wrap">
-    <h2>मंदिर सहयोगी लॉगिन</h2>
-    <p>ही स्क्रीन फक्त अधिकृत मंदिर सहयोगींसाठी आहे.</p>
-    <label class="field"><span>ई-मेल</span><input id="loginEmail" type="email" autocomplete="username"></label>
-    <label class="field"><span>पासवर्ड</span><input id="loginPassword" type="password" autocomplete="current-password"></label>
-    <button class="btn btn-maroon" id="loginBtn" type="button">लॉगिन</button>
-    <div class="msg" id="loginMsg"></div>
+  <section id="loginCard" class="login-wrap">
+    <div class="admin-card">
+      <h2 style="text-align:center;margin-top:0">मंदिर Admin Login</h2>
+      <p style="text-align:center">Google Sheet मधील नोंदी पाहण्यासाठी Admin login आवश्यक आहे.</p>
+      <label class="field"><span>Username</span><input id="adminUsername" type="text" autocomplete="username" value="admin"></label>
+      <label class="field"><span>Password</span><input id="adminPassword" type="password" autocomplete="current-password" placeholder="Password"></label>
+      <button class="btn btn-maroon" id="loginBtn" type="button" style="width:100%;margin-top:8px">Login</button>
+      <div class="msg" id="loginMsg"></div>
+    </div>
   </section>
 
   <section id="adminCard" class="hidden">
     <div class="admin-card">
-      <div class="admin-actions" style="justify-content:space-between"><h2 style="margin:0">॥ प्रसाद व्यवस्थापन ॥</h2><button class="btn btn-outline" id="logoutBtn" type="button">लॉगआउट</button></div>
+      <div class="admin-actions" style="justify-content:space-between"><h2 style="margin:0">॥ आश्रम व्यवस्थापन ॥</h2><div><span class="tag">Admin</span> <button class="btn btn-outline" id="logoutBtn" type="button">Logout</button></div></div>
       <p>देणगी आणि पूजा / अभिषेक सेवांच्या नोंदी रोज तपासा. प्रसाद पाठवल्यानंतर स्थिती व Tracking No. जतन करा.</p>
       <div class="filters">
         <label>शोध<input id="adminSearch" type="search" placeholder="नाव / मोबाईल / UTR / पावती"></label>
         <label>दिनांक<input id="adminDate" type="date"></label>
-        <label>नोंद<select id="adminFilter"><option value="all">सर्व</option><option value="donation">फक्त देणगी</option><option value="service">फक्त पूजा / अभिषेक</option><option value="both">दोन्ही</option></select></label>
+        <label>नोंद<select id="adminFilter"><option value="all">सर्व</option><option value="donation">फक्त देणगी</option><option value="service">फक्त पूजा / अभिषेक</option><option value="both">दोन्ही</option><option value="gurumantra">गुरुमंत्र नोंदणी</option></select></label>
         <label>प्रसाद<select id="adminPrasadFilter"><option value="all">सर्व</option><option value="pending">पाठवायचा आहे</option><option value="sent">पाठवला</option></select></label>
         <button class="btn btn-maroon" id="refreshBtn" type="button">अद्ययावत</button>
         <button class="btn btn-outline" id="exportBtn" type="button">CSV डाउनलोड</button>
@@ -46,7 +48,6 @@ body.admin-page{background:#f7efe3;color:#351a16}.admin-shell{max-width:1400px;m
     </div>
   </section>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase-config.js"></script>
-<script src="admin.js"></script>
+<script src="google-sheets-config.js"></script>
+<script src="admin.js?v=20260926-loginfix"></script>
 </body></html>
