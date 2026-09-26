@@ -230,3 +230,17 @@ body.scrolled .nav{box-shadow:0 10px 28px rgba(35,0,2,.30)}
 .donation-receipt .receipt-data p{padding:11px 0!important;border-bottom:1px dotted #d8b982!important}
 .donation-receipt .receipt-note{grid-column:1/-1!important;line-height:1.55!important}
 @media(max-width:620px){.donation-receipt .receipt-head img{width:90px!important;height:90px!important;max-width:90px!important;max-height:90px!important}.donation-receipt .receipt-head strong{font-size:1.1rem!important}.donation-receipt .receipt-head span,.donation-receipt .receipt-head small,.donation-receipt .receipt-jay{font-size:.82rem!important}}
+
+/* Puja / Abhishek service registration */
+.service-registration-panel{margin-top:28px;padding:26px;background:linear-gradient(145deg,#fffdf7,#fff4d7);border:1px solid rgba(112,22,25,.16);border-radius:24px;box-shadow:0 12px 34px rgba(70,18,18,.08)}
+.service-registration-panel .service-form{margin-top:0}
+.service-payment-stage{margin-top:22px;padding:24px;background:#fffaf0;border:1px solid rgba(112,22,25,.14);border-radius:20px}
+.service-payment-stage .donation-grid{margin-top:18px}
+.service-confirmation{margin-top:18px;padding:18px 20px;border-radius:14px;background:#eef8ed;border:1px solid #9bc59a;color:#315b32;font-weight:800;line-height:1.7}
+@media(max-width:620px){.service-registration-panel{padding:16px;border-radius:18px}.service-payment-stage{padding:16px}.service-payment-stage .upi-actions .btn{width:100%;justify-content:center}}
+
+/* Puja / Abhishek service receipt */
+.service-receipt{margin-top:22px}
+.service-receipt .receipt-data{margin-top:18px}
+.service-receipt .service-receipt-note{grid-column:1/-1;line-height:1.55}
+.service-receipt .receipt-service-line{grid-column:1/-1}

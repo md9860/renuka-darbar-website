@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="mr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>श्री क्षेत्र रेणुका दरबार — Temple Associate</title>
+<link rel="stylesheet" href="style.css">
+<style>
+body.admin-page{background:#f7efe3;color:#351a16}.admin-shell{max-width:1400px;margin:0 auto;padding:24px}.admin-card{background:#fff;border:1px solid rgba(112,22,25,.15);border-radius:18px;padding:22px;box-shadow:0 12px 35px rgba(72,18,18,.08);margin-bottom:20px}.admin-head{display:flex;align-items:center;gap:16px;justify-content:center;text-align:center}.admin-head img{width:72px;height:72px;object-fit:contain}.admin-head h1{margin:0;color:#7a1f1f}.admin-head p{margin:5px 0 0}.login-wrap{max-width:460px;margin:8vh auto}.field{display:block;margin:12px 0}.field span{display:block;font-weight:700;margin-bottom:6px}.field input{width:100%;box-sizing:border-box;padding:12px;border:1px solid #d7c2b7;border-radius:10px;font-size:16px}.admin-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.admin-actions button{cursor:pointer}.filters{display:grid;grid-template-columns:1.3fr 180px 180px 180px auto auto;gap:10px;align-items:end}.filters label{font-weight:700}.filters input,.filters select{width:100%;box-sizing:border-box;padding:11px;border:1px solid #d7c2b7;border-radius:9px;background:#fff}.summary{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}.summary span{background:#fff4df;border:1px solid #ead4b9;padding:8px 12px;border-radius:20px;font-weight:700}.table-wrap{overflow:auto}.admin-table{width:100%;border-collapse:collapse;min-width:1100px}.admin-table th,.admin-table td{border-bottom:1px solid #eadfd7;padding:10px;text-align:left;vertical-align:top}.admin-table th{background:#7a1f1f;color:#fff}.tag{display:inline-block;padding:3px 7px;border-radius:12px;background:#f2dfc7;margin:2px;font-size:12px}.status-btn{border:0;border-radius:8px;padding:8px 10px;cursor:pointer;background:#efe4d6}.status-btn.sent{background:#dcefdc}.track{display:flex;gap:6px}.track input{width:150px;padding:8px;border:1px solid #d7c2b7;border-radius:7px}.msg{padding:10px;border-radius:9px;background:#fff4df;margin:10px 0;display:none}.danger{color:#9b1c1c}.hidden{display:none!important}@media(max-width:900px){.filters{grid-template-columns:1fr 1fr}.admin-shell{padding:12px}}
+</style>
+</head>
+<body class="admin-page">
+<div class="admin-shell">
+  <div class="admin-card admin-head">
+    <img src="assets/sansthan-logo.png" alt="श्री क्षेत्र रेणुका दरबार लोगो">
+    <div><h1>॥ श्री क्षेत्र रेणुका दरबार ॥</h1><p>Temple Associate — भक्त नोंदणी व प्रसाद व्यवस्थापन</p></div>
+  </div>
+
+  <section id="loginCard" class="admin-card login-wrap">
+    <h2>मंदिर सहयोगी लॉगिन</h2>
+    <p>ही स्क्रीन फक्त अधिकृत मंदिर सहयोगींसाठी आहे.</p>
+    <label class="field"><span>ई-मेल</span><input id="loginEmail" type="email" autocomplete="username"></label>
+    <label class="field"><span>पासवर्ड</span><input id="loginPassword" type="password" autocomplete="current-password"></label>
+    <button class="btn btn-maroon" id="loginBtn" type="button">लॉगिन</button>
+    <div class="msg" id="loginMsg"></div>
+  </section>
+
+  <section id="adminCard" class="hidden">
+    <div class="admin-card">
+      <div class="admin-actions" style="justify-content:space-between"><h2 style="margin:0">॥ प्रसाद व्यवस्थापन ॥</h2><button class="btn btn-outline" id="logoutBtn" type="button">लॉगआउट</button></div>
+      <p>देणगी आणि पूजा / अभिषेक सेवांच्या नोंदी रोज तपासा. प्रसाद पाठवल्यानंतर स्थिती व Tracking No. जतन करा.</p>
+      <div class="filters">
+        <label>शोध<input id="adminSearch" type="search" placeholder="नाव / मोबाईल / UTR / पावती"></label>
+        <label>दिनांक<input id="adminDate" type="date"></label>
+        <label>नोंद<select id="adminFilter"><option value="all">सर्व</option><option value="donation">फक्त देणगी</option><option value="service">फक्त पूजा / अभिषेक</option><option value="both">दोन्ही</option></select></label>
+        <label>प्रसाद<select id="adminPrasadFilter"><option value="all">सर्व</option><option value="pending">पाठवायचा आहे</option><option value="sent">पाठवला</option></select></label>
+        <button class="btn btn-maroon" id="refreshBtn" type="button">अद्ययावत</button>
+        <button class="btn btn-outline" id="exportBtn" type="button">CSV डाउनलोड</button>
+      </div>
+      <div class="summary" id="summary"></div>
+      <div class="msg" id="adminMsg"></div>
+    </div>
+    <div class="admin-card table-wrap">
+      <table class="admin-table"><thead><tr><th>नाव</th><th>मोबाईल</th><th>नोंद</th><th>रक्कम</th><th>पत्ता</th><th>व्यवहार / पावती</th><th>प्रसाद</th><th>Tracking</th></tr></thead><tbody id="rows"><tr><td colspan="8">लोड होत आहे…</td></tr></tbody></table>
+    </div>
+  </section>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<script src="admin.js"></script>
+</body></html>

@@ -1251,6 +1251,10 @@ html{scroll-behavior:smooth}
 }
 </style>
 
+
+<style>
+.prasad-management-section{margin-top:48px}.admin-toolbar{display:grid;grid-template-columns:1.6fr .9fr auto auto;gap:12px;align-items:center;margin:22px 0}.admin-toolbar input,.admin-toolbar select{width:100%;padding:13px 15px;border:1px solid rgba(112,22,25,.2);border-radius:12px;background:#fff}.admin-summary{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 18px}.admin-summary span{padding:9px 13px;border-radius:999px;background:#fff4dc;border:1px solid rgba(112,22,25,.12);font-weight:700}.admin-table-wrap{overflow:auto;background:#fff;border:1px solid rgba(112,22,25,.14);border-radius:16px}.admin-table{width:100%;border-collapse:collapse;min-width:1050px}.admin-table th,.admin-table td{padding:12px 10px;border-bottom:1px solid #eee;text-align:left;vertical-align:top}.admin-table th{background:#fff5df;color:#68151b;white-space:nowrap}.prasad-status{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:8px;border:1px solid rgba(112,22,25,.18);background:#fff}.prasad-status.sent{background:#edf8ef}.tracking-input{width:145px;padding:8px;border:1px solid #ccc;border-radius:7px}.prasad-actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.admin-note{margin-top:14px;font-size:13px;opacity:.8}@media(max-width:900px){.admin-toolbar{grid-template-columns:1fr 1fr}.admin-toolbar .btn{width:100%}}@media(max-width:560px){.admin-toolbar{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
   <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
@@ -1588,6 +1592,124 @@ html{scroll-behavior:smooth}
         <article><span class="service-icon">🪷</span><h3>श्री रेणुकामाता अभिषेक</h3><p>भगवती श्री रेणुका मातेच्या चरणी अभिषेक व पूजन सेवा.</p></article>
         <article class="service-featured"><span class="service-icon">🙏</span><h3>प. पू. स्वामी महाराज समाधी अभिषेक</h3><p>प. पू. स्वामी महाराजांच्या पवित्र समाधीस्थळी श्रद्धापूर्वक अभिषेक सेवा.</p></article>
       </div>
+
+      <div class="service-registration-panel" id="puja-nondani">
+        <div class="donation-form-title">
+          <span>पूजा • अभिषेक • नोंदणी</span>
+          <h3>॥ पूजा व अभिषेक सेवा नोंदणी ॥</h3>
+          <p>आपली सेवा नोंदणी करण्यासाठी खालील माहिती भरा. अभिषेक / पूजा दक्षिणा आपण स्वतःच्या श्रद्धेनुसार भरू शकता.</p>
+        </div>
+
+        <form class="donation-form service-form" id="serviceRegistrationForm">
+          <div class="donation-fields">
+            <label>सेवा प्रकार
+              <select id="serviceType" name="serviceType" required>
+                <option value="">सेवा निवडा</option>
+                <option>श्री रेणुकामाता अभिषेक</option>
+                <option>प. पू. स्वामी महाराज समाधी अभिषेक</option>
+                <option>पूजा सेवा</option>
+              </select>
+            </label>
+            <label>सेवेची तारीख
+              <input id="serviceDate" name="serviceDate" type="date" required>
+            </label>
+            <label>भक्ताचे पूर्ण नाव
+              <input id="serviceName" name="serviceName" required autocomplete="name">
+            </label>
+            <label>मोबाईल नंबर
+              <input id="serviceMobile" name="serviceMobile" required inputmode="tel" autocomplete="tel">
+            </label>
+            <label>ईमेल
+              <input id="serviceEmail" name="serviceEmail" type="email" autocomplete="email">
+            </label>
+            <label>गोत्र / संकल्प (ऐच्छिक)
+              <input id="serviceGotra" name="serviceGotra" placeholder="गोत्र किंवा संकल्प असल्यास लिहा">
+            </label>
+            <label class="full-field">पूजा / अभिषेकासाठी विशेष माहिती
+              <textarea id="serviceNote" name="serviceNote" rows="3" placeholder="उदा. वाढदिवस, विवाह, आरोग्य, कुटुंबासाठी संकल्प इ. (ऐच्छिक)"></textarea>
+            </label>
+            <label>अभिषेक / पूजा दक्षिणा (₹)
+              <input id="serviceDakshina" name="serviceDakshina" type="number" min="1" step="1" required inputmode="decimal" placeholder="रक्कम भरा">
+            </label>
+            <label class="full-field">पूर्ण पत्ता
+              <textarea id="serviceAddress" name="serviceAddress" rows="3" required autocomplete="street-address"></textarea>
+            </label>
+            <label>शहर
+              <input id="serviceCity" name="serviceCity" required autocomplete="address-level2">
+            </label>
+            <label>पिन कोड
+              <input id="servicePin" name="servicePin" required inputmode="numeric" autocomplete="postal-code">
+            </label>
+            <label class="full-field donation-consent">
+              <input id="serviceConsent" type="checkbox" required>
+              <span>मी दिलेली माहिती पूजा / अभिषेक सेवा नोंदणी, संपर्क, पेमेंट संदर्भ आणि सेवा व्यवस्थापनासाठी वापरण्यास संमती देतो / देते.</span>
+            </label>
+          </div>
+          <button class="btn btn-gold" type="submit">नोंदणी पुढे करा — पेमेंट करा</button>
+        </form>
+
+        <div class="service-payment-stage" id="servicePaymentStage" hidden>
+          <div class="donation-form-title">
+            <span>Step 2</span>
+            <h3>॥ पूजा व अभिषेक सेवा पेमेंट ॥</h3>
+            <p id="servicePaymentSummary"></p>
+          </div>
+          <div class="donation-grid">
+            <article class="donation-card">
+              <h3>📱 Google Pay / PhonePe / UPI</h3>
+              <p class="pay-label">UPI ID</p>
+              <div class="copy-row"><strong>anjanijoshi0804@okhdfcbank</strong><button type="button" class="copy-btn" data-copy="anjanijoshi0804@okhdfcbank">कॉपी</button></div>
+              <div class="upi-actions payment-brand-actions">
+                <a id="serviceUpiBtn" class="btn btn-maroon upi-pay" href="#">UPI ने Pay करा</a>
+                <a id="serviceGooglePayBtn" class="btn btn-outline upi-pay" href="#">Google Pay</a>
+                <a id="servicePhonePeBtn" class="btn btn-outline upi-pay" href="#">PhonePe</a>
+              </div>
+              <p class="donation-note">मोबाईलवर Google Pay, PhonePe किंवा इतर UPI अॅपमधून पेमेंट करा.</p>
+            </article>
+            <article class="donation-card qr-coming">
+              <h3>▦ UPI / QR</h3>
+              <div id="serviceDynamicUpiQr" class="dynamic-qr"><span>QR तयार होत आहे…</span></div>
+              <p id="serviceQrAmountText"></p>
+              <p class="donation-note">मोबाईलमधील कोणत्याही UPI अॅपने QR स्कॅन करून दक्षिणा भरा.</p>
+            </article>
+            <article class="donation-card">
+              <h3>🏦 Direct Bank Transfer</h3>
+              <dl class="bank-details">
+                <div><dt>Account Holder</dt><dd>श्री क्षेत्र रेणुका दरबार</dd></div>
+                <div><dt>Bank</dt><dd>Union Bank of India</dd></div>
+                <div><dt>Account No.</dt><dd><span>322402010031211</span> <button type="button" class="copy-btn" data-copy="322402010031211">कॉपी</button></dd></div>
+                <div><dt>IFSC</dt><dd><span>UBIN0532240</span> <button type="button" class="copy-btn" data-copy="UBIN0532240">कॉपी</button></dd></div>
+                <div><dt>Branch</dt><dd>शाखेचे नाव येथे अपडेट करा</dd></div>
+              </dl>
+            </article>
+          </div>
+          <div class="payment-complete-box">
+            <label>पेमेंट पद्धत
+              <select id="servicePaymentMethod" required>
+                <option value="">निवडा</option>
+                <option>UPI</option><option>Google Pay</option><option>PhonePe</option><option>Direct Bank Transfer</option>
+              </select>
+            </label>
+            <label>Transaction / UTR No.
+              <input id="serviceTransactionId" required placeholder="पेमेंटनंतर UTR / Transaction ID भरा">
+            </label>
+            <button class="btn btn-gold" type="button" id="servicePaymentCompletedBtn">पेमेंट पूर्ण झाले — नोंदणी पूर्ण करा</button>
+            <p class="manual-payment-warning">पेमेंट पूर्ण झाल्यानंतर Transaction / UTR No. येथे भरा. सेवा नोंदणीचा संदर्भ म्हणून हा क्रमांक जतन केला जाईल.</p>
+          </div>
+          <div class="service-confirmation" id="serviceConfirmation" hidden></div>
+
+          <div class="donation-receipt service-receipt" id="serviceReceipt" hidden>
+            <div class="receipt-head"><img src="assets/sansthan-logo.png" alt="संस्थान लोगो"><div><strong>॥ श्री क्षेत्र रेणुका दरबार ॥</strong><span>सद्गुरू शक्तिपीठ काचमंदीर सोनई</span><b class="receipt-jay">॥ जय जगदंब ॥</b><small>पूजा व अभिषेक सेवा पावती</small></div></div>
+            <div id="serviceReceiptDetails"></div>
+            <p class="prasad-message">आपल्या पूजा व अभिषेक सेवेबद्दल मनःपूर्वक धन्यवाद. श्री क्षेत्र रेणुका दरबारच्या सेवेत आपला सहभाग श्रद्धापूर्वक नोंदविण्यात आला आहे.</p>
+            <div id="serviceReceiptGenerationError" class="receipt-generation-error" role="status" aria-live="polite"></div>
+            <div class="receipt-download-actions">
+              <button class="btn btn-maroon" type="button" id="downloadServiceReceiptPdf">PDF पावती डाउनलोड करा</button>
+              <button class="btn btn-outline" type="button" id="downloadServiceReceiptImage">पावती फोटो डाउनलोड करा</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="events-section reveal" id="events">
@@ -1747,7 +1869,10 @@ html{scroll-behavior:smooth}
     </figure>
   </div>
 
+
   <button id="backToTop" class="back-to-top" aria-label="वर जा">↑</button>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="script.js"></script>
 

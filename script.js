@@ -21,6 +21,41 @@ const closeLightbox=()=>{if(!lightbox)return;lightbox.classList.remove('open');l
 document.querySelectorAll('.gallery-item').forEach(item=>item.addEventListener('click',()=>{if(!lightbox||!lightboxImage||!lightboxCaption)return;lastGalleryTrigger=item;lightboxImage.src=item.dataset.gallerySrc||'';lightboxImage.alt=item.dataset.galleryAlt||'';lightboxCaption.textContent=item.dataset.galleryAlt||'';lightbox.classList.add('open');lightbox.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';lightboxClose?.focus();}));
 lightboxClose?.addEventListener('click',closeLightbox); lightbox?.addEventListener('click',e=>{if(e.target===lightbox)closeLightbox();}); document.addEventListener('keydown',e=>{if(e.key==='Escape'&&lightbox?.classList.contains('open'))closeLightbox();});
 
+// Central temple records (Supabase). The public site can INSERT only; the private
+// admin page is the only place that can READ/UPDATE these records through RLS.
+let rdSupabase = null;
+try {
+  const cfg = window.RENUKA_SUPABASE_CONFIG || {};
+  if (window.supabase && cfg.url && cfg.anonKey) rdSupabase = window.supabase.createClient(cfg.url, cfg.anonKey);
+} catch (e) { console.warn('Supabase initialization skipped:', e); }
+
+async function rdSaveCentralRecord(record) {
+  if (!rdSupabase) return {ok:false, reason:'not-configured'};
+  const payload = {
+    registration_type: record.kind,
+    name: record.name,
+    mobile: record.mobile,
+    email: record.email || null,
+    address: record.address || null,
+    city: record.city || null,
+    pin: record.pin || null,
+    amount: Number(record.amount) || 0,
+    utr: record.utr,
+    receipt_no: record.receiptNo,
+    payment_method: record.payment || null,
+    service_type: record.service || null,
+    service_date: record.serviceDate || null,
+    gotra: record.gotra || null,
+    note: record.note || null
+  };
+  const {error} = await rdSupabase.from('renuka_registrations').insert(payload);
+  if (error) {
+    console.error('Central registration save failed:', error);
+    return {ok:false, reason:error.message || 'save-failed'};
+  }
+  return {ok:true};
+}
+
 // Donation / UPI / receipt flow
 const donationForm=document.getElementById('donationForm');
 const paymentStage=document.getElementById('paymentStage');
@@ -249,7 +284,7 @@ async function createReceipt(){
     const files=await buildReceiptFiles();
     setReceiptDownload(pdfBtn,files.pdf,receiptFileName('pdf'));
     setReceiptDownload(imgBtn,files.png,receiptFileName('png'));
-    existing[utr]=donorData.receiptNo;localStorage.setItem('renukaDarbarReceiptUTRs_v2',JSON.stringify(existing));
+    existing[utr]=donorData.receiptNo;localStorage.setItem('renukaDarbarReceiptUTRs_v2',JSON.stringify(existing));rdSaveDonationRecord(utr,method.value);
     pdfBtn.textContent='PDF पावती डाउनलोड करा';imgBtn.textContent='पावती फोटो डाउनलोड करा';const generationMsg2=document.getElementById('receiptGenerationError');if(generationMsg2)generationMsg2.textContent='';
   }catch(err){
     console.error('Receipt generation failed:',err);
@@ -260,3 +295,84 @@ async function createReceipt(){
   }finally{receiptBusy=false;}
 }
 document.getElementById('paymentCompletedBtn')?.addEventListener('click',createReceipt);
+
+
+// Puja / Abhishek service registration and payment flow
+const serviceRegistrationForm=document.getElementById('serviceRegistrationForm');
+const servicePaymentStage=document.getElementById('servicePaymentStage');
+const servicePaymentSummary=document.getElementById('servicePaymentSummary');
+const serviceQrBox=document.getElementById('serviceDynamicUpiQr');
+const serviceQrAmountText=document.getElementById('serviceQrAmountText');
+const serviceUpiBtn=document.getElementById('serviceUpiBtn');
+const serviceGooglePayBtn=document.getElementById('serviceGooglePayBtn');
+const servicePhonePeBtn=document.getElementById('servicePhonePeBtn');
+let serviceData=null;
+function buildServiceUpiUrl(amount){const params=new URLSearchParams({pa:UPI_ID,pn:UPI_NAME,cu:'INR',tn:'Puja / Abhishek Seva - Shri Renuka Darbar'});if(amount&&Number(amount)>0)params.set('am',Number(amount).toFixed(2));return `upi://pay?${params.toString()}`;}
+function prepareServicePayment(amount){const url=buildServiceUpiUrl(amount);[serviceUpiBtn,serviceGooglePayBtn,servicePhonePeBtn].forEach(link=>{if(link)link.href=url;});if(serviceQrBox){serviceQrBox.innerHTML='';if(window.QRCode){new QRCode(serviceQrBox,{text:url,width:190,height:190,correctLevel:QRCode.CorrectLevel.M});if(serviceQrAmountText)serviceQrAmountText.textContent=`₹${Number(amount).toLocaleString('en-IN')} दक्षिणेसाठी Scan & Pay`;}else serviceQrBox.innerHTML='<span>QR तयार करण्यासाठी इंटरनेट कनेक्शन आवश्यक आहे.</span>';}}
+serviceRegistrationForm?.addEventListener('submit',event=>{event.preventDefault();if(!serviceRegistrationForm.reportValidity())return;serviceData={service:document.getElementById('serviceType').value,date:document.getElementById('serviceDate').value,name:document.getElementById('serviceName').value.trim(),mobile:document.getElementById('serviceMobile').value.trim(),email:document.getElementById('serviceEmail').value.trim()||'—',gotra:document.getElementById('serviceGotra').value.trim()||'—',note:document.getElementById('serviceNote').value.trim()||'—',amount:document.getElementById('serviceDakshina').value,address:document.getElementById('serviceAddress').value.trim(),city:document.getElementById('serviceCity').value.trim(),pin:document.getElementById('servicePin').value.trim()};if(servicePaymentSummary)servicePaymentSummary.textContent=`${serviceData.name} • ${serviceData.service} • दक्षिणा ₹${Number(serviceData.amount).toLocaleString('en-IN')}`;prepareServicePayment(serviceData.amount);servicePaymentStage.hidden=false;document.getElementById('serviceConfirmation').hidden=true;servicePaymentStage.scrollIntoView({behavior:'smooth',block:'start'});});
+
+let serviceReceiptBusy=false;
+function nextServiceReceiptNumber(){const now=new Date(),fyStart=now.getMonth()>=3?now.getFullYear():now.getFullYear()-1,fyEnd=String(fyStart+1).slice(-2),key=`renukaServiceReceiptSeq-${fyStart}-${fyEnd}`;const seq=Number(localStorage.getItem(key)||'0')+1;localStorage.setItem(key,String(seq));return `SEVA/${fyStart}-${fyEnd}/${String(seq).padStart(6,'0')}`;}
+function serviceReceiptFileName(ext){return `${String(serviceData?.receiptNo||'renuka-darbar-seva-receipt').replace(/[^a-zA-Z0-9_-]+/g,'-')}.${ext}`;}
+function drawReceiptLabelValue(ctx,label,value,x,y,maxWidth){ctx.textAlign='left';ctx.fillStyle='#2f2520';ctx.font='bold 20px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText(label,x,y);ctx.font='20px Noto Sans Devanagari, Noto Sans, Arial';drawWrapped(ctx,String(value),x+120,y,maxWidth-120,27,2);}
+async function renderServiceReceiptCanvas(){
+  const W=1240,H=1754,canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)throw new Error('Canvas is not supported');
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.strokeStyle='#b8b8b8';ctx.lineWidth=2;ctx.strokeRect(8,8,W-16,H-16);
+  const logo=await loadReceiptLogo();ctx.textAlign='center';if(logo){const maxW=145,maxH=125,scale=Math.min(maxW/logo.naturalWidth,maxH/logo.naturalHeight),lw=logo.naturalWidth*scale,lh=logo.naturalHeight*scale;ctx.drawImage(logo,(W-lw)/2,30,lw,lh);}
+  ctx.fillStyle='#68151b';ctx.font='bold 34px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('॥ श्री क्षेत्र रेणुका दरबार ॥',W/2,188);
+  ctx.fillStyle='#3b332f';ctx.font='21px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('सद्गुरू शक्तिपीठ काचमंदीर सोनई',W/2,220);
+  ctx.fillStyle='#8a641f';ctx.font='bold 18px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('॥ जय जगदंब ॥',W/2,252);ctx.fillText('पूजा व अभिषेक सेवा पावती',W/2,280);
+  ctx.strokeStyle='#b98a42';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(42,292);ctx.lineTo(W-42,292);ctx.stroke();
+  const method=document.getElementById('servicePaymentMethod')?.value||'';const txn=document.getElementById('serviceTransactionId')?.value.trim()||'';const date=new Intl.DateTimeFormat('mr-IN',{dateStyle:'long',timeStyle:'short'}).format(new Date());
+  const leftX=42,rightX=625,colW=535,labelGap=145,rowH=64;let y=345;
+  const rows=[['पावती क्र.',serviceData.receiptNo,'दिनांक',date],['सेवाग्राही',serviceData.name,'मोबाईल',serviceData.mobile],['ई-मेल',serviceData.email,'पेमेंट',method],['सेवा प्रकार',serviceData.service,'सेवेची तारीख',serviceData.date],['दक्षिणा',`₹${Number(serviceData.amount).toLocaleString('en-IN')}`,'स्थिती','पेमेंट पूर्ण झाले']];
+  for(const [ll,lv,rl,rv] of rows){ctx.textAlign='left';ctx.fillStyle='#2f2520';ctx.font='bold 20px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText(ll,leftX,y);ctx.font='20px Noto Sans Devanagari, Noto Sans, Arial';drawWrapped(ctx,String(lv),leftX+labelGap,y,colW-labelGap,25,2);ctx.font='bold 20px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText(rl,rightX,y);ctx.font='20px Noto Sans Devanagari, Noto Sans, Arial';drawWrapped(ctx,String(rv),rightX+labelGap,y,colW-labelGap,25,2);ctx.strokeStyle='#d8b982';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(leftX,y+25);ctx.lineTo(leftX+colW-15,y+25);ctx.stroke();ctx.beginPath();ctx.moveTo(rightX,y+25);ctx.lineTo(rightX+colW-15,y+25);ctx.stroke();y+=rowH;}
+  ctx.textAlign='left';ctx.fillStyle='#2f2520';ctx.font='bold 20px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('व्यवहार क्रमांक / UTR:',42,y);ctx.font='20px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText(txn,225,y);ctx.strokeStyle='#d8b982';ctx.beginPath();ctx.moveTo(42,y+26);ctx.lineTo(W-42,y+26);ctx.stroke();y+=62;
+  drawReceiptLabelValue(ctx,'गोत्र / संकल्प:',serviceData.gotra,42,y,W-84);ctx.strokeStyle='#d8b982';ctx.beginPath();ctx.moveTo(42,y+48);ctx.lineTo(W-42,y+48);ctx.stroke();y+=72;
+  ctx.fillStyle='#2f2520';ctx.font='bold 20px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('विशेष माहिती:',42,y);ctx.font='20px Noto Sans Devanagari, Noto Sans, Arial';drawWrapped(ctx,serviceData.note,180,y,W-222,27,2);ctx.strokeStyle='#d8b982';ctx.beginPath();ctx.moveTo(42,y+52);ctx.lineTo(W-42,y+52);ctx.stroke();y+=75;
+  ctx.fillStyle='#2f2520';ctx.font='bold 20px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('पत्ता:',42,y);ctx.font='20px Noto Sans Devanagari, Noto Sans, Arial';drawWrapped(ctx,`${serviceData.address}, ${serviceData.city} - ${serviceData.pin}`,115,y,W-157,27,2);ctx.strokeStyle='#d8b982';ctx.beginPath();ctx.moveTo(42,y+52);ctx.lineTo(W-42,y+52);ctx.stroke();
+  y+=95;ctx.textAlign='center';ctx.fillStyle='#68151b';ctx.font='bold 24px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('आपल्या पूजा व अभिषेक सेवेबद्दल मनःपूर्वक धन्यवाद.',W/2,y);ctx.font='bold 22px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('श्री क्षेत्र रेणुका दरबारच्या सेवेत आपला सहभाग श्रद्धापूर्वक नोंदविण्यात आला आहे.',W/2,y+42);
+  ctx.textAlign='left';ctx.fillStyle='#3f3833';ctx.font='16px Noto Sans Devanagari, Noto Sans, Arial';const legal='सूचना: ही पावती भक्ताने दिलेल्या Transaction / UTR संदर्भावर आधारित आहे. सेवा नोंदणी व पेमेंट संदर्भासाठी हा दस्तऐवज जतन करून ठेवा.';drawWrapped(ctx,legal,42,H-100,W-84,24,4);return canvas;
+}
+async function buildServiceReceiptFiles(){const canvas=await renderServiceReceiptCanvas();const png=await canvasToBlob(canvas,'image/png');if(!png||!png.size)throw new Error('PNG export failed');const jpg=canvas.toDataURL('image/jpeg',0.92);const pdf=await makeSinglePagePdf(jpg);if(!pdf||!pdf.size)throw new Error('PDF export failed');return {png,pdf};}
+async function createServiceReceipt(){
+  if(!serviceData||serviceReceiptBusy)return;const method=document.getElementById('servicePaymentMethod'),txn=document.getElementById('serviceTransactionId');if(!method.value){method.focus();return;}if(!txn.value.trim()){txn.focus();return;}
+  const utr=txn.value.trim().replace(/\s+/g,'').toUpperCase();const key='renukaDarbarServiceUTRs_v1';const existing=JSON.parse(localStorage.getItem(key)||'{}');if(existing[utr]){alert(`हा Transaction ID / UTR आधीच सेवा पावतीसाठी वापरला आहे. संदर्भ: ${existing[utr]}`);return;}
+  serviceReceiptBusy=true;serviceData.receiptNo=nextServiceReceiptNumber();const date=new Intl.DateTimeFormat('mr-IN',{dateStyle:'long',timeStyle:'short'}).format(new Date());
+  const details=document.getElementById('serviceReceiptDetails');if(details)details.innerHTML=`<div class="receipt-data receipt-reference-layout"><div class="receipt-row"><p><b>पावती क्र.:</b> ${esc(serviceData.receiptNo)}</p><p><b>दिनांक:</b> ${esc(date)}</p></div><div class="receipt-row"><p><b>सेवाग्राही:</b> ${esc(serviceData.name)}</p><p><b>मोबाईल:</b> ${esc(serviceData.mobile)}</p></div><div class="receipt-row"><p><b>ई-मेल:</b> ${esc(serviceData.email)}</p><p><b>पेमेंट:</b> ${esc(method.value)}</p></div><div class="receipt-row"><p><b>सेवा प्रकार:</b> ${esc(serviceData.service)}</p><p><b>सेवेची तारीख:</b> ${esc(serviceData.date)}</p></div><div class="receipt-row"><p><b>दक्षिणा:</b> ₹${esc(Number(serviceData.amount).toLocaleString('en-IN'))}</p><p><b>स्थिती:</b> पेमेंट पूर्ण झाले</p></div><p class="wide"><b>व्यवहार क्रमांक / UTR:</b> ${esc(utr)}</p><p class="wide"><b>गोत्र / संकल्प:</b> ${esc(serviceData.gotra)}</p><p class="wide"><b>विशेष माहिती:</b> ${esc(serviceData.note)}</p><p class="wide"><b>पत्ता:</b> ${esc(serviceData.address)}, ${esc(serviceData.city)} - ${esc(serviceData.pin)}</p></div>`;
+  const receipt=document.getElementById('serviceReceipt');if(receipt)receipt.hidden=false;receipt?.scrollIntoView({behavior:'smooth',block:'start'});
+  const pdfBtn=document.getElementById('downloadServiceReceiptPdf'),imgBtn=document.getElementById('downloadServiceReceiptImage'),msg=document.getElementById('serviceReceiptGenerationError');pdfBtn.disabled=true;imgBtn.disabled=true;pdfBtn.textContent='पावती तयार होत आहे…';imgBtn.textContent='पावती तयार होत आहे…';if(msg)msg.textContent='';
+  try{const files=await buildServiceReceiptFiles();setReceiptDownload(pdfBtn,files.pdf,serviceReceiptFileName('pdf'));setReceiptDownload(imgBtn,files.png,serviceReceiptFileName('png'));existing[utr]=serviceData.receiptNo;localStorage.setItem(key,JSON.stringify(existing));rdSaveServiceRecord(utr,method.value);pdfBtn.textContent='PDF पावती डाउनलोड करा';imgBtn.textContent='पावती फोटो डाउनलोड करा';}catch(err){console.error('Service receipt generation failed:',err);pdfBtn.disabled=false;imgBtn.disabled=false;pdfBtn.textContent='पावती तयार करा';imgBtn.textContent='पावती फोटो तयार करा';if(msg)msg.textContent='पावती तयार करण्यात अडचण आली. कृपया पुन्हा प्रयत्न करा.';}finally{serviceReceiptBusy=false;}
+}
+document.getElementById('servicePaymentCompletedBtn')?.addEventListener('click',async()=>{if(!serviceData)return;const method=document.getElementById('servicePaymentMethod'),txn=document.getElementById('serviceTransactionId');if(!method.value){method.focus();return;}if(!txn.value.trim()){txn.focus();return;}const utr=txn.value.trim().replace(/\s+/g,'').toUpperCase();const key='renukaDarbarServiceUTRs_v1';const existing=JSON.parse(localStorage.getItem(key)||'{}');if(existing[utr]){alert(`हा Transaction ID / UTR आधीच सेवा नोंदणीसाठी वापरला आहे. संदर्भ: ${existing[utr]}`);return;}await createServiceReceipt();});
+
+
+
+// Prasad management: keep donation/service registrations together in this browser.
+const PRASAD_RECORDS_KEY='renukaDarbarPrasadRecords_v1';
+function rdNorm(v){return String(v||'').trim().replace(/\s+/g,'').toLowerCase();}
+function rdReadRecords(){try{return JSON.parse(localStorage.getItem(PRASAD_RECORDS_KEY)||'[]')}catch(e){return[]}}
+function rdWriteRecord(record){const rows=rdReadRecords();const id=record.kind+'|'+rdNorm(record.mobile)+'|'+rdNorm(record.utr)+'|'+rdNorm(record.receiptNo);const i=rows.findIndex(x=>x.id===id);if(i>=0)rows[i]={...rows[i],...record};else rows.push({id,...record,prasadSent:false,trackingNo:'',createdAt:new Date().toISOString()});localStorage.setItem(PRASAD_RECORDS_KEY,JSON.stringify(rows));if(typeof renderPrasadAdmin==='function')renderPrasadAdmin();}
+async function rdSaveDonationRecord(utr,method){const r={kind:'donation',name:donorData.name,mobile:donorData.mobile,email:donorData.email,address:donorData.address,city:donorData.city,pin:donorData.pin,amount:Number(donorData.amount)||0,utr,receiptNo:donorData.receiptNo,payment:method,service:'देणगी'};rdWriteRecord(r);return rdSaveCentralRecord(r);}
+async function rdSaveServiceRecord(utr,method){const r={kind:'service',name:serviceData.name,mobile:serviceData.mobile,email:serviceData.email,address:serviceData.address,city:serviceData.city,pin:serviceData.pin,amount:Number(serviceData.amount)||0,utr,receiptNo:serviceData.receiptNo,payment:method,service:serviceData.service,serviceDate:serviceData.date,gotra:serviceData.gotra,note:serviceData.note};rdWriteRecord(r);return rdSaveCentralRecord(r);}
+
+
+function renderPrasadAdmin(){
+  const body=document.getElementById('adminTableBody'), summary=document.getElementById('adminSummary');
+  if(!body)return;
+  const q=rdNorm(document.getElementById('adminSearch')?.value), filter=document.getElementById('adminFilter')?.value||'all';
+  const records=rdReadRecords();
+  const groups=new Map();
+  records.forEach(r=>{const key=rdNorm(r.mobile)||rdNorm(r.email)||rdNorm(r.name);if(!key)return;if(!groups.has(key))groups.set(key,[]);groups.get(key).push(r);});
+  let people=[...groups.values()].map(rows=>{const donation=rows.find(r=>r.kind==='donation'), service=rows.find(r=>r.kind==='service');const base=service||donation||rows[0];return {key:rdNorm(base.mobile)||rdNorm(base.email)||rdNorm(base.name),name:base.name,mobile:base.mobile,email:base.email,address:base.address,city:base.city,pin:base.pin,donation,service,amount:(donation?.amount||0)+(service?.amount||0),sent:rows.every(r=>r.prasadSent),tracking:rows.map(r=>r.trackingNo).filter(Boolean).join(', '),rows};});
+  const matches=(p)=>{if(q&&!([p.name,p.mobile,p.email,p.donation?.utr,p.service?.utr,p.donation?.receiptNo,p.service?.receiptNo,p.address,p.city,p.pin].join(' ').toLowerCase().includes(q)))return false;if(filter==='donation'&&(!p.donation||p.service))return false;if(filter==='service'&&(!p.service||p.donation))return false;if(filter==='both'&&(!p.donation||!p.service))return false;if(filter==='pending'&&p.sent)return false;if(filter==='sent'&&!p.sent)return false;return true;};
+  people=people.filter(matches);
+  summary.innerHTML=`<span>एकूण भक्त: ${people.length}</span><span>देणगी: ${people.filter(p=>p.donation).length}</span><span>पूजा / अभिषेक: ${people.filter(p=>p.service).length}</span><span>दोन्ही: ${people.filter(p=>p.donation&&p.service).length}</span><span>प्रसाद बाकी: ${people.filter(p=>!p.sent).length}</span>`;
+  if(!people.length){body.innerHTML='<tr><td colspan="7">नोंदी उपलब्ध नाहीत.</td></tr>';return;}
+  body.innerHTML=people.map(p=>{const tags=[p.donation?'देणगी':'',p.service?'पूजा / अभिषेक':''].filter(Boolean).map(x=>`<span>${x}</span>`).join(' ');const recs=[p.donation,p.service].filter(Boolean);const sent=p.sent;const track=p.tracking||'';return `<tr><td><strong>${esc(p.name||'—')}</strong><br><small>${esc(p.email||'')}</small></td><td>${esc(p.mobile||'—')}</td><td>${tags}<br><small>${recs.map(r=>esc(r.receiptNo||'')).join('<br>')}</small></td><td>₹${Number(p.amount||0).toLocaleString('en-IN')}</td><td>${esc([p.address,p.city,p.pin].filter(Boolean).join(', ')||'—')}</td><td><button type="button" class="prasad-status ${sent?'sent':''}" data-prasad-key="${encodeURIComponent(p.key)}">${sent?'☑ प्रसाद पाठवला':'☐ प्रसाद पाठवायचा आहे'}</button></td><td><div class="prasad-actions"><input class="tracking-input" data-track-key="${encodeURIComponent(p.key)}" value="${esc(track)}" placeholder="Tracking No."><button type="button" class="btn btn-outline" data-track-save="${encodeURIComponent(p.key)}">जतन</button></div></td></tr>`;}).join('');
+}
+function rdTogglePrasad(key){const rows=rdReadRecords();rows.forEach(r=>{const k=rdNorm(r.mobile)||rdNorm(r.email)||rdNorm(r.name);if(k===key)r.prasadSent=!r.prasadSent;});localStorage.setItem(PRASAD_RECORDS_KEY,JSON.stringify(rows));renderPrasadAdmin();}
+function rdSaveTracking(key,value){const rows=rdReadRecords();rows.forEach(r=>{const k=rdNorm(r.mobile)||rdNorm(r.email)||rdNorm(r.name);if(k===key)r.trackingNo=value.trim();});localStorage.setItem(PRASAD_RECORDS_KEY,JSON.stringify(rows));renderPrasadAdmin();}
+function rdExportCsv(){const rows=rdReadRecords(), groups=new Map();rows.forEach(r=>{const k=rdNorm(r.mobile)||rdNorm(r.email)||rdNorm(r.name);if(!groups.has(k))groups.set(k,[]);groups.get(k).push(r);});const out=[['नाव','मोबाईल','ई-मेल','नोंद','रक्कम','UTR','पावती क्र.','पत्ता','शहर','PIN','प्रसाद स्थिती','Tracking No.']];groups.forEach(rs=>{const d=rs.find(r=>r.kind==='donation'),v=rs.find(r=>r.kind==='service'),b=v||d;out.push([b.name,b.mobile,b.email,[d?'देणगी':'',v?'पूजा / अभिषेक':''].filter(Boolean).join(' + '),rs.reduce((a,r)=>a+(Number(r.amount)||0),0),[d?.utr,v?.utr].filter(Boolean).join(' / '),[d?.receiptNo,v?.receiptNo].filter(Boolean).join(' / '),b.address,b.city,b.pin,rs.every(r=>r.prasadSent)?'पाठवला':'पाठवायचा आहे',rs.map(r=>r.trackingNo).filter(Boolean).join(' / ')]);});const csv='\\ufeff'+out.map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\\r\\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='renuka-darbar-prasad-list.csv';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-prasad-key]');if(t)rdTogglePrasad(decodeURIComponent(t.dataset.prasadKey));const s=e.target.closest('[data-track-save]');if(s){const input=document.querySelector(`[data-track-key="${CSS.escape(s.dataset.trackSave)}"]`);rdSaveTracking(decodeURIComponent(s.dataset.trackSave),input?.value||'');}});
+document.getElementById('adminSearch')?.addEventListener('input',renderPrasadAdmin);document.getElementById('adminFilter')?.addEventListener('change',renderPrasadAdmin);document.getElementById('adminRefresh')?.addEventListener('click',renderPrasadAdmin);document.getElementById('adminExport')?.addEventListener('click',rdExportCsv);window.addEventListener('storage',renderPrasadAdmin);renderPrasadAdmin();
