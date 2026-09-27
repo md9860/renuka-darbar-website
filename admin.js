@@ -40,7 +40,14 @@
   }
   async function apiRead(){return request({action:'read',sessionToken}).then(d=>d.rows||[]);}
   async function apiUpdate(ids,changes){return request({action:'update',sessionToken,ids,changes});}
-  function dateOf(r){return String(r.created_at||'').slice(0,10)}
+  function dateOf(r){
+    const raw=String(r.created_at||'').trim();
+    const iso=raw.match(/^(\d{4})-(\d{2})-(\d{2})/); if(iso)return `${iso[1]}-${iso[2]}-${iso[3]}`;
+    const d=new Date(raw); if(!Number.isNaN(d.getTime()))return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Kolkata',year:'numeric',month:'2-digit',day:'2-digit'}).format(d);
+    const m=raw.match(/^(\d{1,2})[\/.-](\d{1,2})[\/.-](\d{4})/); if(m)return `${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`;
+    return '';
+  }
+  function displayDate(r){const d=dateOf(r);if(!d)return '—';const [y,m,day]=d.split('-');return `${day}/${m}/${y}`;}
   async function load(){
     try{show('नोंदी लोड होत आहेत…');all=await apiRead();hideMsg();render();}
     catch(e){if(/session/i.test(e.message)||/login/i.test(e.message)){sessionToken='';localStorage.removeItem('renukaAdminSession');setLoggedIn(false);show('सत्र समाप्त झाले. पुन्हा लॉगिन करा.',true);}else{show('नोंदी लोड करता आल्या नाहीत: '+e.message,true);render();}}
@@ -55,7 +62,7 @@
   function render(){
     const people=groupedPeople();
     $('summary').innerHTML=`<span>भक्त: ${people.length}</span><span>देणगी: ${people.filter(p=>p.donation).length}</span><span>पूजा / अभिषेक: ${people.filter(p=>p.service).length}</span><span>दोन्ही: ${people.filter(p=>p.donation&&p.service).length}</span><span>गुरुमंत्र: ${people.filter(p=>p.gurumantra).length}</span><span>प्रसाद बाकी: ${people.filter(p=>!p.sent).length}</span>`;
-    $('rows').innerHTML=people.length?people.map(p=>{const tags=[p.donation?'देणगी':'',p.service?'पूजा / अभिषेक':'',p.gurumantra?'गुरुमंत्र':''].filter(Boolean).map(x=>`<span class="tag">${x}</span>`).join(' ');const hasPrasad=!!(p.donation||p.service);const txn=p.rows.map(r=>r.registration_type==='gurumantra'?`<div><small>${esc(r.receipt_no||'')}</small><br><small><b>ठिकाण:</b> श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ काचमंदीर सोनई</small></div>`:`<div><b>${esc(r.utr||'')}</b><br><small>${esc(r.receipt_no||'')}</small></div>`).join('<hr>');const prasad=hasPrasad?`<button class="status-btn ${p.sent?'sent':''}" data-key="${esc(p.key)}">${p.sent?'☑ प्रसाद पाठवला':'☐ प्रसाद पाठवायचा आहे'}</button>`:'<span class="tag">लागू नाही</span>';const tracking=hasPrasad?`<div class="track"><input data-track="${esc(p.key)}" value="${esc(p.tracking)}" placeholder="Tracking No."><button class="btn btn-outline" data-save="${esc(p.key)}">जतन</button></div>`:'<span class="tag">लागू नाही</span>';return `<tr><td><strong>${esc(p.name)}</strong><br><small>${esc(p.email||'')}</small></td><td>${esc(p.mobile)}</td><td>${tags}</td><td>₹${p.amount.toLocaleString('en-IN')}</td><td>${esc([p.address,p.city,p.pin].filter(Boolean).join(', '))}</td><td>${txn}</td><td>${prasad}</td><td>${tracking}</td></tr>`}).join(''):'<tr><td colspan="8">या फिल्टरसाठी नोंद उपलब्ध नाही.</td></tr>';
+    $('rows').innerHTML=people.length?people.map(p=>{const tags=[p.donation?'देणगी':'',p.service?'पूजा / अभिषेक':'',p.gurumantra?'गुरुमंत्र':''].filter(Boolean).map(x=>`<span class="tag">${x}</span>`).join(' ');const hasPrasad=!!(p.donation||p.service);const txn=p.rows.map(r=>r.registration_type==='gurumantra'?`<div><small>${esc(r.receipt_no||'')}</small><br><small><b>गुरुमंत्र दिनांक:</b> ${esc(r.service_date||'—')}</small><br><small><b>ठिकाण:</b> श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ काचमंदीर सोनई</small></div>`:`<div><b>${esc(r.utr||'')}</b><br><small>${esc(r.receipt_no||'')}</small></div>`).join('<hr>');const prasad=hasPrasad?`<button class="status-btn ${p.sent?'sent':''}" data-key="${esc(p.key)}">${p.sent?'☑ प्रसाद पाठवला':'☐ प्रसाद पाठवायचा आहे'}</button>`:'<span class="tag">लागू नाही</span>';const tracking=hasPrasad?`<div class="track"><input data-track="${esc(p.key)}" value="${esc(p.tracking)}" placeholder="Tracking No."><button class="btn btn-outline" data-save="${esc(p.key)}">जतन</button></div>`:'<span class="tag">लागू नाही</span>';const dates=[...new Set(p.rows.map(displayDate).filter(x=>x&&x!=='—'))].join('<br>')||'—';const amount=(p.gurumantra&&!p.donation&&!p.service)?'—':`₹${p.amount.toLocaleString('en-IN')}`;return `<tr><td>${dates}</td><td><strong>${esc(p.name)}</strong><br><small>${esc(p.email||'')}</small></td><td>${esc(p.mobile)}</td><td>${tags}</td><td>${p.service?esc(p.service.service_type||'—'):'—'}</td><td>${amount}</td><td>${esc([p.address,p.city,p.pin].filter(Boolean).join(', '))}</td><td>${txn}</td><td>${prasad}</td><td>${tracking}</td></tr>`}).join(''):'<tr><td colspan="10">या फिल्टरसाठी नोंद उपलब्ध नाही.</td></tr>';
   }
   document.addEventListener('click',async e=>{
     const b=e.target.closest('[data-key]');

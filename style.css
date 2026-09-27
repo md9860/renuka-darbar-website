@@ -244,3 +244,24 @@ body.scrolled .nav{box-shadow:0 10px 28px rgba(35,0,2,.30)}
 .service-receipt .receipt-data{margin-top:18px}
 .service-receipt .service-receipt-note{grid-column:1/-1;line-height:1.55}
 .service-receipt .receipt-service-line{grid-column:1/-1}
+
+/* ===== 2026-09-27 Mobile receipt / acknowledgement polish ===== */
+@media (max-width:620px){
+  .donation-receipt,.service-receipt,.receipt-box{
+    width:100%!important;max-width:100%!important;box-sizing:border-box!important;
+    margin-left:0!important;margin-right:0!important;padding:16px 12px!important;
+    overflow:hidden!important;
+  }
+  .donation-receipt .receipt-head,.service-receipt .receipt-head{padding-bottom:14px!important;gap:5px!important}
+  .donation-receipt .receipt-head img,.service-receipt .receipt-head img{width:76px!important;height:76px!important;max-width:76px!important;max-height:76px!important}
+  .donation-receipt .receipt-head strong,.service-receipt .receipt-head strong{font-size:1rem!important;line-height:1.45!important;overflow-wrap:anywhere}
+  .donation-receipt .receipt-head span,.donation-receipt .receipt-head small,.donation-receipt .receipt-jay,
+  .service-receipt .receipt-head span,.service-receipt .receipt-head small,.service-receipt .receipt-jay{font-size:.78rem!important;line-height:1.45!important}
+  .receipt-data,.receipt-reference-layout{display:block!important;margin:12px 0!important}
+  .receipt-reference-layout .receipt-row{display:block!important}
+  .receipt-data p,.receipt-reference-layout p{display:block!important;width:100%!important;box-sizing:border-box!important;padding:9px 0!important;margin:0!important;font-size:.9rem!important;line-height:1.55!important;overflow-wrap:anywhere!important;word-break:break-word!important}
+  .prasad-message,.service-confirmation{padding:12px 10px!important;font-size:.88rem!important;line-height:1.6!important}
+  .receipt-download-actions,.receipt-actions{display:grid!important;grid-template-columns:1fr!important;gap:9px!important;width:100%!important}
+  .receipt-download-actions .btn,.receipt-actions .btn,.receipt-box .btn{width:100%!important;max-width:100%!important;box-sizing:border-box!important;white-space:normal!important;line-height:1.4!important;min-height:46px!important}
+  #guruAcknowledgement h3{text-align:center;font-size:1.05rem;line-height:1.45;margin:0 0 10px}
+}
