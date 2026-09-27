@@ -74,30 +74,29 @@ async function renderReceiptCanvas(){
   ctx.strokeStyle='#b8b8b8';ctx.lineWidth=2;ctx.strokeRect(8,8,W-16,H-16);
 
   const logo=await loadReceiptLogo();
-  ctx.textAlign='center';
+  // Receipt header: logo on the left, trust/temple name beside it (better on mobile PDF view).
+  const headerTextX=690;
   if(logo){
-    const maxW=145,maxH=125;
+    const maxW=155,maxH=135;
     const scale=Math.min(maxW/logo.naturalWidth,maxH/logo.naturalHeight);
     const lw=logo.naturalWidth*scale,lh=logo.naturalHeight*scale;
-    ctx.drawImage(logo,(W-lw)/2,30,lw,lh);
+    ctx.drawImage(logo,70,35,lw,lh);
   }
-
-  // Header: logo, trust name and temple name are deliberately centered as one block.
   ctx.textAlign='center';
   ctx.fillStyle='#7b4a37';
   ctx.font='bold 20px Noto Sans Devanagari, Noto Sans, Arial';
-  ctx.fillText('प. पू. माता प्रेमानंदीनाथ महाराज पब्लिक चॅरिटेबल ट्रस्ट संचालित',W/2,170);
+  ctx.fillText('प. पू. माता प्रेमानंदीनाथ महाराज पब्लिक चॅरिटेबल ट्रस्ट संचालित',headerTextX,82);
   ctx.fillStyle='#68151b';
   ctx.font='bold 34px Noto Sans Devanagari, Noto Sans, Arial';
-  ctx.fillText('श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ',W/2,210);
-  ctx.fillText('काचमंदीर सोनई',W/2,250);
+  ctx.fillText('श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ',headerTextX,126);
+  ctx.fillText('काचमंदीर सोनई',headerTextX,168);
   ctx.fillStyle='#8a641f';
   ctx.font='bold 18px Noto Sans Devanagari, Noto Sans, Arial';
-  ctx.fillText('॥ जय जगदंब ॥',W/2,280);
-  ctx.fillText('देणगी पावती',W/2,310);
+  ctx.fillText('॥ जय जगदंब ॥',W/2,238);
+  ctx.fillText('देणगी पावती',W/2,276);
   ctx.textAlign='left';
 
-  ctx.strokeStyle='#b98a42';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(42,322);ctx.lineTo(W-42,322);ctx.stroke();
+  ctx.strokeStyle='#b98a42';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(42,292);ctx.lineTo(W-42,292);ctx.stroke();
 
   const method=document.getElementById('paymentMethod')?.value||'';
   const txn=document.getElementById('transactionId')?.value.trim()||'';
@@ -303,11 +302,11 @@ function drawReceiptLabelValue(ctx,label,value,x,y,maxWidth){ctx.textAlign='left
 async function renderServiceReceiptCanvas(){
   const W=1240,H=1400,canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)throw new Error('Canvas is not supported');
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.strokeStyle='#b8b8b8';ctx.lineWidth=2;ctx.strokeRect(8,8,W-16,H-16);
-  const logo=await loadReceiptLogo();ctx.textAlign='center';if(logo){const maxW=145,maxH=125,scale=Math.min(maxW/logo.naturalWidth,maxH/logo.naturalHeight),lw=logo.naturalWidth*scale,lh=logo.naturalHeight*scale;ctx.drawImage(logo,(W-lw)/2,30,lw,lh);}
-  ctx.fillStyle='#7b4a37';ctx.font='bold 20px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('प. पू. माता प्रेमानंदीनाथ महाराज पब्लिक चॅरिटेबल ट्रस्ट संचालित',W/2,170);
-  ctx.fillStyle='#68151b';ctx.font='bold 34px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ',W/2,210);ctx.fillText('काचमंदीर सोनई',W/2,250);
-  ctx.fillStyle='#8a641f';ctx.font='bold 18px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('॥ जय जगदंब ॥',W/2,280);ctx.fillText('पूजा व अभिषेक सेवा पावती',W/2,310);
-  ctx.strokeStyle='#b98a42';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(42,322);ctx.lineTo(W-42,322);ctx.stroke();
+  const logo=await loadReceiptLogo();const headerTextX=690;ctx.textAlign='center';if(logo){const maxW=155,maxH=135,scale=Math.min(maxW/logo.naturalWidth,maxH/logo.naturalHeight),lw=logo.naturalWidth*scale,lh=logo.naturalHeight*scale;ctx.drawImage(logo,70,35,lw,lh);}
+  ctx.fillStyle='#7b4a37';ctx.font='bold 20px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('प. पू. माता प्रेमानंदीनाथ महाराज पब्लिक चॅरिटेबल ट्रस्ट संचालित',headerTextX,82);
+  ctx.fillStyle='#68151b';ctx.font='bold 34px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ',headerTextX,126);ctx.fillText('काचमंदीर सोनई',headerTextX,168);
+  ctx.fillStyle='#8a641f';ctx.font='bold 18px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('॥ जय जगदंब ॥',W/2,238);ctx.fillText('पूजा व अभिषेक सेवा पावती',W/2,276);
+  ctx.strokeStyle='#b98a42';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(42,292);ctx.lineTo(W-42,292);ctx.stroke();
   const method=document.getElementById('servicePaymentMethod')?.value||'';const txn=document.getElementById('serviceTransactionId')?.value.trim()||'';const date=new Intl.DateTimeFormat('mr-IN',{dateStyle:'long',timeStyle:'short'}).format(new Date());
   const leftX=42,rightX=625,colW=535,labelGap=145,rowH=64;let y=345;
   const rows=[['पावती क्र.',serviceData.receiptNo,'दिनांक',date],['सेवाग्राही',serviceData.name,'मोबाईल',serviceData.mobile],['ई-मेल',serviceData.email,'पेमेंट',method],['सेवा प्रकार',serviceData.service,'सेवेची तारीख',serviceData.date],['दक्षिणा',`₹${Number(serviceData.amount).toLocaleString('en-IN')}`,'स्थिती','पेमेंट पूर्ण झाले']];
@@ -370,11 +369,11 @@ async function renderGuruAcknowledgementCanvas(){
   const d=guruAcknowledgementData;if(!d)throw new Error('Acknowledgement data is not available');
   const W=1240,H=1400,canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)throw new Error('Canvas is not supported');
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.strokeStyle='#b8b8b8';ctx.lineWidth=2;ctx.strokeRect(8,8,W-16,H-16);
-  const logo=await loadReceiptLogo();ctx.textAlign='center';if(logo){const scale=Math.min(145/logo.naturalWidth,125/logo.naturalHeight),lw=logo.naturalWidth*scale,lh=logo.naturalHeight*scale;ctx.drawImage(logo,(W-lw)/2,30,lw,lh);}
-  ctx.fillStyle='#7b4a37';ctx.font='bold 20px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('प. पू. माता प्रेमानंदीनाथ महाराज पब्लिक चॅरिटेबल ट्रस्ट संचालित',W/2,182);
-  ctx.fillStyle='#68151b';ctx.font='bold 34px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ',W/2,226);ctx.fillText('काचमंदीर सोनई',W/2,266);
-  ctx.fillStyle='#8a641f';ctx.font='bold 22px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('॥ गुरुमंत्र नोंदणी ॥',W/2,306);
-  ctx.strokeStyle='#b98a42';ctx.beginPath();ctx.moveTo(42,326);ctx.lineTo(W-42,326);ctx.stroke();
+  const logo=await loadReceiptLogo();const headerTextX=690;ctx.textAlign='center';if(logo){const scale=Math.min(155/logo.naturalWidth,135/logo.naturalHeight),lw=logo.naturalWidth*scale,lh=logo.naturalHeight*scale;ctx.drawImage(logo,70,35,lw,lh);}
+  ctx.fillStyle='#7b4a37';ctx.font='bold 20px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('प. पू. माता प्रेमानंदीनाथ महाराज पब्लिक चॅरिटेबल ट्रस्ट संचालित',headerTextX,82);
+  ctx.fillStyle='#68151b';ctx.font='bold 34px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ',headerTextX,126);ctx.fillText('काचमंदीर सोनई',headerTextX,168);
+  ctx.fillStyle='#8a641f';ctx.font='bold 22px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('॥ गुरुमंत्र नोंदणी ॥',W/2,276);
+  ctx.strokeStyle='#b98a42';ctx.beginPath();ctx.moveTo(42,296);ctx.lineTo(W-42,296);ctx.stroke();
   const rows=[['नोंदणी क्र.',d.receiptNo],['नोंदणी दिनांक',d.createdLabel],['भक्ताचे पूर्ण नाव',d.name],['मोबाईल नंबर',d.mobile],['ई-मेल',d.email||'—'],['गुरुमंत्र घेतल्याची तारीख',d.guruDate],['गुरुमंत्र ठिकाण / कार्यक्रम',d.guruPlace||'—'],['पत्ता',[d.address,d.city,d.pin].filter(Boolean).join(', ')],['विशेष नोंद',d.note||'—']];
   let y=385;ctx.textAlign='left';for(const [label,value] of rows){ctx.fillStyle='#2f2520';ctx.font='bold 21px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText(label,55,y);ctx.font='21px Noto Sans Devanagari, Noto Sans, Arial';drawWrapped(ctx,String(value),355,y,W-410,30,3);ctx.strokeStyle='#e0c99f';ctx.beginPath();ctx.moveTo(55,y+42);ctx.lineTo(W-55,y+42);ctx.stroke();y+=86;}
   ctx.textAlign='center';ctx.fillStyle='#68151b';ctx.font='bold 23px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('आपली गुरुमंत्र नोंदणी यशस्वीरीत्या नोंदविण्यात आली आहे.',W/2,1190);
