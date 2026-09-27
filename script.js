@@ -82,21 +82,22 @@ async function renderReceiptCanvas(){
     ctx.drawImage(logo,(W-lw)/2,30,lw,lh);
   }
 
-  // Header: logo and every title line centered, matching the requested Marathi receipt.
+  // Header: logo, trust name and temple name are deliberately centered as one block.
+  ctx.textAlign='center';
+  ctx.fillStyle='#7b4a37';
+  ctx.font='bold 20px Noto Sans Devanagari, Noto Sans, Arial';
+  ctx.fillText('प. पू. माता प्रेमानंदीनाथ महाराज पब्लिक चॅरिटेबल ट्रस्ट संचालित',W/2,170);
   ctx.fillStyle='#68151b';
   ctx.font='bold 34px Noto Sans Devanagari, Noto Sans, Arial';
-  ctx.fillText('॥ श्री क्षेत्र रेणुका दरबार ॥',W/2,188);
-  ctx.fillStyle='#3b332f';
-  ctx.font='21px Noto Sans Devanagari, Noto Sans, Arial';
-  ctx.fillText('सद्गुरू शक्तिपीठ काचमंदीर सोनई',W/2,220);
+  ctx.fillText('श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ',W/2,210);
+  ctx.fillText('काचमंदीर सोनई',W/2,250);
   ctx.fillStyle='#8a641f';
   ctx.font='bold 18px Noto Sans Devanagari, Noto Sans, Arial';
-  ctx.fillText('॥ जय जगदंब ॥',W/2,252);
-  ctx.font='bold 18px Noto Sans Devanagari, Noto Sans, Arial';
-  ctx.fillText('देणगी पावती',W/2,280);
+  ctx.fillText('॥ जय जगदंब ॥',W/2,280);
+  ctx.fillText('देणगी पावती',W/2,310);
   ctx.textAlign='left';
 
-  ctx.strokeStyle='#b98a42';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(42,292);ctx.lineTo(W-42,292);ctx.stroke();
+  ctx.strokeStyle='#b98a42';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(42,322);ctx.lineTo(W-42,322);ctx.stroke();
 
   const method=document.getElementById('paymentMethod')?.value||'';
   const txn=document.getElementById('transactionId')?.value.trim()||'';
@@ -106,7 +107,7 @@ async function renderReceiptCanvas(){
 
   // Two-column layout matching the reference print.
   const leftX=42,rightX=625,labelGap=145,colW=535,rowH=72;
-  let y=350;
+  let y=380;
   const rows=[
     ['पावती क्र.',receiptNo,'दिनांक',date],
     ['देणगीदार',donorData.name,'मोबाईल',donorData.mobile],
@@ -303,10 +304,10 @@ async function renderServiceReceiptCanvas(){
   const W=1240,H=1400,canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)throw new Error('Canvas is not supported');
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.strokeStyle='#b8b8b8';ctx.lineWidth=2;ctx.strokeRect(8,8,W-16,H-16);
   const logo=await loadReceiptLogo();ctx.textAlign='center';if(logo){const maxW=145,maxH=125,scale=Math.min(maxW/logo.naturalWidth,maxH/logo.naturalHeight),lw=logo.naturalWidth*scale,lh=logo.naturalHeight*scale;ctx.drawImage(logo,(W-lw)/2,30,lw,lh);}
-  ctx.fillStyle='#68151b';ctx.font='bold 34px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('॥ श्री क्षेत्र रेणुका दरबार ॥',W/2,188);
-  ctx.fillStyle='#3b332f';ctx.font='21px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('सद्गुरू शक्तिपीठ काचमंदीर सोनई',W/2,220);
-  ctx.fillStyle='#8a641f';ctx.font='bold 18px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('॥ जय जगदंब ॥',W/2,252);ctx.fillText('पूजा व अभिषेक सेवा पावती',W/2,280);
-  ctx.strokeStyle='#b98a42';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(42,292);ctx.lineTo(W-42,292);ctx.stroke();
+  ctx.fillStyle='#7b4a37';ctx.font='bold 20px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('प. पू. माता प्रेमानंदीनाथ महाराज पब्लिक चॅरिटेबल ट्रस्ट संचालित',W/2,170);
+  ctx.fillStyle='#68151b';ctx.font='bold 34px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ',W/2,210);ctx.fillText('काचमंदीर सोनई',W/2,250);
+  ctx.fillStyle='#8a641f';ctx.font='bold 18px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('॥ जय जगदंब ॥',W/2,280);ctx.fillText('पूजा व अभिषेक सेवा पावती',W/2,310);
+  ctx.strokeStyle='#b98a42';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(42,322);ctx.lineTo(W-42,322);ctx.stroke();
   const method=document.getElementById('servicePaymentMethod')?.value||'';const txn=document.getElementById('serviceTransactionId')?.value.trim()||'';const date=new Intl.DateTimeFormat('mr-IN',{dateStyle:'long',timeStyle:'short'}).format(new Date());
   const leftX=42,rightX=625,colW=535,labelGap=145,rowH=64;let y=345;
   const rows=[['पावती क्र.',serviceData.receiptNo,'दिनांक',date],['सेवाग्राही',serviceData.name,'मोबाईल',serviceData.mobile],['ई-मेल',serviceData.email,'पेमेंट',method],['सेवा प्रकार',serviceData.service,'सेवेची तारीख',serviceData.date],['दक्षिणा',`₹${Number(serviceData.amount).toLocaleString('en-IN')}`,'स्थिती','पेमेंट पूर्ण झाले']];
