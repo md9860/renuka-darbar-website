@@ -66,7 +66,7 @@ function drawWrapped(ctx,text,x,y,maxWidth,lineHeight,maxLines=4){const words=St
 function loadReceiptLogo(){return new Promise(resolve=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>resolve(null);img.src=RECEIPT_LOGO_DATA;});}
 async function renderReceiptCanvas(){
   // A4 portrait receipt matching the supplied printed-receipt reference.
-  const W=1240,H=1754,canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;
+  const W=1240,H=1400,canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;
   const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)throw new Error('Canvas is not supported');
   ctx.fillStyle='#ffffff';ctx.fillRect(0,0,W,H);
 
@@ -195,10 +195,10 @@ async function makeSinglePagePdf(dataUrl){
   const objects=[];
   objects.push(enc.encode('1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj\n'));
   objects.push(enc.encode('2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj\n'));
-  objects.push(enc.encode('3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /XObject << /Im0 5 0 R >> >> /Contents 4 0 R >>\nendobj\n'));
-  const content='q\n595.28 0 0 841.89 0 0 cm\n/Im0 Do\nQ\n';
+  objects.push(enc.encode('3 0 obj\n<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 672.10] /Resources << /XObject << /Im0 5 0 R >> >> /Contents 4 0 R >>\nendobj\n'));
+  const content='q\n595.28 0 0 672.10 0 0 cm\n/Im0 Do\nQ\n';
   objects.push(enc.encode(`4 0 obj\n<< /Length ${content.length} >>\nstream\n${content}endstream\nendobj\n`));
-  const imagePrefix=enc.encode(`5 0 obj\n<< /Type /XObject /Subtype /Image /Width 1240 /Height 1754 /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${imgLen} >>\nstream\n`);
+  const imagePrefix=enc.encode(`5 0 obj\n<< /Type /XObject /Subtype /Image /Width 1240 /Height 1400 /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${imgLen} >>\nstream\n`);
   const imageSuffix=enc.encode('\nendstream\nendobj\n');
   const chunks=[header];
   const offsets=[0];
@@ -300,7 +300,7 @@ function nextServiceReceiptNumber(){const now=new Date(),fyStart=now.getMonth()>
 function serviceReceiptFileName(ext){return `${String(serviceData?.receiptNo||'renuka-darbar-seva-receipt').replace(/[^a-zA-Z0-9_-]+/g,'-')}.${ext}`;}
 function drawReceiptLabelValue(ctx,label,value,x,y,maxWidth){ctx.textAlign='left';ctx.fillStyle='#2f2520';ctx.font='bold 20px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText(label,x,y);ctx.font='20px Noto Sans Devanagari, Noto Sans, Arial';drawWrapped(ctx,String(value),x+120,y,maxWidth-120,27,2);}
 async function renderServiceReceiptCanvas(){
-  const W=1240,H=1754,canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)throw new Error('Canvas is not supported');
+  const W=1240,H=1400,canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)throw new Error('Canvas is not supported');
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.strokeStyle='#b8b8b8';ctx.lineWidth=2;ctx.strokeRect(8,8,W-16,H-16);
   const logo=await loadReceiptLogo();ctx.textAlign='center';if(logo){const maxW=145,maxH=125,scale=Math.min(maxW/logo.naturalWidth,maxH/logo.naturalHeight),lw=logo.naturalWidth*scale,lh=logo.naturalHeight*scale;ctx.drawImage(logo,(W-lw)/2,30,lw,lh);}
   ctx.fillStyle='#68151b';ctx.font='bold 34px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('॥ श्री क्षेत्र रेणुका दरबार ॥',W/2,188);
@@ -367,17 +367,17 @@ let guruAcknowledgementData=null;
 function guruAckFileName(){return `${String(guruAcknowledgementData?.receiptNo||'gurumantra-acknowledgement').replace(/[^a-zA-Z0-9_-]+/g,'-')}.pdf`;}
 async function renderGuruAcknowledgementCanvas(){
   const d=guruAcknowledgementData;if(!d)throw new Error('Acknowledgement data is not available');
-  const W=1240,H=1754,canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)throw new Error('Canvas is not supported');
+  const W=1240,H=1400,canvas=document.createElement('canvas');canvas.width=W;canvas.height=H;const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)throw new Error('Canvas is not supported');
   ctx.fillStyle='#fff';ctx.fillRect(0,0,W,H);ctx.strokeStyle='#b8b8b8';ctx.lineWidth=2;ctx.strokeRect(8,8,W-16,H-16);
   const logo=await loadReceiptLogo();ctx.textAlign='center';if(logo){const scale=Math.min(145/logo.naturalWidth,125/logo.naturalHeight),lw=logo.naturalWidth*scale,lh=logo.naturalHeight*scale;ctx.drawImage(logo,(W-lw)/2,30,lw,lh);}
   ctx.fillStyle='#7b4a37';ctx.font='bold 20px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('प. पू. माता प्रेमानंदीनाथ महाराज पब्लिक चॅरिटेबल ट्रस्ट संचालित',W/2,182);
-  ctx.fillStyle='#68151b';ctx.font='bold 36px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ काचमंदीर सोनई',W/2,232);
-  ctx.fillStyle='#8a641f';ctx.font='bold 22px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('॥ गुरुमंत्र नोंदणी  ॥',W/2,278);
-  ctx.strokeStyle='#b98a42';ctx.beginPath();ctx.moveTo(42,300);ctx.lineTo(W-42,300);ctx.stroke();
+  ctx.fillStyle='#68151b';ctx.font='bold 34px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ',W/2,226);ctx.fillText('काचमंदीर सोनई',W/2,266);
+  ctx.fillStyle='#8a641f';ctx.font='bold 22px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('॥ गुरुमंत्र नोंदणी ॥',W/2,306);
+  ctx.strokeStyle='#b98a42';ctx.beginPath();ctx.moveTo(42,326);ctx.lineTo(W-42,326);ctx.stroke();
   const rows=[['नोंदणी क्र.',d.receiptNo],['नोंदणी दिनांक',d.createdLabel],['भक्ताचे पूर्ण नाव',d.name],['मोबाईल नंबर',d.mobile],['ई-मेल',d.email||'—'],['गुरुमंत्र घेतल्याची तारीख',d.guruDate],['गुरुमंत्र ठिकाण / कार्यक्रम',d.guruPlace||'—'],['पत्ता',[d.address,d.city,d.pin].filter(Boolean).join(', ')],['विशेष नोंद',d.note||'—']];
-  let y=365;ctx.textAlign='left';for(const [label,value] of rows){ctx.fillStyle='#2f2520';ctx.font='bold 21px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText(label,55,y);ctx.font='21px Noto Sans Devanagari, Noto Sans, Arial';drawWrapped(ctx,String(value),355,y,W-410,30,3);ctx.strokeStyle='#e0c99f';ctx.beginPath();ctx.moveTo(55,y+42);ctx.lineTo(W-55,y+42);ctx.stroke();y+=86;}
-  ctx.textAlign='center';ctx.fillStyle='#68151b';ctx.font='bold 23px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('आपली गुरुमंत्र नोंदणी यशस्वीरीत्या नोंदविण्यात आली आहे.',W/2,1240);
-  ctx.fillStyle='#51433c';ctx.font='20px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('ही संगणकीय पोचपावती आहे.',W/2,1285);return canvas;
+  let y=385;ctx.textAlign='left';for(const [label,value] of rows){ctx.fillStyle='#2f2520';ctx.font='bold 21px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText(label,55,y);ctx.font='21px Noto Sans Devanagari, Noto Sans, Arial';drawWrapped(ctx,String(value),355,y,W-410,30,3);ctx.strokeStyle='#e0c99f';ctx.beginPath();ctx.moveTo(55,y+42);ctx.lineTo(W-55,y+42);ctx.stroke();y+=86;}
+  ctx.textAlign='center';ctx.fillStyle='#68151b';ctx.font='bold 23px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('आपली गुरुमंत्र नोंदणी यशस्वीरीत्या नोंदविण्यात आली आहे.',W/2,1190);
+  ctx.fillStyle='#51433c';ctx.font='20px Noto Sans Devanagari, Noto Sans, Arial';ctx.fillText('ही संगणकीय पोचपावती आहे.',W/2,1235);return canvas;
 }
 async function downloadGuruAcknowledgement(){const btn=document.getElementById('downloadGuruAcknowledgement'),err=document.getElementById('guruAcknowledgementError');try{btn.disabled=true;btn.textContent='Acknowledgement तयार होत आहे…';if(err)err.textContent='';const canvas=await renderGuruAcknowledgementCanvas();const jpg=canvas.toDataURL('image/jpeg',0.94);const pdf=await makeSinglePagePdf(jpg);downloadBlob(pdf,guruAckFileName());}catch(e){console.error(e);if(err){err.style.display='block';err.textContent='Acknowledgement तयार करण्यात अडचण आली. कृपया पुन्हा प्रयत्न करा.';}}finally{btn.disabled=false;btn.textContent='Acknowledgement PDF डाउनलोड करा';}}
 document.getElementById('downloadGuruAcknowledgement')?.addEventListener('click',downloadGuruAcknowledgement);
