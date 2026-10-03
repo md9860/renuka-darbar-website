@@ -1396,6 +1396,64 @@ section[id], article[id]{scroll-margin-top:82px;}
 }
 </style>
 
+
+<style>
+/* ===== Event-wise Chhayachitra Gallery ===== */
+.eventwise-gallery{padding:64px 0;background:linear-gradient(180deg,#fffaf0,#fff7e8)}
+.eventwise-gallery .section-wrap{max-width:1320px;margin:auto;padding:0 22px}
+.gallery-section-title{text-align:center;margin:28px 0 24px}.gallery-section-title h2{margin:0;color:#68151b;font-size:clamp(26px,3vw,38px)}.gallery-section-title p{margin:8px auto 0;color:#765d4d;max-width:760px}.video-main-title{margin-top:58px}
+.event-gallery-block{margin:0 0 34px;padding:22px;border:1px solid rgba(104,21,27,.12);border-radius:24px;background:rgba(255,255,255,.78);box-shadow:0 12px 30px rgba(72,18,18,.08)}
+.event-gallery-head{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:16px}.event-gallery-head span{font-weight:800;color:#a56e18;font-size:13px;letter-spacing:.05em}.event-gallery-head h3{margin:3px 0 4px;color:#68151b;font-size:clamp(20px,2.2vw,29px)}.event-gallery-head p{margin:0;color:#796354}
+.event-slider-nav{display:flex;gap:8px;flex:none}.event-slider-nav button{width:42px;height:42px;border-radius:50%;border:1px solid #c79a3b;background:#fff;color:#68151b;font-size:28px;line-height:1;cursor:pointer;box-shadow:0 5px 14px rgba(72,18,18,.08)}
+.event-media-slider{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(230px,1fr);grid-template-rows:1fr;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:2px 2px 10px;scrollbar-width:thin}.event-media-card{scroll-snap-align:start;border:0;border-radius:17px;overflow:hidden;background:#f2e7d2;box-shadow:0 8px 18px rgba(45,25,15,.12);min-height:260px}.photo-card{padding:0;cursor:pointer}.photo-card img{width:100%;height:280px;display:block;object-fit:cover;transition:transform .3s ease}.photo-card:hover img{transform:scale(1.035)}
+.video-slider{grid-auto-columns:minmax(300px,420px)}.video-card{background:#2c1112;min-height:0}.video-card video{display:block;width:100%;aspect-ratio:9/16;max-height:520px;background:#000;object-fit:contain}.video-title{padding:14px 15px 16px;color:#fff7e8;font-weight:700;line-height:1.55;font-size:15px;background:linear-gradient(180deg,#54181b,#321011)}
+@media(max-width:760px){.eventwise-gallery{padding:42px 0}.eventwise-gallery .section-wrap{padding:0 12px}.event-gallery-block{padding:14px;border-radius:18px;margin-bottom:22px}.event-gallery-head{align-items:center}.event-gallery-head p{font-size:13px}.event-slider-nav button{width:38px;height:38px}.event-media-slider{grid-auto-columns:82%;gap:11px}.photo-card img{height:300px}.video-slider{grid-auto-columns:88%}.video-card video{max-height:480px}.gallery-section-title{margin-top:20px}.video-main-title{margin-top:42px}}
+</style>
+
+<style>
+/* ===== FINAL CHHAYACHITRE: one-photo / one-video slideshow ===== */
+.eventwise-gallery .gallery-section-title{text-align:center;margin-bottom:28px}
+.eventwise-gallery .gallery-section-title h2{color:#68151b;font-size:clamp(2rem,4vw,3rem);margin-bottom:8px}
+.event-gallery-block{max-width:1120px;margin:0 auto 42px;padding:22px 72px 26px;position:relative;background:linear-gradient(180deg,#fffaf3,#fff8ea);border:1px solid rgba(154,106,22,.24);border-radius:26px;box-shadow:0 18px 45px rgba(72,18,18,.10)}
+.event-gallery-head{justify-content:center;text-align:center;margin-bottom:18px}
+.event-gallery-head>div:first-child{width:100%}
+.event-gallery-head h3{font-size:clamp(1.35rem,2.4vw,2rem);color:#68151b;margin:4px 0 0}
+.event-gallery-head span{color:#9a6a16;font-weight:800}
+.event-slider-nav{position:absolute;inset:0;pointer-events:none}
+.event-slider-nav button{position:absolute;top:54%;transform:translateY(-50%);z-index:5;pointer-events:auto;width:50px;height:50px;border-radius:50%;border:0;background:#7b1d22;color:#ffd77b;font-size:34px;line-height:1;box-shadow:0 8px 20px rgba(72,18,18,.22)}
+.event-slider-nav .event-prev{left:10px}.event-slider-nav .event-next{right:10px}
+.event-media-slider{display:grid!important;grid-auto-flow:column!important;grid-auto-columns:100%!important;gap:0!important;overflow-x:auto!important;scroll-snap-type:x mandatory!important;scroll-behavior:smooth!important;padding:0!important;scrollbar-width:none!important;border-radius:20px;background:#1a0909}
+.event-media-slider::-webkit-scrollbar{display:none}
+.event-media-card{width:100%!important;min-width:100%!important;min-height:0!important;scroll-snap-align:center!important;scroll-snap-stop:always!important;border-radius:20px!important;background:#1a0909!important;box-shadow:none!important}
+.photo-card img{width:100%!important;height:min(68vh,680px)!important;object-fit:contain!important;background:#1a0909!important;transform:none!important}
+.video-card{display:flex!important;flex-direction:column!important;justify-content:center!important}
+.video-card video{width:100%!important;height:min(68vh,680px)!important;max-height:none!important;object-fit:contain!important;background:#000!important}
+.video-title{background:#fff8ea!important;color:#68151b!important;font-weight:800!important;text-align:center!important;padding:14px 18px!important;font-size:clamp(.95rem,1.5vw,1.12rem)!important}
+@media(max-width:760px){.event-gallery-block{padding:14px 48px 18px;margin-bottom:28px;border-radius:20px}.event-slider-nav button{width:40px;height:40px;font-size:28px}.event-slider-nav .event-prev{left:4px}.event-slider-nav .event-next{right:4px}.photo-card img,.video-card video{height:56vh!important;max-height:520px!important}.event-gallery-head h3{font-size:1.25rem}}
+</style>
+
+
+<style id="gallery-category-slideshow-css">
+.gallery-media-tabs{display:flex;justify-content:center;gap:12px;margin:22px 0 18px;flex-wrap:wrap}.gallery-main-tab,.gallery-category-btn{border:1px solid #b87824;background:#fffaf0;color:#68151b;border-radius:999px;padding:11px 20px;font-weight:800;cursor:pointer;transition:.2s}.gallery-main-tab{font-size:18px;min-width:135px}.gallery-main-tab.active,.gallery-category-btn.active{background:#8b241e;color:#fff;border-color:#8b241e;box-shadow:0 8px 18px rgba(104,21,27,.18)}.gallery-category-tabs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:0 auto 28px;max-width:1250px}.gallery-category-btn{font-size:14px;max-width:320px}.gallery-kind-panel{display:none}.gallery-kind-panel.active{display:block}.gallery-category-panel{display:none!important}.gallery-category-panel.active{display:block!important}.gallery-category-panel .event-media-slider{position:relative}.gallery-category-panel .event-media-card{scroll-snap-align:center}.gallery-category-panel .photo-card img{object-fit:contain!important;background:#1a0909}.gallery-category-panel .event-slider-nav{display:flex!important}.gallery-category-panel .video-card{min-height:0}.gallery-category-panel .video-card video{width:100%;height:min(68vh,650px);object-fit:contain;background:#120707}.gallery-category-panel .video-title{padding:14px 18px;background:#fffaf0;color:#68151b;font-weight:800;text-align:center;line-height:1.5}
+@media(max-width:760px){.gallery-main-tab{font-size:16px;min-width:120px}.gallery-category-btn{font-size:13px;padding:9px 14px}.gallery-category-tabs{gap:8px;margin-bottom:20px}.gallery-category-panel .video-card video{height:54vh}}
+</style>
+
+<style id="video-category-premium-ui">
+/* Compact premium video category menu */
+#gallery .video-category-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:1120px;margin:4px auto 30px}
+#gallery .video-category-tabs .gallery-category-btn{max-width:none;width:100%;min-height:58px;display:flex;align-items:center;justify-content:flex-start;gap:11px;padding:10px 14px;border-radius:16px;text-align:left;line-height:1.35;background:linear-gradient(145deg,#fffdf7,#fff6e7);border:1px solid rgba(173,112,27,.42);box-shadow:0 6px 16px rgba(83,35,16,.06);font-size:14px}
+#gallery .video-category-tabs .gallery-category-btn:hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(83,35,16,.11)}
+#gallery .video-category-tabs .gallery-category-btn.active{background:linear-gradient(135deg,#76191b,#9b2c23);color:#fff;border-color:#76191b;box-shadow:0 10px 24px rgba(104,21,27,.22)}
+#gallery .video-cat-no{display:inline-flex;align-items:center;justify-content:center;flex:0 0 34px;width:34px;height:34px;border-radius:50%;background:#f5dfae;color:#68151b;font-size:12px;font-weight:900}
+#gallery .video-category-tabs .gallery-category-btn.active .video-cat-no{background:#f7d98f;color:#68151b}
+#gallery .video-category-panel .event-gallery-head{text-align:center;justify-content:center}
+#gallery .video-category-panel .event-gallery-head>div{width:100%;text-align:center}
+#gallery .video-category-panel .event-gallery-head h3{font-size:clamp(22px,2vw,30px);color:#68151b;margin-top:5px}
+#gallery .video-category-panel .video-card{max-width:980px;margin:0 auto;border-radius:22px;overflow:hidden;box-shadow:0 16px 38px rgba(55,16,12,.16)}
+#gallery .video-category-panel .video-title{font-size:16px;padding:16px 20px}
+@media(max-width:900px){#gallery .video-category-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){#gallery .video-category-tabs{grid-template-columns:1fr;gap:9px}#gallery .video-category-tabs .gallery-category-btn{min-height:52px;padding:9px 12px;font-size:13px}#gallery .video-cat-no{flex-basis:30px;width:30px;height:30px}#gallery .video-category-panel .video-title{font-size:14px;padding:12px 14px}}
+</style>
 </head>
 <body>
 <div aria-hidden="true" class="scroll-progress"><span id="scrollProgress"></span></div>
@@ -1440,7 +1498,7 @@ section[id], article[id]{scroll-margin-top:82px;}
 <a href="#parampara">सद्गुरू परंपरा</a>
 <a href="#bhajananand-section">भजनानंद</a>
 <a href="#seva-info">पूजा व अभिषेक</a>
-<a href="#gallery">छायाचित्रे</a>
+<a href="#gallery">छायाचित्रे व व्हिडिओ</a>
 <a href="#gurumantra-nondani">गुरुमंत्र</a>
 <a href="#contact">संपर्क</a>
 </div>
@@ -1699,9 +1757,9 @@ section[id], article[id]{scroll-margin-top:82px;}
 <section class="section-wrap reveal" id="bhajananand-section">
       <div class="section-heading"><span>♫ भजनानंद</span><h2>॥ ऑडिओ अल्बम ॥</h2><p>भजन, आरत्या, स्तोत्रे आणि भक्तिगीते ऑनलाईन मोफत ऐका.</p><p><a class="btn btn-maroon" href="downloads/apps/renuka-darbar.apk" download>Android App डाउनलोड करा</a></p></div>
       <div class="audio-marathi-notice" role="note">
-        <strong>♪ ऐकणे व डाउनलोड ♪</strong>
+       <div><br><strong>♪<p style="text-align: center;"> ऐकणे व डाउनलोड ♪</strong><br/>
         <span>ऑनलाईन भजन व भक्तिगीते ऐकणे पूर्णपणे मोफत आहे.</span>
-        <span>संपूर्ण अल्बम डाउनलोड करायचा असल्यास कृपया निर्धारित शुल्क भरून डाउनलोड करा.</span>
+        <span>संपूर्ण अल्बम डाउनलोड करायचा असल्यास कृपया निर्धारित शुल्क भरून डाउनलोड करा.</span><p/><div/>
       </div>      
 	<div class="audio-album-grid playable-grid">
 	<article class="audio-album-card playable-album">
@@ -1713,7 +1771,7 @@ section[id], article[id]{scroll-margin-top:82px;}
 <article class="audio-album-card playable-album">
           <img class="album-cover" src="assets/album-covers/om-kar-mhanata-lagli-samadhi.jpg" alt="ॐकार म्हणता लागली समाधी  अल्बम मुखपृष्ठ" loading="lazy" decoding="async"><div class="album-icon">♫</div><h3>ॐकार म्हणता लागली समाधी </h3><p class="album-price">डाउनलोड ₹100</p>
           <button type="button" class="btn btn-outline album-play-all">▶ संपूर्ण अल्बम ऐका</button>
-          <div class="album-track-list"><div class="album-track"><span>1. Track 1</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/01-Track 1.mp3"></audio></div><div class="album-track"><span>2. Om Namo Om Namo Narayana Narayana</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/02-Om Namo Om Namo Narayana Narayana.mp3"></audio></div><div class="album-track"><span>3. Yogiraja yave ata</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/03-Yogiraja yave ata.mp3"></audio></div><div class="album-track"><span>4. Gururaya Swamiraya Padto Me Paya</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/04-Gururaya Swamiraya Padto Me Paya.mp3"></audio></div><div class="album-track"><span>5. Yogiraj Swami Mala Bhet Dyavi</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/05-Yogiraj Swami Mala Bhet Dyavi.mp3"></audio></div><div class="album-track"><span>6. Omkar Mhanata Lagli Samathi</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/06-Omkar Mhanata Lagli Samathi.mp3"></audio></div><div class="album-track"><span>7. Ye Mauliya Sadguruya HanstrithSwamiya</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/07-Ye Mauliya Sadguruya HanstrithSwamiya.mp3"></audio></div><div class="album-track"><span>8. Bhramharoop Dhyani YogirajSwami</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/08-Bhramharoop Dhyani YogirajSwami.mp3"></audio></div><div class="album-track"><span>9. Narayanroopi Narayan</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/09-Narayanroopi Narayan.mp3"></audio></div></div>
+          <div class="album-track-list"><div class="album-track"><span>1. Track 1</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/01-Track 1.mp3"></audio></div><div class="album-track"><span>2. Om Namo Om Namo Narayana Narayana</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/02-Om Namo Om Namo Narayana Narayana.mp3"></audio></div><div class="album-track"><span>3. Yogiraja yave ata</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/03-Yogiraja yave ata.mp3"></audio></div><div class="album-track"><span>4. Gururaya Swamiraya Padto Me Paya</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/04-Gururaya Swamiraya Padto Me Paya.mp3"></audio></div><div class="album-track"><span>5. Yogiraj Swami Mala Bhet Dyavi</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/05-Yogiraj Swami Mala Bhet Dyavi.mp3"></audio></div><div class="album-track"><span>6. Omkar Mhanata Lagli Samathi</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/06-Omkar Mhanata Lagli Samathi.mp3"></audio></div><div class="album-track"><span>7. Ye Mauliya सद्गुरू दर्शनya HanstrithSwamiya</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/07-Ye Mauliya सद्गुरू दर्शनya HanstrithSwamiya.mp3"></audio></div><div class="album-track"><span>8. Bhramharoop Dhyani YogirajSwami</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/08-Bhramharoop Dhyani YogirajSwami.mp3"></audio></div><div class="album-track"><span>9. Narayanroopi Narayan</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/09-Narayanroopi Narayan.mp3"></audio></div></div>
           <button type="button" class="btn btn-maroon album-buy" data-album="ॐकार म्हणता लागली समाधी" data-file="downloads/albums/Om-Kar-Mhanata-Lagli-Samadhi.zip">₹100 — अल्बम डाउनलोड करा</button>
         </article>
 <article class="audio-album-card playable-album">
@@ -1890,24 +1948,183 @@ section[id], article[id]{scroll-margin-top:82px;}
 <div><b>माघ शुक्ल सप्तमी</b><span>सद्गुरू सिद्धनाथ महाराज प्रगटदिन</span></div>
 </div>
 </section>
-<section class="gallery-showcase reveal" id="gallery">
-<div class="section-heading">
-<span>दर्शनाची झलक</span>
-<h2>॥ फोटो गॅलरी ॥</h2>
-<p>सध्या वेबसाइटमध्ये उपलब्ध असलेल्या मूळ छायाचित्रांची निवडक झलक. पुढे संस्थानची अधिकृत कार्यक्रम छायाचित्रे येथे जोडता येतील.</p>
-</div>
-<div class="gallery-mosaic">
-<button class="gallery-item gallery-wide" data-gallery-alt="श्री क्षेत्र रेणुका दरबार मंदिर" data-gallery-src="assets/temple.jpeg" type="button"><img alt="श्री क्षेत्र रेणुका दरबार मंदिर" decoding="async" loading="lazy" src="assets/temple.jpeg"/><span>मंदिर</span></button>
-<button class="gallery-item gallery-tall" data-gallery-alt="श्री रेणुका माता" data-gallery-src="assets/renuka-mata.jpeg" type="button"><img alt="श्री रेणुका माता" decoding="async" loading="lazy" src="assets/renuka-mata.jpeg"/><span>श्री रेणुका माता</span></button>
-<button class="gallery-item" data-gallery-alt="सद्गुरू सिद्धनाथ महाराज" data-gallery-src="assets/siddhanath.jpeg" type="button"><img alt="सद्गुरू सिद्धनाथ महाराज" decoding="async" loading="lazy" src="assets/siddhanath.jpeg"/><span>सिद्धनाथ महाराज</span></button>
-<button class="gallery-item" data-gallery-alt="प. पू. कृष्णानंद सरस्वती स्वामी महाराज" data-gallery-src="assets/krishnanand.jpeg" type="button"><img alt="प. पू. कृष्णानंद सरस्वती स्वामी महाराज" decoding="async" loading="lazy" src="assets/krishnanand.jpeg"/><span>कृष्णानंद स्वामी</span></button>
-<button class="gallery-item gallery-wide" data-gallery-alt="प. पू. योगीराज हंसतीर्थ स्वामी महाराज" data-gallery-src="assets/yogiraj.jpeg" type="button"><img alt="प. पू. योगीराज हंसतीर्थ स्वामी महाराज" decoding="async" loading="lazy" src="assets/yogiraj.jpeg"/><span>योगीराज हंसतीर्थ स्वामी</span></button>
-<button class="gallery-item" data-gallery-alt="प. पू. माता प्रेमानंदीनाथ महाराज" data-gallery-src="assets/premanandinath.jpeg" type="button"><img alt="प. पू. माता प्रेमानंदीनाथ महाराज" decoding="async" loading="lazy" src="assets/premanandinath.jpeg"/><span>माता प्रेमानंदीनाथ</span></button>
-<button class="gallery-item" data-gallery-alt="सद्गुरू नाना महाराज" data-gallery-src="assets/nana.jpeg" type="button"><img alt="सद्गुरू नाना महाराज" decoding="async" loading="lazy" src="assets/nana.jpeg"/><span>नाना महाराज</span></button>
-<button class="gallery-item" data-gallery-alt="सद्गुरू आप्पा महाराज" data-gallery-src="assets/appa.jpeg" type="button"><img alt="सद्गुरू आप्पा महाराज" decoding="async" loading="lazy" src="assets/appa.jpeg"/><span>आप्पा महाराज</span></button>
-</div>
-<p class="gallery-note">छायाचित्रे फक्त मांडणीसाठी वापरली आहेत; मूळ प्रतिमा बदललेल्या नाहीत.</p>
-</section>
+<section class="gallery-showcase eventwise-gallery reveal" id="gallery">
+<div class="section-wrap">
+<div class="section-heading"><span>📷 छायाचित्रे आणि व्हिडिओ</span><h2>॥ छायाचित्रे ॥</h2><p>विभाग निवडा. त्या विभागातील छायाचित्रे आपोआप स्लाइड होतील.</p></div>
+<div class="gallery-media-tabs"><button type="button" class="gallery-main-tab active" data-kind="photo">छायाचित्रे</button><button type="button" class="gallery-main-tab" data-kind="video">व्हिडिओ</button></div>
+<div class="gallery-kind-panel active" data-kind-panel="photo"><div class="gallery-category-tabs"><button type="button" class="gallery-category-btn active" data-target="photo-1">श्री गणेश पूजन</button><button type="button" class="gallery-category-btn" data-target="photo-2">योगपीठासन भगवती रेणुका माता</button><button type="button" class="gallery-category-btn" data-target="photo-3">सद्गुरू दर्शन</button><button type="button" class="gallery-category-btn" data-target="photo-4">समाधी दर्शन</button><button type="button" class="gallery-category-btn" data-target="photo-5">प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव</button><button type="button" class="gallery-category-btn" data-target="photo-6">श्री महालक्ष्मी माता शुभआगमन</button></div><section class="event-gallery-block gallery-category-panel photo-category-panel" data-category="photo-1" aria-labelledby="folder-gallery-1">
+<div class="event-gallery-head"><div><span>छायाचित्रे • 7</span><h3 id="folder-gallery-1">श्री गणेश पूजन</h3></div><div class="event-slider-nav"><button type="button" class="event-prev" aria-label="मागील">‹</button><button type="button" class="event-next" aria-label="पुढील">›</button></div></div>
+<div class="event-media-slider">
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p01-001.jpeg" data-gallery-alt="श्री गणेश पूजन - 1"><img src="assets/gallery/photos/p01-001.jpeg" loading="lazy" decoding="async" alt="श्री गणेश पूजन - 1"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p01-002.jpeg" data-gallery-alt="श्री गणेश पूजन - 2"><img src="assets/gallery/photos/p01-002.jpeg" loading="lazy" decoding="async" alt="श्री गणेश पूजन - 2"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p01-003.jpeg" data-gallery-alt="श्री गणेश पूजन - 3"><img src="assets/gallery/photos/p01-003.jpeg" loading="lazy" decoding="async" alt="श्री गणेश पूजन - 3"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p01-004.jpeg" data-gallery-alt="श्री गणेश पूजन - 4"><img src="assets/gallery/photos/p01-004.jpeg" loading="lazy" decoding="async" alt="श्री गणेश पूजन - 4"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p01-005.jpeg" data-gallery-alt="श्री गणेश पूजन - 5"><img src="assets/gallery/photos/p01-005.jpeg" loading="lazy" decoding="async" alt="श्री गणेश पूजन - 5"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p01-006.jpeg" data-gallery-alt="श्री गणेश पूजन - 6"><img src="assets/gallery/photos/p01-006.jpeg" loading="lazy" decoding="async" alt="श्री गणेश पूजन - 6"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p01-007.jpeg" data-gallery-alt="श्री गणेश पूजन - 7"><img src="assets/gallery/photos/p01-007.jpeg" loading="lazy" decoding="async" alt="श्री गणेश पूजन - 7"></button>
+</div></section>
+<section class="event-gallery-block gallery-category-panel photo-category-panel" data-category="photo-2" aria-labelledby="folder-gallery-2">
+<div class="event-gallery-head"><div><span>छायाचित्रे • 29</span><h3 id="folder-gallery-2">योगपीठासन भगवती रेणुका माता</h3></div><div class="event-slider-nav"><button type="button" class="event-prev" aria-label="मागील">‹</button><button type="button" class="event-next" aria-label="पुढील">›</button></div></div>
+<div class="event-media-slider">
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-001.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 1"><img src="assets/gallery/photos/p02-001.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 1"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-002.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 2"><img src="assets/gallery/photos/p02-002.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 2"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-003.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 3"><img src="assets/gallery/photos/p02-003.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 3"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-004.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 4"><img src="assets/gallery/photos/p02-004.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 4"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-005.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 5"><img src="assets/gallery/photos/p02-005.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 5"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-006.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 6"><img src="assets/gallery/photos/p02-006.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 6"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-007.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 7"><img src="assets/gallery/photos/p02-007.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 7"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-008.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 8"><img src="assets/gallery/photos/p02-008.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 8"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-009.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 9"><img src="assets/gallery/photos/p02-009.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 9"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-010.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 10"><img src="assets/gallery/photos/p02-010.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 10"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-011.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 11"><img src="assets/gallery/photos/p02-011.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 11"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-012.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 12"><img src="assets/gallery/photos/p02-012.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 12"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-013.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 13"><img src="assets/gallery/photos/p02-013.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 13"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-014.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 14"><img src="assets/gallery/photos/p02-014.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 14"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-015.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 15"><img src="assets/gallery/photos/p02-015.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 15"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-016.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 16"><img src="assets/gallery/photos/p02-016.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 16"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-017.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 17"><img src="assets/gallery/photos/p02-017.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 17"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-018.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 18"><img src="assets/gallery/photos/p02-018.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 18"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-019.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 19"><img src="assets/gallery/photos/p02-019.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 19"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-020.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 20"><img src="assets/gallery/photos/p02-020.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 20"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-021.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 21"><img src="assets/gallery/photos/p02-021.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 21"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-022.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 22"><img src="assets/gallery/photos/p02-022.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 22"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-023.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 23"><img src="assets/gallery/photos/p02-023.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 23"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-024.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 24"><img src="assets/gallery/photos/p02-024.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 24"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-025.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 25"><img src="assets/gallery/photos/p02-025.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 25"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-026.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 26"><img src="assets/gallery/photos/p02-026.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 26"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-027.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 27"><img src="assets/gallery/photos/p02-027.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 27"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-028.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 28"><img src="assets/gallery/photos/p02-028.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 28"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p02-029.jpeg" data-gallery-alt="योगपीठासन भगवती रेणुका माता - 29"><img src="assets/gallery/photos/p02-029.jpeg" loading="lazy" decoding="async" alt="योगपीठासन भगवती रेणुका माता - 29"></button>
+</div></section>
+<section class="event-gallery-block gallery-category-panel photo-category-panel" data-category="photo-3" aria-labelledby="folder-gallery-3">
+<div class="event-gallery-head"><div><span>छायाचित्रे • 7</span><h3 id="folder-gallery-3">सद्गुरू दर्शन</h3></div><div class="event-slider-nav"><button type="button" class="event-prev" aria-label="मागील">‹</button><button type="button" class="event-next" aria-label="पुढील">›</button></div></div>
+<div class="event-media-slider">
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p03-001.jpeg" data-gallery-alt="सद्गुरू दर्शन - 1"><img src="assets/gallery/photos/p03-001.jpeg" loading="lazy" decoding="async" alt="सद्गुरू दर्शन - 1"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p03-002.jpeg" data-gallery-alt="सद्गुरू दर्शन - 2"><img src="assets/gallery/photos/p03-002.jpeg" loading="lazy" decoding="async" alt="सद्गुरू दर्शन - 2"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p03-003.jpeg" data-gallery-alt="सद्गुरू दर्शन - 3"><img src="assets/gallery/photos/p03-003.jpeg" loading="lazy" decoding="async" alt="सद्गुरू दर्शन - 3"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p03-004.jpeg" data-gallery-alt="सद्गुरू दर्शन - 4"><img src="assets/gallery/photos/p03-004.jpeg" loading="lazy" decoding="async" alt="सद्गुरू दर्शन - 4"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p03-005.jpeg" data-gallery-alt="सद्गुरू दर्शन - 5"><img src="assets/gallery/photos/p03-005.jpeg" loading="lazy" decoding="async" alt="सद्गुरू दर्शन - 5"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p03-006.jpeg" data-gallery-alt="सद्गुरू दर्शन - 6"><img src="assets/gallery/photos/p03-006.jpeg" loading="lazy" decoding="async" alt="सद्गुरू दर्शन - 6"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p03-007.jpeg" data-gallery-alt="सद्गुरू दर्शन - 7"><img src="assets/gallery/photos/p03-007.jpeg" loading="lazy" decoding="async" alt="सद्गुरू दर्शन - 7"></button>
+</div></section>
+<section class="event-gallery-block gallery-category-panel photo-category-panel" data-category="photo-4" aria-labelledby="folder-gallery-4">
+<div class="event-gallery-head"><div><span>छायाचित्रे • 37</span><h3 id="folder-gallery-4">समाधी दर्शन</h3></div><div class="event-slider-nav"><button type="button" class="event-prev" aria-label="मागील">‹</button><button type="button" class="event-next" aria-label="पुढील">›</button></div></div>
+<div class="event-media-slider">
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-001.jpeg" data-gallery-alt="समाधी दर्शन - 1"><img src="assets/gallery/photos/p04-001.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 1"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-002.jpeg" data-gallery-alt="समाधी दर्शन - 2"><img src="assets/gallery/photos/p04-002.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 2"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-003.jpeg" data-gallery-alt="समाधी दर्शन - 3"><img src="assets/gallery/photos/p04-003.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 3"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-004.jpeg" data-gallery-alt="समाधी दर्शन - 4"><img src="assets/gallery/photos/p04-004.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 4"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-005.jpeg" data-gallery-alt="समाधी दर्शन - 5"><img src="assets/gallery/photos/p04-005.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 5"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-006.jpeg" data-gallery-alt="समाधी दर्शन - 6"><img src="assets/gallery/photos/p04-006.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 6"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-007.jpeg" data-gallery-alt="समाधी दर्शन - 7"><img src="assets/gallery/photos/p04-007.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 7"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-008.jpeg" data-gallery-alt="समाधी दर्शन - 8"><img src="assets/gallery/photos/p04-008.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 8"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-009.jpeg" data-gallery-alt="समाधी दर्शन - 9"><img src="assets/gallery/photos/p04-009.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 9"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-010.jpeg" data-gallery-alt="समाधी दर्शन - 10"><img src="assets/gallery/photos/p04-010.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 10"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-011.jpeg" data-gallery-alt="समाधी दर्शन - 11"><img src="assets/gallery/photos/p04-011.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 11"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-012.jpeg" data-gallery-alt="समाधी दर्शन - 12"><img src="assets/gallery/photos/p04-012.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 12"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-013.jpeg" data-gallery-alt="समाधी दर्शन - 13"><img src="assets/gallery/photos/p04-013.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 13"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-014.jpeg" data-gallery-alt="समाधी दर्शन - 14"><img src="assets/gallery/photos/p04-014.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 14"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-015.jpeg" data-gallery-alt="समाधी दर्शन - 15"><img src="assets/gallery/photos/p04-015.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 15"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-016.jpeg" data-gallery-alt="समाधी दर्शन - 16"><img src="assets/gallery/photos/p04-016.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 16"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-017.jpeg" data-gallery-alt="समाधी दर्शन - 17"><img src="assets/gallery/photos/p04-017.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 17"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-018.jpeg" data-gallery-alt="समाधी दर्शन - 18"><img src="assets/gallery/photos/p04-018.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 18"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-019.jpeg" data-gallery-alt="समाधी दर्शन - 19"><img src="assets/gallery/photos/p04-019.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 19"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-020.jpeg" data-gallery-alt="समाधी दर्शन - 20"><img src="assets/gallery/photos/p04-020.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 20"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-021.jpeg" data-gallery-alt="समाधी दर्शन - 21"><img src="assets/gallery/photos/p04-021.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 21"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-022.jpeg" data-gallery-alt="समाधी दर्शन - 22"><img src="assets/gallery/photos/p04-022.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 22"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-023.jpeg" data-gallery-alt="समाधी दर्शन - 23"><img src="assets/gallery/photos/p04-023.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 23"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-024.jpeg" data-gallery-alt="समाधी दर्शन - 24"><img src="assets/gallery/photos/p04-024.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 24"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-025.jpeg" data-gallery-alt="समाधी दर्शन - 25"><img src="assets/gallery/photos/p04-025.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 25"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-026.jpeg" data-gallery-alt="समाधी दर्शन - 26"><img src="assets/gallery/photos/p04-026.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 26"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-027.jpeg" data-gallery-alt="समाधी दर्शन - 27"><img src="assets/gallery/photos/p04-027.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 27"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-028.jpeg" data-gallery-alt="समाधी दर्शन - 28"><img src="assets/gallery/photos/p04-028.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 28"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-029.jpeg" data-gallery-alt="समाधी दर्शन - 29"><img src="assets/gallery/photos/p04-029.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 29"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-030.jpeg" data-gallery-alt="समाधी दर्शन - 30"><img src="assets/gallery/photos/p04-030.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 30"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-031.jpeg" data-gallery-alt="समाधी दर्शन - 31"><img src="assets/gallery/photos/p04-031.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 31"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-032.jpeg" data-gallery-alt="समाधी दर्शन - 32"><img src="assets/gallery/photos/p04-032.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 32"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-033.jpeg" data-gallery-alt="समाधी दर्शन - 33"><img src="assets/gallery/photos/p04-033.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 33"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-034.jpeg" data-gallery-alt="समाधी दर्शन - 34"><img src="assets/gallery/photos/p04-034.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 34"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-035.jpeg" data-gallery-alt="समाधी दर्शन - 35"><img src="assets/gallery/photos/p04-035.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 35"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-036.jpeg" data-gallery-alt="समाधी दर्शन - 36"><img src="assets/gallery/photos/p04-036.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 36"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p04-037.jpeg" data-gallery-alt="समाधी दर्शन - 37"><img src="assets/gallery/photos/p04-037.jpeg" loading="lazy" decoding="async" alt="समाधी दर्शन - 37"></button>
+</div></section>
+<section class="event-gallery-block gallery-category-panel photo-category-panel" data-category="photo-5" aria-labelledby="folder-gallery-5">
+<div class="event-gallery-head"><div><span>छायाचित्रे • 20</span><h3 id="folder-gallery-5">प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव</h3></div><div class="event-slider-nav"><button type="button" class="event-prev" aria-label="मागील">‹</button><button type="button" class="event-next" aria-label="पुढील">›</button></div></div>
+<div class="event-media-slider">
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p05-001.jpeg" data-gallery-alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 1"><img src="assets/gallery/photos/p05-001.jpeg" loading="lazy" decoding="async" alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 1"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p05-002.jpeg" data-gallery-alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 2"><img src="assets/gallery/photos/p05-002.jpeg" loading="lazy" decoding="async" alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 2"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p05-003.jpeg" data-gallery-alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 3"><img src="assets/gallery/photos/p05-003.jpeg" loading="lazy" decoding="async" alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 3"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p05-004.jpeg" data-gallery-alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 4"><img src="assets/gallery/photos/p05-004.jpeg" loading="lazy" decoding="async" alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 4"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p05-005.jpeg" data-gallery-alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 5"><img src="assets/gallery/photos/p05-005.jpeg" loading="lazy" decoding="async" alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 5"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p05-006.jpeg" data-gallery-alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 6"><img src="assets/gallery/photos/p05-006.jpeg" loading="lazy" decoding="async" alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 6"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p05-007.jpeg" data-gallery-alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 7"><img src="assets/gallery/photos/p05-007.jpeg" loading="lazy" decoding="async" alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 7"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p05-008.jpeg" data-gallery-alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 8"><img src="assets/gallery/photos/p05-008.jpeg" loading="lazy" decoding="async" alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 8"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p05-009.jpeg" data-gallery-alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 9"><img src="assets/gallery/photos/p05-009.jpeg" loading="lazy" decoding="async" alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 9"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p05-010.jpeg" data-gallery-alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 10"><img src="assets/gallery/photos/p05-010.jpeg" loading="lazy" decoding="async" alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 10"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p05-011.jpeg" data-gallery-alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 11"><img src="assets/gallery/photos/p05-011.jpeg" loading="lazy" decoding="async" alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 11"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p05-012.jpeg" data-gallery-alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 12"><img src="assets/gallery/photos/p05-012.jpeg" loading="lazy" decoding="async" alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 12"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p05-013.jpeg" data-gallery-alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 13"><img src="assets/gallery/photos/p05-013.jpeg" loading="lazy" decoding="async" alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 13"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p05-014.jpeg" data-gallery-alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 14"><img src="assets/gallery/photos/p05-014.jpeg" loading="lazy" decoding="async" alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 14"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p05-015.jpeg" data-gallery-alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 15"><img src="assets/gallery/photos/p05-015.jpeg" loading="lazy" decoding="async" alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 15"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p05-016.jpeg" data-gallery-alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 16"><img src="assets/gallery/photos/p05-016.jpeg" loading="lazy" decoding="async" alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 16"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p05-017.jpeg" data-gallery-alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 17"><img src="assets/gallery/photos/p05-017.jpeg" loading="lazy" decoding="async" alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 17"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p05-018.jpeg" data-gallery-alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 18"><img src="assets/gallery/photos/p05-018.jpeg" loading="lazy" decoding="async" alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 18"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p05-019.jpeg" data-gallery-alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 19"><img src="assets/gallery/photos/p05-019.jpeg" loading="lazy" decoding="async" alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 19"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p05-020.jpeg" data-gallery-alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 20"><img src="assets/gallery/photos/p05-020.jpeg" loading="lazy" decoding="async" alt="प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव - 20"></button>
+</div></section>
+<section class="event-gallery-block gallery-category-panel photo-category-panel" data-category="photo-6" aria-labelledby="folder-gallery-6">
+<div class="event-gallery-head"><div><span>छायाचित्रे • 11</span><h3 id="folder-gallery-6">श्री महालक्ष्मी माता शुभआगमन</h3></div><div class="event-slider-nav"><button type="button" class="event-prev" aria-label="मागील">‹</button><button type="button" class="event-next" aria-label="पुढील">›</button></div></div>
+<div class="event-media-slider">
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p06-001.jpeg" data-gallery-alt="श्री महालक्ष्मी माता शुभआगमन - 1"><img src="assets/gallery/photos/p06-001.jpeg" loading="lazy" decoding="async" alt="श्री महालक्ष्मी माता शुभआगमन - 1"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p06-002.jpeg" data-gallery-alt="श्री महालक्ष्मी माता शुभआगमन - 2"><img src="assets/gallery/photos/p06-002.jpeg" loading="lazy" decoding="async" alt="श्री महालक्ष्मी माता शुभआगमन - 2"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p06-003.jpeg" data-gallery-alt="श्री महालक्ष्मी माता शुभआगमन - 3"><img src="assets/gallery/photos/p06-003.jpeg" loading="lazy" decoding="async" alt="श्री महालक्ष्मी माता शुभआगमन - 3"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p06-004.jpeg" data-gallery-alt="श्री महालक्ष्मी माता शुभआगमन - 4"><img src="assets/gallery/photos/p06-004.jpeg" loading="lazy" decoding="async" alt="श्री महालक्ष्मी माता शुभआगमन - 4"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p06-005.jpeg" data-gallery-alt="श्री महालक्ष्मी माता शुभआगमन - 5"><img src="assets/gallery/photos/p06-005.jpeg" loading="lazy" decoding="async" alt="श्री महालक्ष्मी माता शुभआगमन - 5"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p06-006.jpeg" data-gallery-alt="श्री महालक्ष्मी माता शुभआगमन - 6"><img src="assets/gallery/photos/p06-006.jpeg" loading="lazy" decoding="async" alt="श्री महालक्ष्मी माता शुभआगमन - 6"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p06-007.jpeg" data-gallery-alt="श्री महालक्ष्मी माता शुभआगमन - 7"><img src="assets/gallery/photos/p06-007.jpeg" loading="lazy" decoding="async" alt="श्री महालक्ष्मी माता शुभआगमन - 7"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p06-008.jpeg" data-gallery-alt="श्री महालक्ष्मी माता शुभआगमन - 8"><img src="assets/gallery/photos/p06-008.jpeg" loading="lazy" decoding="async" alt="श्री महालक्ष्मी माता शुभआगमन - 8"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p06-009.jpeg" data-gallery-alt="श्री महालक्ष्मी माता शुभआगमन - 9"><img src="assets/gallery/photos/p06-009.jpeg" loading="lazy" decoding="async" alt="श्री महालक्ष्मी माता शुभआगमन - 9"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p06-010.jpeg" data-gallery-alt="श्री महालक्ष्मी माता शुभआगमन - 10"><img src="assets/gallery/photos/p06-010.jpeg" loading="lazy" decoding="async" alt="श्री महालक्ष्मी माता शुभआगमन - 10"></button>
+<button class="event-media-card photo-card" type="button" data-gallery-src="assets/gallery/photos/p06-011.jpeg" data-gallery-alt="श्री महालक्ष्मी माता शुभआगमन - 11"><img src="assets/gallery/photos/p06-011.jpeg" loading="lazy" decoding="async" alt="श्री महालक्ष्मी माता शुभआगमन - 11"></button>
+</div></section></div>
+<div class="gallery-kind-panel" data-kind-panel="video"><div class="gallery-category-tabs video-category-tabs"><button type="button" class="gallery-category-btn" data-target="video-1"><span class="video-cat-no">01</span><span>प्रेमानंदीनाथ महाराज पुण्यतिथी</span></button><button type="button" class="gallery-category-btn" data-target="video-2"><span class="video-cat-no">02</span><span>श्री महालक्ष्मी शुभआगमन</span></button><button type="button" class="gallery-category-btn" data-target="video-3"><span class="video-cat-no">03</span><span>आगमन गणरायाचे</span></button><button type="button" class="gallery-category-btn" data-target="video-4"><span class="video-cat-no">04</span><span>गुरुपौर्णिमा • काकडा आरती</span></button><button type="button" class="gallery-category-btn" data-target="video-5"><span class="video-cat-no">05</span><span>सोमवार • समाधी पूजन</span></button><button type="button" class="gallery-category-btn" data-target="video-6"><span class="video-cat-no">06</span><span>हंसतीर्थ स्वामी पुण्यतिथी</span></button><button type="button" class="gallery-category-btn" data-target="video-7"><span class="video-cat-no">07</span><span>अखंड पायी वारी</span></button><button type="button" class="gallery-category-btn" data-target="video-8"><span class="video-cat-no">08</span><span>परमा एकादशी</span></button><button type="button" class="gallery-category-btn" data-target="video-9"><span class="video-cat-no">09</span><span>शारदीय नवरात्रोत्सव</span></button><button type="button" class="gallery-category-btn" data-target="video-10"><span class="video-cat-no">10</span><span>नवरात्रोत्सव • स्वरूपिणी पूजन</span></button><button type="button" class="gallery-category-btn" data-target="video-11"><span class="video-cat-no">11</span><span>प्रतिवार्षिक दिंडी आगमन</span></button><button type="button" class="gallery-category-btn" data-target="video-12"><span class="video-cat-no">12</span><span>समाधी दर्शन</span></button></div><section class="event-gallery-block gallery-category-panel video-category-panel" data-category="video-1">
+<div class="event-gallery-head"><div><span>व्हिडिओ • 01</span><h3>प्रेमानंदीनाथ महाराज पुण्यतिथी</h3></div></div>
+<div class="event-media-slider video-slider"><article class="event-media-card video-card"><video controls preload="metadata" playsinline><source src="assets/gallery/videos/video-05.mp4" type="video/mp4"></video><div class="video-title">प. पू.सौ. ब्रम्हीभूत गुरुमाऊली माता प्रेमानंदीनाथ महाराज पुण्यतिथी उत्सव</div></article></div>
+</section><section class="event-gallery-block gallery-category-panel video-category-panel" data-category="video-2">
+<div class="event-gallery-head"><div><span>व्हिडिओ • 02</span><h3>श्री महालक्ष्मी शुभआगमन</h3></div></div>
+<div class="event-media-slider video-slider"><article class="event-media-card video-card"><video controls preload="metadata" playsinline><source src="assets/gallery/videos/video-08.mp4" type="video/mp4"></video><div class="video-title">श्री महालक्ष्मी माता शुभआगमन</div></article></div>
+</section><section class="event-gallery-block gallery-category-panel video-category-panel" data-category="video-3">
+<div class="event-gallery-head"><div><span>व्हिडिओ • 03</span><h3>आगमन गणरायाचे</h3></div></div>
+<div class="event-media-slider video-slider"><article class="event-media-card video-card"><video controls preload="metadata" playsinline><source src="assets/gallery/videos/video-03.mp4" type="video/mp4"></video><div class="video-title">आगमन गणरायाचे</div></article></div>
+</section><section class="event-gallery-block gallery-category-panel video-category-panel" data-category="video-4">
+<div class="event-gallery-head"><div><span>व्हिडिओ • 04</span><h3>गुरुपौर्णिमा • काकडा आरती</h3></div></div>
+<div class="event-media-slider video-slider"><article class="event-media-card video-card"><video controls preload="metadata" playsinline><source src="assets/gallery/videos/video-04.mp4" type="video/mp4"></video><div class="video-title">गुरुपौर्णिमापर्वावर परब्रम्ह परमहंस सद्‌गुरु राजाधिराज योगीराज हंसतीर्थ स्वामी महाराज यांची प्रातः काकडा आरती</div></article></div>
+</section><section class="event-gallery-block gallery-category-panel video-category-panel" data-category="video-5">
+<div class="event-gallery-head"><div><span>व्हिडिओ • 05</span><h3>सोमवार • समाधी पूजन</h3></div></div>
+<div class="event-media-slider video-slider"><article class="event-media-card video-card"><video controls preload="metadata" playsinline><source src="assets/gallery/videos/video-07.mp4" type="video/mp4"></video><div class="video-title">श्रावणी सोमवार अंगभूत शिवस्वरूप सद्गुरु समाधी षोडशोपचार पूजन</div></article></div>
+</section><section class="event-gallery-block gallery-category-panel video-category-panel" data-category="video-6">
+<div class="event-gallery-head"><div><span>व्हिडिओ • 06</span><h3>हंसतीर्थ स्वामी पुण्यतिथी</h3></div></div>
+<div class="event-media-slider video-slider"><article class="event-media-card video-card"><video controls preload="metadata" playsinline><source src="assets/gallery/videos/video-01.mp4" type="video/mp4"></video><div class="video-title">पू. संतश्रेष्ठ सद्गुरू योगिराज हंसतीर्थ स्वामी महाराज पुण्यतिथी महाअभिषेक</div></article></div>
+</section><section class="event-gallery-block gallery-category-panel video-category-panel" data-category="video-7">
+<div class="event-gallery-head"><div><span>व्हिडिओ • 07</span><h3>अखंड पायी वारी</h3></div></div>
+<div class="event-media-slider video-slider"><article class="event-media-card video-card"><video controls preload="metadata" playsinline><source src="assets/gallery/videos/video-02.mp4" type="video/mp4"></video><div class="video-title">अखंड पायी वारी l वारकरी हंसतीर्थ मुरारी l</div></article></div>
+</section><section class="event-gallery-block gallery-category-panel video-category-panel" data-category="video-8">
+<div class="event-gallery-head"><div><span>व्हिडिओ • 08</span><h3>परमा एकादशी</h3></div></div>
+<div class="event-media-slider video-slider"><article class="event-media-card video-card"><video controls preload="metadata" playsinline><source src="assets/gallery/videos/video-06.mp4" type="video/mp4"></video><div class="video-title">परमा एकादशी</div></article></div>
+</section><section class="event-gallery-block gallery-category-panel video-category-panel" data-category="video-9">
+<div class="event-gallery-head"><div><span>व्हिडिओ • 09</span><h3>शारदीय नवरात्रोत्सव</h3></div></div>
+<div class="event-media-slider video-slider"><article class="event-media-card video-card"><video controls preload="metadata" playsinline><source src="assets/gallery/videos/video-09.mp4" type="video/mp4"></video><div class="video-title">श्री राजराजेश्वरी रेणुकामाता ब्रह्मचारिणी माता स्वरूपिणी पूजन  शारदीय नवरात्रोत्सव</div></article></div>
+</section><section class="event-gallery-block gallery-category-panel video-category-panel" data-category="video-10">
+<div class="event-gallery-head"><div><span>व्हिडिओ • 10</span><h3>नवरात्रोत्सव • स्वरूपिणी पूजन</h3></div></div>
+<div class="event-media-slider video-slider"><article class="event-media-card video-card"><video controls preload="metadata" playsinline><source src="assets/gallery/videos/video-10.mp4" type="video/mp4"></video><div class="video-title">श्री राजराजेश्वरी रेणुकामाता ब्रह्मचारिणी माता स्वरूपिणी पूजन  शारदीय नवरात्रोत्सव1</div></article></div>
+</section><section class="event-gallery-block gallery-category-panel video-category-panel" data-category="video-11">
+<div class="event-gallery-head"><div><span>व्हिडिओ • 11</span><h3>प्रतिवार्षिक दिंडी आगमन</h3></div></div>
+<div class="event-media-slider video-slider"><article class="event-media-card video-card"><video controls preload="metadata" playsinline><source src="assets/gallery/videos/video-11.mp4" type="video/mp4"></video><div class="video-title">सोनई प्रतिवार्षिक दिंडी आगमन</div></article></div>
+</section><section class="event-gallery-block gallery-category-panel video-category-panel" data-category="video-12">
+<div class="event-gallery-head"><div><span>व्हिडिओ • 12</span><h3>समाधी दर्शन</h3></div></div>
+<div class="event-media-slider video-slider"><article class="event-media-card video-card"><video controls preload="metadata" playsinline><source src="assets/gallery/videos/video-12.mp4" type="video/mp4"></video><div class="video-title">ॐ त्र्यम्बकं यजामहे सुगन्धिं पुष्टिवर्धनम्। उर्वारुकमिव बन्धनान्मृत्योर्मुक्षीय माऽमृतात्॥</div></article></div>
+</section></div>
+</div></section>
 <section class="section-wrap reveal" id="gurumantra-nondani">
 <div class="section-heading"><span>सद्गुरू कृपा</span><h2>॥ गुरुमंत्र नोंदणी ॥</h2><p>गुरुमंत्र घेतलेल्या भक्तांनी मंदिराच्या नोंदीसाठी खालील माहिती भरावी.</p></div>
 <div class="service-registration-panel">
@@ -2223,6 +2440,43 @@ section[id], article[id]{scroll-margin-top:82px;}
     const link=document.createElement('a'); link.href=selectedFile; link.download=''; document.body.appendChild(link); link.click(); link.remove();
     alert('पेमेंट नोंदवले. अल्बम डाउनलोड सुरू होत आहे.'); if(box) box.hidden=true;
   });
+})();
+</script>
+
+<script id="gallery-category-slideshow-js">
+(function(){
+  var autoTimer=null;
+  function stopVideos(){document.querySelectorAll('#gallery video').forEach(function(v){if(!v.paused)v.pause();});}
+  function setupBlock(block){
+    var slider=block.querySelector('.event-media-slider'), prev=block.querySelector('.event-prev'), next=block.querySelector('.event-next'); if(!slider)return;
+    function amount(){return Math.max(280,slider.clientWidth);}
+    if(prev)prev.onclick=function(){slider.scrollBy({left:-amount(),behavior:'smooth'});restartAuto();};
+    if(next)next.onclick=function(){slider.scrollBy({left:amount(),behavior:'smooth'});restartAuto();};
+  }
+  document.querySelectorAll('#gallery .event-gallery-block').forEach(setupBlock);
+  function showCategory(kind,target){
+    stopVideos();
+    var panel=document.querySelector('#gallery [data-kind-panel="'+kind+'"]'); if(!panel)return;
+    panel.querySelectorAll('.gallery-category-panel').forEach(function(x){x.classList.toggle('active',x.dataset.category===target);});
+    panel.querySelectorAll('.gallery-category-btn').forEach(function(x){x.classList.toggle('active',x.dataset.target===target);});
+    var active=panel.querySelector('.gallery-category-panel.active .event-media-slider'); if(active)active.scrollTo({left:0,behavior:'auto'});
+    restartAuto();
+  }
+  document.querySelectorAll('#gallery .gallery-main-tab').forEach(function(btn){btn.addEventListener('click',function(){
+    var kind=btn.dataset.kind; stopVideos(); document.querySelectorAll('#gallery .gallery-main-tab').forEach(function(x){x.classList.toggle('active',x===btn);});
+    document.querySelectorAll('#gallery .gallery-kind-panel').forEach(function(x){x.classList.toggle('active',x.dataset.kindPanel===kind);});
+    var p=document.querySelector('#gallery [data-kind-panel="'+kind+'"]'); var b=p&&p.querySelector('.gallery-category-btn'); if(b)showCategory(kind,b.dataset.target); restartAuto();
+  });});
+  document.querySelectorAll('#gallery .gallery-category-btn').forEach(function(btn){btn.addEventListener('click',function(){var p=btn.closest('.gallery-kind-panel');showCategory(p.dataset.kindPanel,btn.dataset.target);});});
+  function autoSlide(){
+    var photoPanel=document.querySelector('#gallery [data-kind-panel="photo"].active .photo-category-panel.active'); if(!photoPanel)return;
+    var slider=photoPanel.querySelector('.event-media-slider'); if(!slider)return;
+    var max=slider.scrollWidth-slider.clientWidth; if(max<5)return;
+    if(slider.scrollLeft>=max-10) slider.scrollTo({left:0,behavior:'smooth'}); else slider.scrollBy({left:slider.clientWidth,behavior:'smooth'});
+  }
+  function restartAuto(){clearInterval(autoTimer);autoTimer=setInterval(autoSlide,4000);}
+  var firstPhoto=document.querySelector('#gallery [data-kind-panel="photo"] .gallery-category-btn'); if(firstPhoto)showCategory('photo',firstPhoto.dataset.target);
+  restartAuto();
 })();
 </script>
 </body>
