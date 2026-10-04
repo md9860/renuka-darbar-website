@@ -251,166 +251,8 @@
   .lakshmidevi-profile p{font-size:16px;line-height:1.8;text-align:left}
 }
 </style>
-<style>
-/* ===== सद्गुरू परंपरा : balanced 4 + 3 layout ===== */
-@media (min-width: 1100px){
-  #parampara .guru-path{
-    display:grid !important;
-    grid-template-columns:repeat(8,minmax(0,1fr)) !important;
-    gap:34px 18px !important;
-    max-width:1380px !important;
-    margin:34px auto 0 !important;
-    align-items:start !important;
-  }
-  #parampara .guru-step{
-    grid-column:span 2 !important;
-    width:100% !important;
-    min-width:0 !important;
-  }
-  #parampara .guru-step:nth-child(5){grid-column:2 / span 2 !important;}
-  #parampara .guru-step:nth-child(6){grid-column:4 / span 2 !important;}
-  #parampara .guru-step:nth-child(7){grid-column:6 / span 2 !important;}
-  #parampara .guru-step img{
-    width:100% !important;
-    height:265px !important;
-    object-fit:cover !important;
-    object-position:center top !important;
-  }
-  #parampara .guru-step h3{
-    min-height:52px;
-    margin-top:12px;
-    line-height:1.45;
-  }
-}
-@media (min-width:761px) and (max-width:1099px){
-  #parampara .guru-path{
-    display:grid !important;
-    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
-    gap:28px 22px !important;
-  }
-  #parampara .guru-step:last-child{
-    grid-column:1 / -1 !important;
-    max-width:320px;
-    justify-self:center;
-  }
-}
-@media (max-width:760px){
-  #parampara .guru-path{
-    display:grid !important;
-    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
-    gap:22px 12px !important;
-  }
-  #parampara .guru-step:last-child{
-    grid-column:1 / -1 !important;
-    max-width:250px;
-    justify-self:center;
-  }
-  #parampara .guru-step img{
-    width:100% !important;
-    height:auto !important;
-    aspect-ratio:4/5;
-    object-fit:cover !important;
-    object-position:center top !important;
-  }
-}
-</style>
-<style>
-/* ===== सद्गुरू परंपरा : show complete original photos ===== */
-@media (min-width:1100px){
-  #parampara .guru-path{
-    display:grid !important;
-    grid-template-columns:repeat(8,minmax(0,1fr)) !important;
-    gap:38px 24px !important;
-    max-width:1420px !important;
-    margin:36px auto 0 !important;
-    align-items:start !important;
-  }
-  #parampara .guru-step{
-    grid-column:span 2 !important;
-    width:100% !important;
-    min-width:0 !important;
-    display:flex !important;
-    flex-direction:column !important;
-    align-items:center !important;
-  }
-  #parampara .guru-step:nth-child(5){grid-column:2 / span 2 !important;}
-  #parampara .guru-step:nth-child(6){grid-column:4 / span 2 !important;}
-  #parampara .guru-step:nth-child(7){grid-column:6 / span 2 !important;}
 
-  #parampara .guru-step img{
-    width:100% !important;
-    height:360px !important;
-    object-fit:contain !important;
-    object-position:center center !important;
-    display:block !important;
-    padding:7px !important;
-    box-sizing:border-box !important;
-    background:#4d0005 !important;
-    border-radius:18px !important;
-  }
-  #parampara .guru-step h3{
-    width:100% !important;
-    min-height:58px !important;
-    margin:12px 0 0 !important;
-    padding:0 5px !important;
-    text-align:center !important;
-    line-height:1.45 !important;
-  }
-}
-@media (min-width:761px) and (max-width:1099px){
-  #parampara .guru-path{
-    display:grid !important;
-    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
-    gap:30px 24px !important;
-  }
-  #parampara .guru-step:last-child{
-    grid-column:1/-1 !important;
-    width:min(100%,380px) !important;
-    justify-self:center !important;
-  }
-  #parampara .guru-step img{
-    width:100% !important;
-    height:390px !important;
-    object-fit:contain !important;
-    object-position:center !important;
-    padding:6px !important;
-    box-sizing:border-box !important;
-    background:#4d0005 !important;
-  }
-}
-@media (max-width:760px){
-  #parampara .guru-path{
-    display:grid !important;
-    grid-template-columns:1fr !important;
-    gap:28px !important;
-    max-width:390px !important;
-    margin-left:auto !important;
-    margin-right:auto !important;
-  }
-  #parampara .guru-step,
-  #parampara .guru-step:last-child{
-    width:100% !important;
-    max-width:360px !important;
-    justify-self:center !important;
-  }
-  #parampara .guru-step img{
-    width:100% !important;
-    height:auto !important;
-    max-height:480px !important;
-    aspect-ratio:auto !important;
-    object-fit:contain !important;
-    object-position:center !important;
-    padding:6px !important;
-    box-sizing:border-box !important;
-    background:#4d0005 !important;
-  }
-  #parampara .guru-step h3{
-    min-height:0 !important;
-    margin-top:10px !important;
-    text-align:center !important;
-  }
-}
-</style>
+
 <style>
 /* ===== Refined site animations ===== */
 html{scroll-behavior:smooth}
@@ -1455,6 +1297,574 @@ section[id], article[id]{scroll-margin-top:82px;}
 @media(max-width:900px){#gallery .video-category-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){#gallery .video-category-tabs{grid-template-columns:1fr;gap:9px}#gallery .video-category-tabs .gallery-category-btn{min-height:52px;padding:9px 12px;font-size:13px}#gallery .video-cat-no{flex-basis:30px;width:30px;height:30px}#gallery .video-category-panel .video-title{font-size:14px;padding:12px 14px}}
 </style>
+<style>
+/* =========================================================
+   TEMPLE ANNOUNCEMENT TICKER
+   Renuka Darbar Sonai
+   ========================================================= */
+
+.temple-announcement {
+    position: relative;
+    z-index: 10;
+
+    width: min(1180px, calc(100% - 40px));
+
+    min-height: 58px;
+
+    margin: 22px auto;
+
+    padding: 0 !important;
+
+    display: flex;
+    align-items: stretch;
+
+    overflow: hidden;
+
+    background: #fffaf0;
+
+    border: 1px solid rgba(184, 126, 28, .55);
+    border-radius: 16px;
+
+    box-shadow:
+        0 8px 25px rgba(84, 25, 17, .10);
+}
+
+
+/* LEFT TITLE */
+
+.announcement-label {
+    position: relative;
+    z-index: 3;
+
+    flex: 0 0 auto;
+
+    min-width: 190px;
+
+    padding: 0 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    white-space: nowrap;
+
+    background:
+        linear-gradient(
+            135deg,
+            #68151b,
+            #8c2021
+        );
+
+    color: #fff6df;
+
+    font-size: 15px;
+    font-weight: 800;
+}
+
+
+/* GOLD SEPARATOR */
+
+.announcement-label::after {
+    content: "";
+
+    position: absolute;
+
+    right: 0;
+    top: 12px;
+    bottom: 12px;
+
+    width: 1px;
+
+    background:
+        rgba(247, 211, 133, .65);
+}
+
+
+.announcement-bell {
+    font-size: 18px;
+}
+
+
+/* MOVING AREA */
+
+.announcement-window {
+    position: relative;
+
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+
+    min-width: 0;
+
+    overflow: hidden;
+}
+
+
+/* FADE LEFT + RIGHT */
+
+.announcement-window::before,
+.announcement-window::after {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+
+    width: 35px;
+
+    z-index: 2;
+
+    pointer-events: none;
+}
+
+.announcement-window::before {
+    left: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            #fffaf0,
+            transparent
+        );
+}
+
+.announcement-window::after {
+    right: 0;
+
+    background:
+        linear-gradient(
+            270deg,
+            #fffaf0,
+            transparent
+        );
+}
+
+
+/* MOVING TEXT */
+
+.announcement-track {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 28px;
+
+    width: max-content;
+
+    padding-left: 100%;
+
+    white-space: nowrap;
+
+    color: #68151b;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    animation:
+        renukaAnnouncementScroll
+        32s linear infinite;
+}
+
+
+/* GOLD DOT */
+
+.announcement-dot {
+    color: #c28a26;
+
+    font-size: 9px;
+}
+
+
+/* PAUSE WHEN VISITOR HOVERS */
+
+.temple-announcement:hover
+.announcement-track {
+    animation-play-state: paused;
+}
+
+
+/* ANIMATION */
+
+@keyframes renukaAnnouncementScroll {
+
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+    .temple-announcement {
+
+        width:
+            calc(100% - 20px);
+
+        min-height: 50px;
+
+        margin:
+            14px auto;
+
+        border-radius: 12px;
+    }
+
+
+    .announcement-label {
+
+        min-width: auto;
+
+        padding:
+            0 12px;
+
+        font-size: 0;
+    }
+
+
+    .announcement-label
+    .announcement-bell {
+
+        font-size: 19px;
+    }
+
+
+    .announcement-track {
+
+        gap: 20px;
+
+        font-size: 13px;
+
+        animation-duration: 27s;
+    }
+
+
+    .announcement-window::before,
+    .announcement-window::after {
+
+        width: 18px;
+    }
+}
+
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .announcement-track {
+
+        animation: none;
+
+        padding-left: 20px;
+    }
+}
+
+</style>
+<style>
+/* ===== आगामी कार्यक्रम ===== */
+
+#upcoming-events {
+    padding: 65px 20px;
+    background: linear-gradient(
+        180deg,
+        #fffaf0,
+        #fff3d5,
+        #fffaf0
+    );
+}
+
+#upcoming-events .section-heading {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#upcoming-events .section-heading span {
+    color: #9a6a16;
+    font-weight: 800;
+}
+
+#upcoming-events .section-heading h2 {
+    color: #68151b;
+    margin-top: 8px;
+}
+
+.upcoming-event-card {
+    max-width: 950px;
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: 350px 1fr;
+
+    gap: 30px;
+    align-items: center;
+
+    background: #ffffff;
+
+    padding: 24px;
+
+    border-radius: 24px;
+
+    border: 1px solid rgba(112,22,25,.15);
+
+    box-shadow:
+        0 15px 40px rgba(72,18,18,.12);
+}
+
+.upcoming-event-poster {
+    width: 100%;
+    max-height: 420px;
+
+    object-fit: contain;
+
+    background: #5b070b;
+
+    border-radius: 18px;
+}
+
+.upcoming-event-info h3 {
+    color: #68151b;
+
+    font-size: 27px;
+
+    margin: 0 0 20px;
+
+    line-height: 1.5;
+}
+
+.upcoming-event-info p {
+    font-size: 17px;
+
+    line-height: 1.8;
+
+    margin: 10px 0;
+}
+
+.upcoming-event-info strong {
+    color: #68151b;
+}
+
+
+/* ===== Mobile ===== */
+
+@media (max-width: 760px) {
+
+    #upcoming-events {
+        padding: 45px 12px;
+    }
+
+    .upcoming-event-card {
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+
+        padding: 16px;
+    }
+
+    .upcoming-event-poster {
+        max-height: 450px;
+    }
+
+    .upcoming-event-info h3 {
+        text-align: center;
+
+        font-size: 22px;
+    }
+
+    .upcoming-event-info p {
+        font-size: 15px;
+    }
+}
+</style>
+<style id="ui-alignment-final">
+/* ===== FINAL UI ALIGNMENT POLISH: desktop + tablet + mobile ===== */
+
+/* Shared section rhythm */
+#parampara, #events, #seva{
+  box-sizing:border-box;
+}
+#parampara .section-heading,
+#events .section-heading,
+#seva .donation-heading{
+  max-width:820px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* 1) Sadguru Parampara: balanced 4 + 3, equal visual frames */
+@media (min-width:1100px){
+  #parampara{padding:64px 32px 68px !important;}
+  #parampara .guru-path{
+    display:grid !important;
+    grid-template-columns:repeat(12,minmax(0,1fr)) !important;
+    gap:34px 20px !important;
+    width:min(100%,1260px) !important;
+    max-width:1260px !important;
+    margin:34px auto 0 !important;
+    align-items:start !important;
+  }
+  #parampara .guru-step{
+    grid-column:span 3 !important;
+    width:100% !important;
+    max-width:none !important;
+    min-width:0 !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:center !important;
+  }
+  #parampara .guru-step:nth-child(5){grid-column:2 / span 3 !important;}
+  #parampara .guru-step:nth-child(6){grid-column:5 / span 3 !important;}
+  #parampara .guru-step:nth-child(7){grid-column:8 / span 3 !important;}
+  #parampara .guru-step img{
+    width:100% !important;
+    height:300px !important;
+    padding:6px !important;
+    object-fit:contain !important;
+    object-position:center !important;
+    background:#4d0005 !important;
+    border:3px solid var(--gold) !important;
+    border-radius:18px !important;
+    box-sizing:border-box !important;
+  }
+  #parampara .guru-step h3{
+    width:100% !important;
+    min-height:48px !important;
+    margin:11px 0 0 !important;
+    padding:0 4px !important;
+    display:flex !important;
+    align-items:flex-start !important;
+    justify-content:center !important;
+    text-align:center !important;
+    font-size:14px !important;
+    line-height:1.5 !important;
+  }
+}
+
+/* 2) Festival cards: same width, height and spacing */
+#events{
+  padding:64px 24px 68px !important;
+}
+#events .event-grid{
+  width:min(100%,1280px) !important;
+  max-width:1280px !important;
+  margin:34px auto 0 !important;
+  display:grid !important;
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  gap:18px !important;
+  align-items:stretch !important;
+}
+#events .event-grid > div{
+  min-height:126px !important;
+  height:100% !important;
+  padding:22px 18px !important;
+  border-radius:18px !important;
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+}
+#events .event-grid b{line-height:1.45 !important;}
+#events .event-grid span{line-height:1.55 !important;}
+
+/* 3) Donation: keep the module centered instead of stretching edge-to-edge */
+#seva.donation-panel{
+  width:min(94%,1300px) !important;
+  max-width:1300px !important;
+  margin:44px auto !important;
+  padding:clamp(24px,3vw,38px) !important;
+  box-sizing:border-box !important;
+}
+#seva .donation-form,
+#seva .payment-stage,
+#seva .donation-receipt{
+  width:100% !important;
+  max-width:1180px !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+  box-sizing:border-box !important;
+}
+#seva .donation-fields{gap:16px 18px !important;}
+#seva .donation-fields input,
+#seva .donation-fields select,
+#seva .donation-fields textarea{min-height:50px;}
+
+/* Tablet */
+@media (min-width:761px) and (max-width:1099px){
+  #parampara{padding:52px 22px 58px !important;}
+  #parampara .guru-path{
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    width:min(100%,760px) !important;
+    max-width:760px !important;
+    gap:30px 22px !important;
+  }
+  #parampara .guru-step:last-child{
+    grid-column:1/-1 !important;
+    width:min(100%,360px) !important;
+    justify-self:center !important;
+  }
+  #parampara .guru-step img{height:350px !important;object-fit:contain !important;}
+  #events .event-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;max-width:820px !important;}
+  #seva.donation-panel{width:calc(100% - 32px) !important;}
+}
+
+/* Mobile */
+@media (max-width:760px){
+  #parampara{padding:42px 12px 48px !important;}
+  #parampara .section-heading{padding:0 8px !important;}
+  #parampara .guru-path{
+    grid-template-columns:1fr !important;
+    width:100% !important;
+    max-width:390px !important;
+    gap:26px !important;
+    margin:26px auto 0 !important;
+  }
+  #parampara .guru-step,
+  #parampara .guru-step:last-child{
+    grid-column:auto !important;
+    width:100% !important;
+    max-width:360px !important;
+    justify-self:center !important;
+  }
+  #parampara .guru-step img{
+    width:100% !important;
+    height:auto !important;
+    max-height:440px !important;
+    object-fit:contain !important;
+    padding:5px !important;
+  }
+  #parampara .guru-step h3{font-size:14px !important;line-height:1.5 !important;margin-top:9px !important;}
+
+  #events{padding:44px 12px 48px !important;}
+  #events .event-grid{
+    grid-template-columns:1fr !important;
+    width:100% !important;
+    max-width:520px !important;
+    gap:13px !important;
+    margin-top:24px !important;
+  }
+  #events .event-grid > div{min-height:104px !important;padding:18px 14px !important;}
+
+  #seva.donation-panel{
+    width:calc(100% - 20px) !important;
+    margin:28px auto !important;
+    padding:18px 12px !important;
+    border-radius:20px !important;
+  }
+  #seva .donation-form, #seva .payment-stage{padding:18px 12px !important;border-radius:16px !important;}
+  #seva .donation-fields{grid-template-columns:1fr !important;gap:13px !important;}
+  #seva .donation-fields .full-field{grid-column:auto !important;}
+}
+</style>
 </head>
 <body>
 <div aria-hidden="true" class="scroll-progress"><span id="scrollProgress"></span></div>
@@ -1518,6 +1928,47 @@ section[id], article[id]{scroll-margin-top:82px;}
 </div>
 <div aria-hidden="true" class="hero-edge"></div>
 </section>
+
+<!-- =====================================================
+     TEMPLE ANNOUNCEMENT TICKER
+===================================================== -->
+<section class="temple-announcement" aria-label="मंदिर सूचना">
+<div class="announcement-label">
+<span class="announcement-bell">🔔</span>
+<span>महत्त्वाची सूचना</span>
+</div>
+<div class="announcement-window">
+<div class="announcement-track">
+<span>🚩 श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ काचमंदीर सोनई</span>
+<span class="announcement-dot">◆</span>
+<span>📅 आगामी धार्मिक कार्यक्रमांची माहिती येथे उपलब्ध आहे</span>
+<span class="announcement-dot">◆</span>
+<span>📿 गुरुमंत्र नोंदणी सुरू आहे</span>
+<span class="announcement-dot">◆</span>
+<span>🙏 देणगी / सेवा उपलब्ध आहे</span>
+</div>
+</div>
+</section>
+
+<!-- ===== आगामी कार्यक्रम ===== -->
+<section class="reveal" id="upcoming-events">
+<div class="section-wrap">
+<div class="section-heading">
+<span>📅 पुढील कार्यक्रम</span>
+<h2>॥ आगामी कार्यक्रम ॥</h2>
+</div>
+<div class="upcoming-event-card" data-event-date="2026-10-11">
+<img src="https://i.ytimg.com/vi/HORqfSAo-tA/maxresdefault.jpg" alt="शारदीय नवरात्रोत्सव २०२६" class="upcoming-event-poster"/>
+<div class="upcoming-event-info">
+<h3>शारदीय नवरात्रोत्सव २०२६</h3>
+<p>📅 <strong>दिनांक:</strong> ११ ऑक्टोबर २०२६</p>
+<p>⏰ <strong>वेळ:</strong> सकाळी ९:०० वा.</p>
+<p>🛕 <strong>स्थळ:</strong> श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ काचमंदीर सोनई</p>
+</div>
+</div>
+</div>
+</section>
+
 <section aria-label="जलद दुवे" class="quick-shell reveal">
 <div class="quick">
 <a href="#darshan"><span class="quick-icon">🛕</span><b>आजचे दर्शन</b><small>देवीचे नित्य दर्शन</small></a>
@@ -1525,7 +1976,6 @@ section[id], article[id]{scroll-margin-top:82px;}
 <a href="#events"><span class="quick-icon">📅</span><b>उत्सव व कार्यक्रम</b><small>विशेष धार्मिक पर्व</small></a>
 <a href="#gurumantra-nondani"><span class="quick-icon">📿</span><b>गुरुमंत्र नोंदणी</b><small>भक्त नोंदणी करा</small></a>
 <a href="#seva"><span class="quick-icon">🙏</span><b>देणगी / सेवा</b><small>संस्थेसाठी आपले सहकार्य</small></a>
-<a href="#live"><span class="quick-icon live-dot">●</span><b>लाईव्ह दर्शन</b><small>ऑनलाईन दर्शन</small></a>
 </div>
 </section>
 <section aria-label="श्री क्षेत्र रेणुका दरबार मूल्ये" class="sacred-ribbon reveal">
@@ -1758,7 +2208,7 @@ section[id], article[id]{scroll-margin-top:82px;}
 <section class="section-wrap reveal" id="bhajananand-section">
       <div class="section-heading"><span>♫ भजनानंद</span><h2>॥ ऑडिओ अल्बम ॥</h2><p>भजन, आरत्या, स्तोत्रे आणि भक्तिगीते ऑनलाईन मोफत ऐका.</p><p><a class="btn btn-maroon" href="downloads/apps/renuka-darbar.apk" download>Android App डाउनलोड करा</a></p></div>
       <div class="audio-marathi-notice" role="note">
-       <div><br><strong>♪<p style="text-align: center;"> ऐकणे व डाउनलोड ♪</strong><br/>
+       <div><br><strong><p style="text-align: center;"> ♪ ऐकणे व डाउनलोड  ♪</strong><br/>
         <span>ऑनलाईन भजन व भक्तिगीते ऐकणे पूर्णपणे मोफत आहे.</span>
         <span>संपूर्ण अल्बम डाउनलोड करायचा असल्यास कृपया निर्धारित शुल्क भरून डाउनलोड करा.</span><p/><div/>
       </div>      
@@ -1937,6 +2387,7 @@ section[id], article[id]{scroll-margin-top:82px;}
 </div>
 </section>
 <section class="events-section reveal" id="events">
+
 <div class="section-heading light"><span>परंपरेतील पर्व</span><h2>॥ उत्सव व धार्मिक पर्व ॥</h2><p>चालू वर्षाच्या तारखा संस्थानकडून निश्चित झाल्यानंतर येथे प्रसिद्ध केल्या जातील.</p></div>
 <div class="event-grid">
 <div><b>कार्तिक शुक्ल अष्टमी</b><span>श्री रेणुकामाता प्रगटदिन</span></div>
@@ -2481,4 +2932,36 @@ section[id], article[id]{scroll-margin-top:82px;}
 })();
 </script>
 </body>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const today = new Date();
+
+    today.setHours(0, 0, 0, 0);
+
+    document
+        .querySelectorAll(".upcoming-event-card")
+        .forEach(function (card) {
+
+            const eventDate =
+                card.getAttribute("data-event-date");
+
+            if (!eventDate) return;
+
+            const parts = eventDate.split("-");
+
+            const date = new Date(
+                Number(parts[0]),
+                Number(parts[1]) - 1,
+                Number(parts[2])
+            );
+
+            if (date < today) {
+                card.style.display = "none";
+            }
+
+        });
+
+});
+</script>
 </html>
