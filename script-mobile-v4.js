@@ -395,5 +395,1064 @@ gurumantraRegistrationForm?.addEventListener('submit',async event=>{
     const details=document.getElementById('guruAcknowledgementDetails');if(details)details.innerHTML=`<div class="receipt-data receipt-reference-layout"><div class="receipt-row"><p><b>नोंदणी क्र.:</b> ${esc(record.receiptNo)}</p><p><b>दिनांक:</b> ${esc(guruAcknowledgementData.createdLabel)}</p></div><div class="receipt-row"><p><b>भक्त:</b> ${esc(record.name)}</p><p><b>मोबाईल:</b> ${esc(record.mobile)}</p></div><p class="wide"><b>गुरुमंत्र तारीख:</b> ${esc(record.serviceDate)}</p><p class="wide"><b>ठिकाण / कार्यक्रम:</b> ${esc(guruPlace||'—')}</p><p class="wide"><b>पत्ता:</b> ${esc([record.address,record.city,record.pin].filter(Boolean).join(', '))}</p></div>`;
     const ack=document.getElementById('guruAcknowledgement');if(ack){ack.hidden=false;ack.scrollIntoView({behavior:'smooth',block:'start'});}gurumantraRegistrationForm.reset();if(msg)msg.textContent='गुरुमंत्र नोंदणी यशस्वीरीत्या जतन झाली. खालील Acknowledgement डाउनलोड करा.';
   }catch(err){console.error(err);if(msg){msg.style.display='block';msg.textContent='नोंदणी जतन झाली नाही. कृपया पुन्हा प्रयत्न करा.';msg.classList.add('danger');}}
-  finally{submit.disabled=false;submit.textContent='गुरुमंत्र नोंदणी जतन करा';}
+finally{
+  submit.disabled=false;
+  submit.textContent='गुरुमंत्र नोंदणी जतन करा';
+}
 });
+
+/* =========================================================
+   RENUKA DARBAR - AUTOMATIC YOUTUBE VIDEO GALLERY
+   Separate from Registration / Google Sheets
+   ========================================================= */
+
+(function () {
+
+  const RENUKA_YOUTUBE_API =
+    'https://script.google.com/macros/s/AKfycbysxyAeFJGCnSqKrwRV8J3NThl7m9fq_Jh5Lt05GSW-DB0cNBaShoDGxZtTO9jaD3OPew/exec';
+
+
+  /* =========================================================
+     SAFE HTML ESCAPE
+     ========================================================= */
+
+  function ytEscape(value) {
+
+    return String(value ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+
+  }
+
+
+  /* =========================================================
+     CREATE YOUTUBE EMBED URL
+
+     IMPORTANT:
+     Uses normal youtube.com embed.
+     Sends current website origin + referrer.
+     Works with GitHub Pages and future custom domain.
+     ========================================================= */
+
+  function buildYouTubeEmbedUrl(videoId) {
+
+    const id =
+      encodeURIComponent(
+        String(videoId || '').trim()
+      );
+
+    if (!id) {
+      return '';
+    }
+
+    const origin =
+      window.location.origin;
+
+    const referrer =
+      window.location.href;
+
+    return (
+      'https://www.youtube.com/embed/' +
+      id +
+      '?rel=0' +
+      '&playsinline=1' +
+      '&origin=' +
+      encodeURIComponent(origin) +
+      '&widget_referrer=' +
+      encodeURIComponent(referrer)
+    );
+
+  }
+
+
+  /* =========================================================
+     FORMAT YOUTUBE DATE
+     ========================================================= */
+
+  function formatYouTubeDate(value) {
+
+    if (!value) {
+      return '';
+    }
+
+    try {
+
+      const date =
+        new Date(value);
+
+      if (
+        Number.isNaN(
+          date.getTime()
+        )
+      ) {
+        return '';
+      }
+
+      return new Intl.DateTimeFormat(
+        'mr-IN',
+        {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric'
+        }
+      ).format(date);
+
+    } catch (error) {
+
+      return '';
+
+    }
+
+  }
+
+
+  /* =========================================================
+     FIND VIDEO PANEL
+     ========================================================= */
+
+  function getVideoPanel() {
+
+    return document.querySelector(
+      '#gallery [data-kind-panel="video"]'
+    );
+
+  }
+
+
+  /* =========================================================
+     CREATE YOUTUBE SECTION
+     ========================================================= */
+
+  function createYouTubeSection() {
+
+    const videoPanel =
+      getVideoPanel();
+
+    if (!videoPanel) {
+
+      console.warn(
+        'Renuka YouTube Gallery: video panel not found.'
+      );
+
+      return null;
+
+    }
+
+
+    let section =
+      document.getElementById(
+        'youtubeAutoGallery'
+      );
+
+
+    if (section) {
+      return section;
+    }
+
+
+    section =
+      document.createElement(
+        'section'
+      );
+
+
+    section.id =
+      'youtubeAutoGallery';
+
+
+    section.className =
+      'renuka-youtube-gallery';
+
+
+    section.innerHTML = `
+
+      <div class="renuka-youtube-heading">
+
+        <span class="renuka-youtube-label">
+          🎥 YouTube
+        </span>
+
+        <h3>
+          नवीन व्हिडिओ
+        </h3>
+
+        <p>
+          श्री क्षेत्र रेणुका दरबार सोनई यांच्या
+          YouTube चॅनेलवरील नवीन व्हिडिओ
+        </p>
+
+      </div>
+
+
+      <div
+        id="renukaYoutubeLoading"
+        class="renuka-youtube-loading"
+      >
+
+        नवीन व्हिडिओ लोड होत आहेत…
+
+      </div>
+
+
+      <div
+        id="renukaYoutubeContent"
+        class="renuka-youtube-content"
+        hidden
+      >
+
+      </div>
+
+
+      <div
+        id="renukaYoutubeError"
+        class="renuka-youtube-error"
+        hidden
+      >
+
+        YouTube व्हिडिओ सध्या लोड करता आले नाहीत.
+
+      </div>
+
+    `;
+
+
+    videoPanel.insertBefore(
+      section,
+      videoPanel.firstChild
+    );
+
+
+    return section;
+
+  }
+
+
+  /* =========================================================
+     RENDER VIDEOS
+     ========================================================= */
+
+  function renderYouTubeVideos(videos) {
+
+    const content =
+      document.getElementById(
+        'renukaYoutubeContent'
+      );
+
+
+    const loading =
+      document.getElementById(
+        'renukaYoutubeLoading'
+      );
+
+
+    const errorBox =
+      document.getElementById(
+        'renukaYoutubeError'
+      );
+
+
+    if (!content) {
+      return;
+    }
+
+
+    if (
+      !Array.isArray(videos) ||
+      videos.length === 0
+    ) {
+
+      if (loading) {
+        loading.hidden = true;
+      }
+
+      if (errorBox) {
+        errorBox.hidden = false;
+      }
+
+      return;
+
+    }
+
+
+    const firstVideo =
+      videos[0];
+
+
+    const firstEmbedUrl =
+      buildYouTubeEmbedUrl(
+        firstVideo.videoId
+      );
+
+
+    content.innerHTML = `
+
+      <div class="renuka-youtube-featured">
+
+        <div class="renuka-youtube-player-wrap">
+
+          <iframe
+
+            id="renukaYoutubePlayer"
+
+            src="${ytEscape(firstEmbedUrl)}"
+
+            title="${ytEscape(firstVideo.title)}"
+
+            loading="lazy"
+
+            referrerpolicy="strict-origin-when-cross-origin"
+
+            allow="
+              accelerometer;
+              autoplay;
+              clipboard-write;
+              encrypted-media;
+              gyroscope;
+              picture-in-picture;
+              web-share
+            "
+
+            allowfullscreen
+
+          ></iframe>
+
+        </div>
+
+
+        <div class="renuka-youtube-current-info">
+
+          <h4 id="renukaYoutubeCurrentTitle">
+
+            ${ytEscape(firstVideo.title)}
+
+          </h4>
+
+
+          <p id="renukaYoutubeCurrentDate">
+
+            ${
+              ytEscape(
+                formatYouTubeDate(
+                  firstVideo.published
+                )
+              )
+            }
+
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div
+        id="renukaYoutubeList"
+        class="renuka-youtube-list"
+      >
+
+        ${videos.map(
+          (video, index) => `
+
+            <button
+
+              type="button"
+
+              class="renuka-youtube-card ${
+                index === 0
+                  ? 'active'
+                  : ''
+              }"
+
+              data-youtube-index="${index}"
+
+            >
+
+              <span class="renuka-youtube-thumb">
+
+                <img
+
+                  src="${ytEscape(video.thumbnail)}"
+
+                  alt="${ytEscape(video.title)}"
+
+                  loading="lazy"
+
+                >
+
+                <span class="renuka-youtube-play">
+
+                  ▶
+
+                </span>
+
+              </span>
+
+
+              <span class="renuka-youtube-card-copy">
+
+                <strong>
+
+                  ${ytEscape(video.title)}
+
+                </strong>
+
+
+                <small>
+
+                  ${
+                    ytEscape(
+                      formatYouTubeDate(
+                        video.published
+                      )
+                    )
+                  }
+
+                </small>
+
+              </span>
+
+            </button>
+
+          `
+        ).join('')}
+
+      </div>
+
+    `;
+
+
+    if (loading) {
+      loading.hidden = true;
+    }
+
+
+    if (errorBox) {
+      errorBox.hidden = true;
+    }
+
+
+    content.hidden = false;
+
+
+    /* =====================================================
+       VIDEO CARD CLICK
+       ===================================================== */
+
+    const player =
+      document.getElementById(
+        'renukaYoutubePlayer'
+      );
+
+
+    const title =
+      document.getElementById(
+        'renukaYoutubeCurrentTitle'
+      );
+
+
+    const date =
+      document.getElementById(
+        'renukaYoutubeCurrentDate'
+      );
+
+
+    const cards =
+      content.querySelectorAll(
+        '.renuka-youtube-card'
+      );
+
+
+    cards.forEach(
+      card => {
+
+        card.addEventListener(
+          'click',
+          () => {
+
+            const index =
+              Number(
+                card.dataset.youtubeIndex
+              );
+
+
+            const video =
+              videos[index];
+
+
+            if (!video) {
+              return;
+            }
+
+
+            cards.forEach(
+              item =>
+                item.classList.remove(
+                  'active'
+                )
+            );
+
+
+            card.classList.add(
+              'active'
+            );
+
+
+            /* IMPORTANT:
+               Always use youtube.com.
+               Do NOT switch back to youtube-nocookie.com.
+            */
+
+            if (player) {
+
+              player.src =
+                buildYouTubeEmbedUrl(
+                  video.videoId
+                );
+
+
+              player.title =
+                video.title ||
+                'YouTube Video';
+
+            }
+
+
+            if (title) {
+
+              title.textContent =
+                video.title ||
+                'YouTube Video';
+
+            }
+
+
+            if (date) {
+
+              date.textContent =
+                formatYouTubeDate(
+                  video.published
+                );
+
+            }
+
+
+            const playerWrap =
+              content.querySelector(
+                '.renuka-youtube-featured'
+              );
+
+
+            if (playerWrap) {
+
+              playerWrap.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+              });
+
+            }
+
+          }
+        );
+
+      }
+    );
+
+  }
+
+
+  /* =========================================================
+     LOAD VIDEOS FROM SEPARATE APPS SCRIPT
+     ========================================================= */
+
+  async function loadRenukaYouTubeVideos() {
+
+    createYouTubeSection();
+
+
+    const loading =
+      document.getElementById(
+        'renukaYoutubeLoading'
+      );
+
+
+    const errorBox =
+      document.getElementById(
+        'renukaYoutubeError'
+      );
+
+
+    try {
+
+      if (loading) {
+
+        loading.hidden = false;
+
+        loading.textContent =
+          'नवीन YouTube व्हिडिओ लोड होत आहेत…';
+
+      }
+
+
+      if (errorBox) {
+        errorBox.hidden = true;
+      }
+
+
+      const url =
+        RENUKA_YOUTUBE_API +
+        '?action=youtubeVideos&t=' +
+        Date.now();
+
+
+      const response =
+        await fetch(
+          url,
+          {
+            method: 'GET',
+            cache: 'no-store'
+          }
+        );
+
+
+      if (!response.ok) {
+
+        throw new Error(
+          'YouTube API HTTP ' +
+          response.status
+        );
+
+      }
+
+
+      const data =
+        await response.json();
+
+
+      if (
+        !data ||
+        data.ok !== true ||
+        !Array.isArray(data.videos)
+      ) {
+
+        throw new Error(
+          data &&
+          data.error
+            ? data.error
+            : 'Invalid YouTube response'
+        );
+
+      }
+
+
+      renderYouTubeVideos(
+        data.videos
+      );
+
+
+    } catch (error) {
+
+      console.error(
+        'Renuka YouTube Gallery:',
+        error
+      );
+
+
+      if (loading) {
+        loading.hidden = true;
+      }
+
+
+      if (errorBox) {
+
+        errorBox.hidden = false;
+
+        errorBox.textContent =
+          'YouTube व्हिडिओ सध्या लोड करता आले नाहीत. कृपया थोड्या वेळाने पुन्हा प्रयत्न करा.';
+
+      }
+
+    }
+
+  }
+
+
+  /* =========================================================
+     YOUTUBE GALLERY CSS
+     ========================================================= */
+
+  function addRenukaYouTubeStyles() {
+
+    if (
+      document.getElementById(
+        'renukaYoutubeGalleryStyles'
+      )
+    ) {
+      return;
+    }
+
+
+    const style =
+      document.createElement(
+        'style'
+      );
+
+
+    style.id =
+      'renukaYoutubeGalleryStyles';
+
+
+    style.textContent = `
+
+      #youtubeAutoGallery{
+        max-width:1180px;
+        margin:0 auto 42px;
+        padding:26px;
+        border-radius:26px;
+        background:
+          linear-gradient(
+            145deg,
+            #fffaf0,
+            #fff2d7
+          );
+        border:1px solid rgba(115,24,25,.16);
+        box-shadow:
+          0 16px 42px
+          rgba(72,18,18,.10);
+      }
+
+
+      .renuka-youtube-heading{
+        text-align:center;
+        max-width:850px;
+        margin:0 auto 24px;
+      }
+
+
+      .renuka-youtube-label{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        padding:7px 15px;
+        margin-bottom:8px;
+        border-radius:999px;
+        background:#68151b;
+        color:#fff4cf;
+        font-size:14px;
+        font-weight:900;
+        letter-spacing:.04em;
+      }
+
+
+      .renuka-youtube-heading h3{
+        margin:5px 0 7px;
+        color:#68151b;
+        font-size:
+          clamp(
+            1.55rem,
+            4vw,
+            2.25rem
+          );
+      }
+
+
+      .renuka-youtube-heading p{
+        margin:0;
+        color:#6d5141;
+        line-height:1.7;
+      }
+
+
+      .renuka-youtube-loading,
+      .renuka-youtube-error{
+        padding:25px;
+        text-align:center;
+        font-weight:800;
+        color:#68151b;
+      }
+
+
+      .renuka-youtube-player-wrap{
+        position:relative;
+        width:100%;
+        aspect-ratio:16/9;
+        overflow:hidden;
+        border-radius:20px;
+        background:#210003;
+        box-shadow:
+          0 14px 34px
+          rgba(55,5,8,.22);
+      }
+
+
+      .renuka-youtube-player-wrap iframe{
+        position:absolute;
+        inset:0;
+        width:100%;
+        height:100%;
+        border:0;
+        display:block;
+      }
+
+
+      .renuka-youtube-current-info{
+        padding:17px 5px 7px;
+        text-align:center;
+      }
+
+
+      .renuka-youtube-current-info h4{
+        margin:0;
+        color:#68151b;
+        font-size:
+          clamp(
+            17px,
+            2vw,
+            23px
+          );
+        line-height:1.5;
+      }
+
+
+      .renuka-youtube-current-info p{
+        margin:7px 0 0;
+        color:#95662b;
+        font-weight:800;
+      }
+
+
+      .renuka-youtube-list{
+        display:grid;
+        grid-template-columns:
+          repeat(
+            3,
+            minmax(0,1fr)
+          );
+        gap:14px;
+        margin-top:22px;
+      }
+
+
+      .renuka-youtube-card{
+        appearance:none;
+        width:100%;
+        border:1px solid
+          rgba(105,21,25,.16);
+        border-radius:17px;
+        overflow:hidden;
+        padding:0;
+        background:#fff;
+        cursor:pointer;
+        text-align:left;
+        box-shadow:
+          0 8px 22px
+          rgba(75,25,15,.08);
+        transition:
+          transform .25s ease,
+          box-shadow .25s ease,
+          border-color .25s ease;
+      }
+
+
+      .renuka-youtube-card:hover{
+        transform:
+          translateY(-3px);
+        box-shadow:
+          0 12px 28px
+          rgba(75,25,15,.14);
+      }
+
+
+      .renuka-youtube-card.active{
+        border:2px solid
+          #9a681b;
+        box-shadow:
+          0 10px 26px
+          rgba(110,55,12,.18);
+      }
+
+
+      .renuka-youtube-thumb{
+        display:block;
+        position:relative;
+        aspect-ratio:16/9;
+        overflow:hidden;
+        background:#3d0508;
+      }
+
+
+      .renuka-youtube-thumb img{
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        display:block;
+      }
+
+
+      .renuka-youtube-play{
+        position:absolute;
+        left:50%;
+        top:50%;
+        transform:
+          translate(-50%,-50%);
+        width:48px;
+        height:48px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        padding-left:3px;
+        border-radius:50%;
+        background:
+          rgba(103,10,16,.92);
+        color:#fff;
+        font-size:19px;
+        box-shadow:
+          0 5px 15px
+          rgba(0,0,0,.25);
+      }
+
+
+      .renuka-youtube-card-copy{
+        display:block;
+        padding:13px 14px 14px;
+      }
+
+
+      .renuka-youtube-card-copy strong{
+        display:-webkit-box;
+        overflow:hidden;
+        -webkit-line-clamp:2;
+        -webkit-box-orient:vertical;
+        min-height:45px;
+        color:#68151b;
+        line-height:1.45;
+        font-size:15px;
+      }
+
+
+      .renuka-youtube-card-copy small{
+        display:block;
+        margin-top:7px;
+        color:#9a672f;
+        font-weight:800;
+      }
+
+
+      @media(max-width:900px){
+
+        .renuka-youtube-list{
+          grid-template-columns:
+            repeat(
+              2,
+              minmax(0,1fr)
+            );
+        }
+
+      }
+
+
+      @media(max-width:600px){
+
+        #youtubeAutoGallery{
+          margin:
+            0 10px 30px;
+          padding:
+            17px 12px 20px;
+          border-radius:20px;
+        }
+
+
+        .renuka-youtube-list{
+          grid-template-columns:1fr;
+          gap:12px;
+        }
+
+
+        .renuka-youtube-card{
+          display:grid;
+          grid-template-columns:
+            138px
+            minmax(0,1fr);
+          align-items:stretch;
+        }
+
+
+        .renuka-youtube-thumb{
+          height:100%;
+          min-height:90px;
+          aspect-ratio:auto;
+        }
+
+
+        .renuka-youtube-card-copy{
+          padding:11px 12px;
+        }
+
+
+        .renuka-youtube-card-copy strong{
+          min-height:0;
+          font-size:14px;
+        }
+
+
+        .renuka-youtube-play{
+          width:39px;
+          height:39px;
+          font-size:16px;
+        }
+
+      }
+
+
+      @media(max-width:390px){
+
+        .renuka-youtube-card{
+          grid-template-columns:
+            116px
+            minmax(0,1fr);
+        }
+
+      }
+
+    `;
+
+
+    document.head.appendChild(
+      style
+    );
+
+  }
+
+
+  /* =========================================================
+     START
+     ========================================================= */
+
+  function startRenukaYouTubeGallery() {
+
+    addRenukaYouTubeStyles();
+
+    loadRenukaYouTubeVideos();
+
+  }
+
+
+  if (
+    document.readyState ===
+    'loading'
+  ) {
+
+    document.addEventListener(
+      'DOMContentLoaded',
+      startRenukaYouTubeGallery
+    );
+
+  } else {
+
+    startRenukaYouTubeGallery();
+
+  }
+
+})();
