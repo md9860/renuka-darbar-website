@@ -1238,8 +1238,6 @@ section[id], article[id]{scroll-margin-top:82px;}
   #bhajananand-section .album-play-all,#bhajananand-section .album-buy{width:100%;min-width:0}
 }
 </style>
-
-
 <style>
 /* ===== Event-wise Chhayachitra Gallery ===== */
 .eventwise-gallery{padding:64px 0;background:linear-gradient(180deg,#fffaf0,#fff7e8)}
@@ -1252,7 +1250,201 @@ section[id], article[id]{scroll-margin-top:82px;}
 .video-slider{grid-auto-columns:minmax(300px,420px)}.video-card{background:#2c1112;min-height:0}.video-card video{display:block;width:100%;aspect-ratio:9/16;max-height:520px;background:#000;object-fit:contain}.video-title{padding:14px 15px 16px;color:#fff7e8;font-weight:700;line-height:1.55;font-size:15px;background:linear-gradient(180deg,#54181b,#321011)}
 @media(max-width:760px){.eventwise-gallery{padding:42px 0}.eventwise-gallery .section-wrap{padding:0 12px}.event-gallery-block{padding:14px;border-radius:18px;margin-bottom:22px}.event-gallery-head{align-items:center}.event-gallery-head p{font-size:13px}.event-slider-nav button{width:38px;height:38px}.event-media-slider{grid-auto-columns:82%;gap:11px}.photo-card img{height:300px}.video-slider{grid-auto-columns:88%}.video-card video{max-height:480px}.gallery-section-title{margin-top:20px}.video-main-title{margin-top:42px}}
 </style>
+<style>
+/* =====================================================
+   FINAL COMPACT AUDIO ALBUM DESIGN - ALL ALBUMS
+   ===================================================== */
 
+#bhajananand-section .audio-album-grid.playable-grid{
+    display:grid !important;
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    gap:24px !important;
+    max-width:1200px !important;
+    margin:30px auto 0 !important;
+    align-items:start !important;
+}
+
+#bhajananand-section .audio-album-card.playable-album{
+    display:flex !important;
+    flex-direction:column !important;
+    gap:10px !important;
+    padding:15px !important;
+    border-radius:22px !important;
+    background:#fff !important;
+    border:1px solid rgba(104,21,27,.15) !important;
+    box-shadow:0 10px 28px rgba(72,18,18,.10) !important;
+    transition:transform .3s ease,box-shadow .3s ease !important;
+}
+
+@media(hover:hover){
+    #bhajananand-section .playable-album:hover{
+        transform:translateY(-4px);
+        box-shadow:0 16px 34px rgba(72,18,18,.15) !important;
+    }
+}
+
+/* Same Mata image styling */
+#bhajananand-section .album-cover{
+    width:100% !important;
+    height:260px !important;
+    display:block !important;
+    object-fit:contain !important;
+    object-position:center !important;
+    padding:7px !important;
+    box-sizing:border-box !important;
+    border-radius:17px !important;
+    background:linear-gradient(145deg,#5a080b,#7b171b) !important;
+}
+
+#bhajananand-section .playable-album h3{
+    margin:6px 0 2px !important;
+    text-align:center !important;
+    color:#68151b !important;
+    font-size:21px !important;
+    line-height:1.4 !important;
+}
+
+#bhajananand-section .album-price{
+    align-self:center !important;
+    margin:0 auto 5px !important;
+    padding:6px 13px !important;
+    border-radius:999px !important;
+    background:#fff3d5 !important;
+    color:#7a1f1f !important;
+    font-weight:900 !important;
+}
+
+/* Open album button */
+#bhajananand-section .album-toggle{
+    width:100% !important;
+    padding:12px 15px !important;
+    margin:2px 0 !important;
+    border:0 !important;
+    border-radius:12px !important;
+    background:#68151b !important;
+    color:#fff8e7 !important;
+    font-size:15px !important;
+    font-weight:800 !important;
+    cursor:pointer !important;
+}
+
+#bhajananand-section .album-toggle:hover{
+    background:#851e24 !important;
+}
+
+/* CLOSED ALBUM */
+#bhajananand-section .playable-album:not(.is-open) .album-track-list,
+#bhajananand-section .playable-album:not(.is-open) .album-play-all,
+#bhajananand-section .playable-album:not(.is-open) .album-buy{
+    display:none !important;
+}
+
+/* OPEN ALBUM */
+#bhajananand-section .playable-album.is-open{
+    grid-column:1 / -1 !important;
+    padding:22px !important;
+}
+
+#bhajananand-section .playable-album.is-open .album-cover{
+    max-width:360px !important;
+    height:310px !important;
+    margin:0 auto !important;
+}
+
+#bhajananand-section .playable-album.is-open .album-play-all{
+    display:inline-flex !important;
+    align-self:center !important;
+    justify-content:center !important;
+    min-width:230px !important;
+}
+
+#bhajananand-section .playable-album.is-open .album-track-list{
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:10px !important;
+    width:100% !important;
+    margin:10px 0 !important;
+    padding:12px !important;
+}
+
+#bhajananand-section .playable-album.is-open .album-buy{
+    display:inline-flex !important;
+    align-self:center !important;
+    justify-content:center !important;
+    min-width:250px !important;
+}
+
+#bhajananand-section .album-track{
+    padding:10px !important;
+    border-radius:12px !important;
+    background:#fffaf2 !important;
+    border:1px solid rgba(104,21,27,.10) !important;
+}
+
+#bhajananand-section .album-track span{
+    display:block !important;
+    margin-bottom:6px !important;
+    color:#5d2a20 !important;
+    font-size:14px !important;
+    font-weight:800 !important;
+}
+
+#bhajananand-section .album-track audio{
+    display:block !important;
+    width:100% !important;
+}
+
+/* TABLET */
+@media(max-width:900px){
+
+    #bhajananand-section .audio-album-grid.playable-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    }
+
+    #bhajananand-section .album-cover{
+        height:240px !important;
+    }
+}
+
+/* MOBILE */
+@media(max-width:600px){
+
+    #bhajananand-section .audio-album-grid.playable-grid{
+        grid-template-columns:1fr !important;
+        gap:18px !important;
+    }
+
+    #bhajananand-section .audio-album-card.playable-album{
+        padding:13px !important;
+    }
+
+    #bhajananand-section .album-cover{
+        height:230px !important;
+    }
+
+    #bhajananand-section .playable-album.is-open{
+        grid-column:auto !important;
+        padding:14px !important;
+    }
+
+    #bhajananand-section .playable-album.is-open .album-cover{
+        max-width:100% !important;
+        height:250px !important;
+    }
+
+    #bhajananand-section .playable-album.is-open .album-track-list{
+        grid-template-columns:1fr !important;
+        padding:8px !important;
+    }
+
+    #bhajananand-section .album-toggle,
+    #bhajananand-section .album-play-all,
+    #bhajananand-section .album-buy{
+        width:100% !important;
+        min-width:0 !important;
+    }
+}
+</style>
 <style>
 /* ===== FINAL CHHAYACHITRE: one-photo / one-video slideshow ===== */
 .eventwise-gallery .gallery-section-title{text-align:center;margin-bottom:28px}
@@ -2208,65 +2400,1039 @@ section[id], article[id]{scroll-margin-top:82px;}
 </section>
 
 <section class="section-wrap reveal" id="bhajananand-section">
-      <div class="section-heading"><span>♫ भजनानंद</span><h2>॥ ऑडिओ अल्बम ॥</h2><p>भजन, आरत्या, स्तोत्रे आणि भक्तिगीते ऑनलाईन मोफत ऐका.</p><p><a class="btn btn-maroon" href="downloads/apps/renuka-darbar.apk" download>Android App डाउनलोड करा</a></p></div>
-      <div class="audio-marathi-notice" role="note">
-       <div><br><strong><p style="text-align: center;"> ♪ ऐकणे व डाउनलोड  ♪</strong><br/>
-        <span>ऑनलाईन भजन व भक्तिगीते ऐकणे पूर्णपणे मोफत आहे.</span>
-        <span>संपूर्ण अल्बम डाउनलोड करायचा असल्यास कृपया निर्धारित शुल्क भरून डाउनलोड करा.</span><p/><div/>
-      </div>      
-	<div class="audio-album-grid playable-grid">
-	<article class="audio-album-card playable-album">
-          <img class="album-cover" src="assets/album-covers/namami-hanstirthay.jpg" alt="नमामि हंसतीर्थाय अल्बम मुखपृष्ठ" loading="lazy" decoding="async"><div class="album-icon">♫</div><h3>नमामि 	हंसतीर्थाय</h3><p class="album-price">डाउनलोड ₹100</p>
-          <button type="button" class="btn btn-outline album-play-all">▶ संपूर्ण अल्बम ऐका</button>
-          <div class="album-track-list"><div class="album-track"><span>1. Om Namo Narayanay Hanstrith Swami Om</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Namami Hanstirthay/01-Om Namo Narayanay Hanstrith Swami Om.mp3"></audio></div><div class="album-track"><span>2. Jagisadwi Zali Premanandi Mala</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Namami Hanstirthay/02-Jagisadwi Zali Premanandi Mala.mp3"></audio></div><div class="album-track"><span>3. Guru Swarupi Ramave Dhani Guru Naamane Ramave Mani</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Namami Hanstirthay/03-Guru Swarupi Ramave Dhani Guru Naamane Ramave Mani.mp3"></audio></div><div class="album-track"><span>4. Namami Yogirajay</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Namami Hanstirthay/04-Namami Yogirajay.mp3"></audio></div><div class="album-track"><span>5. Jay Ho Jay Shree Yati Raya</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Namami Hanstirthay/05-Jay Ho Jay Shree Yati Raya.mp3"></audio></div><div class="album-track"><span>6. Renukai Tu Trigun Shakti Tu</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Namami Hanstirthay/06-Renukai Tu Trigun Shakti Tu.mp3"></audio></div><div class="album-track"><span>7. Aai Mauli Chhaya Sauli</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Namami Hanstirthay/07-Aai Mauli Chhaya Sauli.mp3"></audio></div></div>
-          <button type="button" class="btn btn-maroon album-buy" data-album="नमामि हंसतीर्थाय" data-file="downloads/albums/Namami-Hanstirthay.zip">₹100 — अल्बम डाउनलोड करा</button>
-        </article>
-<article class="audio-album-card playable-album">
-          <img class="album-cover" src="assets/album-covers/om-kar-mhanata-lagli-samadhi.jpg" alt="ॐकार म्हणता लागली समाधी  अल्बम मुखपृष्ठ" loading="lazy" decoding="async"><div class="album-icon">♫</div><h3>ॐकार म्हणता लागली समाधी </h3><p class="album-price">डाउनलोड ₹100</p>
-          <button type="button" class="btn btn-outline album-play-all">▶ संपूर्ण अल्बम ऐका</button>
-          <div class="album-track-list"><div class="album-track"><span>1. Track 1</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/01-Track 1.mp3"></audio></div><div class="album-track"><span>2. Om Namo Om Namo Narayana Narayana</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/02-Om Namo Om Namo Narayana Narayana.mp3"></audio></div><div class="album-track"><span>3. Yogiraja yave ata</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/03-Yogiraja yave ata.mp3"></audio></div><div class="album-track"><span>4. Gururaya Swamiraya Padto Me Paya</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/04-Gururaya Swamiraya Padto Me Paya.mp3"></audio></div><div class="album-track"><span>5. Yogiraj Swami Mala Bhet Dyavi</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/05-Yogiraj Swami Mala Bhet Dyavi.mp3"></audio></div><div class="album-track"><span>6. Omkar Mhanata Lagli Samathi</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/06-Omkar Mhanata Lagli Samathi.mp3"></audio></div><div class="album-track"><span>7. Ye Mauliya सद्गुरू दर्शनya HanstrithSwamiya</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/07-Ye Mauliya सद्गुरू दर्शनya HanstrithSwamiya.mp3"></audio></div><div class="album-track"><span>8. Bhramharoop Dhyani YogirajSwami</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/08-Bhramharoop Dhyani YogirajSwami.mp3"></audio></div><div class="album-track"><span>9. Narayanroopi Narayan</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Om Kar Mhanata Lagli Samadhi/09-Narayanroopi Narayan.mp3"></audio></div></div>
-          <button type="button" class="btn btn-maroon album-buy" data-album="ॐकार म्हणता लागली समाधी" data-file="downloads/albums/Om-Kar-Mhanata-Lagli-Samadhi.zip">₹100 — अल्बम डाउनलोड करा</button>
-        </article>
-<article class="audio-album-card playable-album">
-          <img class="album-cover" src="assets/album-covers/bhawanand4.png" alt="भावानंद ४ अल्बम मुखपृष्ठ" loading="lazy" decoding="async"><div class="album-icon">♫</div><h3>भावानंद ४ </h3><p class="album-price">डाउनलोड ₹100</p>
-          <button type="button" class="btn btn-outline album-play-all">▶ संपूर्ण अल्बम ऐका</button>
-          <div class="album-track-list"><div class="album-track"><span>1. Ye G Renukai Maze Matapurche Aai</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Bhawanand4/01-Ye G Renukai Maze Matapurche Aai.mp3"></audio></div><div class="album-track"><span>2. Utsav Tuza Karu Amba Yei Mate Jagdambe</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Bhawanand4/02-Utsav Tuza Karu Amba Yei Mate Jagdambe.mp3"></audio></div><div class="album-track"><span>3. Aai Tuza Me Vas Me Vas</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Bhawanand4/03-Aai Tuza Me Vas Me Vas.mp3"></audio></div><div class="album-track"><span>4. Saktidandala Naman Maze</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Bhawanand4/04-Saktidandala Naman Maze.mp3"></audio></div><div class="album-track"><span>5. Ali Bhawani Bhaktasathi Darbari Dhawat</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Bhawanand4/05-Ali Bhawani Bhaktasathi Darbari Dhawat.mp3"></audio></div><div class="album-track"><span>6. Sagun Upasana Preame Hi</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Bhawanand4/06-Sagun Upasana Preame Hi.mp3"></audio></div><div class="album-track"><span>7. Jasi Tuzi Marji Asel Aai Tasech Karige Ata</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Bhawanand4/07-Jasi Tuzi Marji Asel Aai Tasech Karige Ata.mp3"></audio></div><div class="album-track"><span>8. Aaicha Aahe Sarva Adhar</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Bhawanand4/08-Aaicha Aahe Sarva Adhar.mp3"></audio></div><div class="album-track"><span>9. Ved Maz Mazya Krupalu Aaiche</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Bhawanand4/09-Ved Maz Mazya Krupalu Aaiche.mp3"></audio></div></div>
-          <button type="button" class="btn btn-maroon album-buy" data-album="भावानंद ४ " data-file="downloads/albums/Bhawanand4.zip">₹100 — अल्बम डाउनलोड करा</button>
-        </article>
-<article class="audio-album-card playable-album">
-          <img class="album-cover" src="assets/album-covers/nitya-nem-nami.jpg" alt="नित्य नेम नामी अल्बम मुखपृष्ठ" loading="lazy" decoding="async"><div class="album-icon">♫</div><h3>नित्य नेम नामी</h3><p class="album-price">डाउनलोड ₹100</p>
-          <button type="button" class="btn btn-outline album-play-all">▶ संपूर्ण अल्बम ऐका</button>
-          <div class="album-track-list"><div class="album-track"><span>1. Track 1</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Nitya Nem Nami/01-Track 1.mp3"></audio></div><div class="album-track"><span>2. Jagdamb Namsmaran</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Nitya Nem Nami/02-Jagdamb Namsmaran.mp3"></audio></div><div class="album-track"><span>3. Harihara Nandnathaya Aadre Adi Vanduya</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Nitya Nem Nami/03-Harihara Nandnathaya Aadre Adi Vanduya.mp3"></audio></div><div class="album-track"><span>4. Jay Ho Jay Shree Yati Raya</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Nitya Nem Nami/04-Jay Ho Jay Shree Yati Raya.mp3"></audio></div><div class="album-track"><span>5. Drisdh Kaditeg Mazya Harinandachi</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Nitya Nem Nami/05-Drisdh Kaditeg Mazya Harinandachi.mp3"></audio></div><div class="album-track"><span>6. Track 6</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Nitya Nem Nami/06-Track 6.mp3"></audio></div><div class="album-track"><span>7. Jay Jay Jay Hari Nanda Natha</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Nitya Nem Nami/07-Jay Jay Jay Hari Nanda Natha.mp3"></audio></div><div class="album-track"><span>8. Premanand Malala Aarti Karuya Bhaktimatela</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Nitya Nem Nami/08-Premanand Malala Aarti Karuya Bhaktimatela.mp3"></audio></div><div class="album-track"><span>9. Hanstrithy Yogiraja Yogiraja</span><audio controls controlsList="nodownload" preload="none" src="assets/audio/Nitya Nem Nami/09-Hanstrithy Yogiraja Yogiraja.mp3"></audio></div></div>
-          <button type="button" class="btn btn-maroon album-buy" data-album="नित्य नेम नामी" data-file="downloads/albums/Nitya-Nem-Nami.zip">₹100 — अल्बम डाउनलोड करा</button>
-        </article>
-      </div>
-      <div class="album-payment-box" id="albumPaymentBox" hidden>
-        <button type="button" class="album-close" id="albumClose" aria-label="बंद करा">×</button>
-        <h3 id="albumPayTitle">ऑडिओ अल्बम</h3>
-        <p><b>डाउनलोड किंमत: ₹100</b></p>
-        <p>अल्बम डाउनलोड करण्यासाठी खालील UPI पर्यायांपैकी एक वापरून ₹100 पेमेंट करा.</p>
-        <div class="album-upi-payment">
-          <div class="album-upi-details">
-            <p class="pay-label">UPI ID</p>
-            <div class="copy-row"><strong id="albumUpiId">anjanijoshi0804@okhdfcbank</strong><button type="button" class="copy-btn" data-copy="anjanijoshi0804@okhdfcbank">कॉपी</button></div>
-            <div class="upi-actions payment-brand-actions">
-              <a class="btn btn-maroon upi-pay" id="albumUpiPay" href="#">UPI ने ₹100 Pay करा</a>
-              <a class="btn btn-outline upi-pay" id="albumGooglePay" href="#">Google Pay</a>
-              <a class="btn btn-outline upi-pay" id="albumPhonePe" href="#">PhonePe</a>
-            </div>
-          </div>
-          <div class="album-qr-wrap">
-            <h4>▦ UPI / QR</h4>
-            <div class="dynamic-qr" id="albumDynamicUpiQr"><span>QR तयार होत आहे…</span></div>
-            <p>Scan &amp; Pay ₹100</p>
-          </div>
-        </div>
-        <label class="album-utr-label">Transaction ID / UTR<input id="albumUtr" type="text" inputmode="text" placeholder="उदा. 123456789012"></label>
-        <button type="button" class="btn btn-gold" id="albumConfirm">पेमेंट पूर्ण झाले — डाउनलोड करा</button>
-        <p class="donation-note">पेमेंट केल्यानंतर Transaction ID / UTR भरून डाउनलोड करा.</p>
-      </div>
-    </section>
 
+    <div class="section-heading">
+        <span>♫ भजनानंद</span>
+        <h2>॥ ऑडिओ अल्बम ॥</h2>
+
+        <p>
+            भजन, आरत्या, स्तोत्रे आणि भक्तिगीते ऑनलाईन मोफत ऐका.
+        </p>
+
+        <p>
+            <a class="btn btn-maroon"
+               href="downloads/apps/renuka-darbar.apk"
+               download>
+                Android App डाउनलोड करा
+            </a>
+        </p>
+    </div>
+
+
+    <!-- =========================
+         AUDIO INFORMATION
+    ========================== -->
+
+    <div class="audio-marathi-notice" role="note" style="text-align: center;">
+    <div style="text-align: center; width: 100%;">
+
+        <p style="text-align: center; margin: 0 0 10px;">
+            <strong>♪ ऐकणे व डाउनलोड ♪</strong>
+        </p>
+
+        <p style="text-align: center; margin: 5px 0;">
+            ऑनलाईन भजन व भक्तिगीते ऐकणे पूर्णपणे मोफत आहे.
+        </p>
+
+        <p style="text-align: center; margin: 5px 0;">
+            संपूर्ण अल्बम डाउनलोड करायचा असल्यास कृपया निर्धारित शुल्क भरून डाउनलोड करा.
+        </p>
+
+    </div>
+</div>
+
+    <!-- =========================
+         ALL AUDIO ALBUMS
+    ========================== -->
+
+    <div class="audio-album-grid playable-grid">
+
+
+        <!-- ======================================
+             1. भावानंद ३
+        ======================================= -->
+
+        <article class="audio-album-card playable-album">
+
+            <img class="album-cover"
+                 src="assets/album-covers/bhawanand3.png"
+                 alt="भावानंद ३ अल्बम मुखपृष्ठ"
+                 loading="lazy"
+                 decoding="async">
+
+            <div class="album-icon">♫</div>
+
+            <h3>भावानंद ३</h3>
+
+            <p class="album-price">
+                डाउनलोड ₹100
+            </p>
+
+            <button type="button"
+                    class="album-toggle"
+                    aria-expanded="false">
+                🎵 अल्बम उघडा
+            </button>
+
+            <button type="button"
+                    class="btn btn-outline album-play-all">
+                ▶ संपूर्ण अल्बम ऐका
+            </button>
+
+
+            <div class="album-track-list">
+
+                <div class="album-track">
+                    <span>1. Thay Thay Nachat Ganpati Ale</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/Bhawanand3/01-Thay Thay Nachat Ganpati Ale.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>2. Aai Dhav Ata Tu Lavkar Ye</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/Bhawanand3/02-Aai Dhav Ata Tu Lavkar Ye.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>3. Drusthi Aad Ka Ge Aai Zali Tuchi Ata</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/Bhawanand3/03-Drusthi Aad Ka Ge Aai Zali Tuchi Ata.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>4. Hari Hara Panduranga</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/Bhawanand3/04-Hari Hara Panduranga.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>5. Aaige Dakhvi Bramha Mala</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/Bhawanand3/05-Aaige Dakhvi Bramha Mala.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>6. SadGuru Krupa wahwi</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/Bhawanand3/06-SadGuru Krupa wahwi.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>7. Bhandaryachi Deva Tula Aavad</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/Bhawanand3/07-Bhandaryachi Deva Tula Aavad.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>8. Mazya Aaicha Sonyavani Rang</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/Bhawanand3/08-Mazya Aaicha Sonyavani Rang.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>9. Aai Dise Nayani Samori</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/Bhawanand3/09-Aai Dise Nayani Samori.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>10. Sari Jagmay Hi Amba</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/Bhawanand3/10-Sari Jagmay Hi Amba.mp3">
+                    </audio>
+                </div>
+
+            </div>
+
+
+            <button type="button"
+                    class="btn btn-maroon album-buy"
+                    data-album="भावानंद ३"
+                    data-file="downloads/albums/Bhawanand2.zip">
+                ₹100 — अल्बम डाउनलोड करा
+            </button>
+
+        </article>
+
+
+
+        <!-- ======================================
+             2. भावानंद २
+        ======================================= -->
+
+        <article class="audio-album-card playable-album">
+
+            <img class="album-cover"
+                 src="assets/album-covers/bhawanand2.png"
+                 alt="भावानंद २ अल्बम मुखपृष्ठ"
+                 loading="lazy"
+                 decoding="async">
+
+            <div class="album-icon">♫</div>
+
+            <h3>भावानंद २</h3>
+
+            <p class="album-price">
+                डाउनलोड ₹100
+            </p>
+
+            <button type="button"
+                    class="album-toggle"
+                    aria-expanded="false">
+                🎵 अल्बम उघडा
+            </button>
+
+            <button type="button"
+                    class="btn btn-outline album-play-all">
+                ▶ संपूर्ण अल्बम ऐका
+            </button>
+
+
+            <div class="album-track-list">
+
+                <div class="album-track">
+                    <span>1. Lambodar Girija Nanna Deva</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets\audio\Bhawanand2/01-Lambodar Girija Nanna Deva.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>2. Dhav Ata Ghei Aai</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/Bhawanand2/02-Dhav Ata Ghei Aai.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>3. Natli Natli Natli Aai</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/Bhawanand2/03-Natli Natli Natli Aai.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>4. Maya Tum Jivan (Hindi)</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/Bhawanand2/04-Maya Tum Jivan (Hindi).mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>5. Mazi May May May</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/Bhawanand2/05-Mazi May May May.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>6. Shiv Shankara Karuna Kara</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/Bhawanand2/06-Shiv Shankara Karuna Kara.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>7. Dhund Zala Darbar Aaicha</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/Bhawanand2/07-Dhund Zala Darbar Aaicha.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>8. Nahi Jagat Apule Koni</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/Bhawanand2/08-Nahi Jagat Apule Koni.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>9. Veiragya Dei Aai</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/Bhawanand2/09-Veiragya Dei Aai.mp3">
+                    </audio>
+                </div>
+
+            </div>
+
+
+            <button type="button"
+                    class="btn btn-maroon album-buy"
+                    data-album="भावानंद २"
+                    data-file="downloads/albums/Bhawanand3.zip">
+                ₹100 — अल्बम डाउनलोड करा
+            </button>
+
+        </article>
+
+
+
+        <!-- ======================================
+             3. आई बोल
+        ======================================= -->
+
+        <article class="audio-album-card playable-album">
+
+            <img class="album-cover"
+                 src="assets/album-covers/Aaibol.png"
+                 alt="आई बोल अल्बम मुखपृष्ठ"
+                 loading="lazy"
+                 decoding="async">
+
+            <div class="album-icon">♫</div>
+
+            <h3>आई बोल</h3>
+
+            <p class="album-price">
+                डाउनलोड ₹100
+            </p>
+
+            <button type="button"
+                    class="album-toggle"
+                    aria-expanded="false">
+                🎵 अल्बम उघडा
+            </button>
+
+            <button type="button"
+                    class="btn btn-outline album-play-all">
+                ▶ संपूर्ण अल्बम ऐका
+            </button>
+
+
+            <div class="album-track-list">
+
+                <div class="album-track">
+                    <span>1. Smarta yei dhauni</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/AAI BOL/01-Smarta yei dhauni.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>2. Jay Jay karto Ambecha</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/AAI BOL/02-Jay Jay karto Ambecha.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>3. Zala Anand Sarwana</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/AAI BOL/03-Zala Anand Sarwana.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>4. Aai Me Magen Jogawa</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/AAI BOL/04-Aai Me Magen Jogawa.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>5. Jau Nako Tasare</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/AAI BOL/05-Jau Nako Tasare.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>6. Ananad Mavena Gagnnat</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/AAI BOL/06-Ananad Mavena Gagnnat.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>7. Aai Bol</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/AAI BOL/07-Aai Bol.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>8. Vanduni Zauya Sharna</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/AAI BOL/08-Vanduni Zauya Sharna.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>9. Aaicha Gondhali</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/AAI BOL/09-Aaicha Gondhali.mp3">
+                    </audio>
+                </div>
+
+
+                <div class="album-track">
+                    <span>10. Arti Karu Hi Swamichi</span>
+
+                    <audio controls
+                           controlsList="nodownload"
+                           preload="none"
+                           src="assets/audio/AAI BOL/10-Arti Karu Hi Swamichi.mp3">
+                    </audio>
+                </div>
+
+            </div>
+
+
+            <button type="button"
+                    class="btn btn-maroon album-buy"
+                    data-album="आई बोल"
+                    data-file="downloads/albums/AAI BOL.zip">
+                ₹100 — अल्बम डाउनलोड करा
+            </button>
+
+        </article>
+
+
+
+        <!-- ======================================
+             4. नमामि हंसतीर्थाय
+        ======================================= -->
+
+        <article class="audio-album-card playable-album">
+
+            <img class="album-cover"
+                 src="assets/album-covers/namami-hanstirthay.png"
+                 alt="नमामि हंसतीर्थाय अल्बम मुखपृष्ठ"
+                 loading="lazy"
+                 decoding="async">
+
+            <div class="album-icon">♫</div>
+
+            <h3>नमामि हंसतीर्थाय</h3>
+
+            <p class="album-price">
+                डाउनलोड ₹100
+            </p>
+
+            <button type="button"
+                    class="album-toggle"
+                    aria-expanded="false">
+                🎵 अल्बम उघडा
+            </button>
+
+            <button type="button"
+                    class="btn btn-outline album-play-all">
+                ▶ संपूर्ण अल्बम ऐका
+            </button>
+
+
+            <div class="album-track-list">
+
+                <div class="album-track">
+                    <span>1. Om Namo Narayanay Hanstrith Swami Om</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Namami Hanstirthay/01-Om Namo Narayanay Hanstrith Swami Om.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>2. Jagisadwi Zali Premanandi Mala</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Namami Hanstirthay/02-Jagisadwi Zali Premanandi Mala.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>3. Guru Swarupi Ramave Dhani Guru Naamane Ramave Mani</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Namami Hanstirthay/03-Guru Swarupi Ramave Dhani Guru Naamane Ramave Mani.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>4. Namami Yogirajay</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Namami Hanstirthay/04-Namami Yogirajay.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>5. Jay Ho Jay Shree Yati Raya</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Namami Hanstirthay/05-Jay Ho Jay Shree Yati Raya.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>6. Renukai Tu Trigun Shakti Tu</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Namami Hanstirthay/06-Renukai Tu Trigun Shakti Tu.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>7. Aai Mauli Chhaya Sauli</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Namami Hanstirthay/07-Aai Mauli Chhaya Sauli.mp3"></audio>
+                </div>
+
+            </div>
+
+
+            <button type="button"
+                    class="btn btn-maroon album-buy"
+                    data-album="नमामि हंसतीर्थाय"
+                    data-file="downloads/albums/Namami-Hanstirthay.zip">
+                ₹100 — अल्बम डाउनलोड करा
+            </button>
+
+        </article>
+
+
+
+        <!-- ======================================
+             5. ॐकार म्हणता लागली समाधी
+        ======================================= -->
+
+        <article class="audio-album-card playable-album">
+
+            <img class="album-cover"
+                 src="assets/album-covers/om-kar-mhanata-lagli-samadhi.png"
+                 alt="ॐकार म्हणता लागली समाधी अल्बम मुखपृष्ठ"
+                 loading="lazy"
+                 decoding="async">
+
+            <div class="album-icon">♫</div>
+
+            <h3>ॐकार म्हणता लागली समाधी</h3>
+
+            <p class="album-price">
+                डाउनलोड ₹100
+            </p>
+
+            <button type="button"
+                    class="album-toggle"
+                    aria-expanded="false">
+                🎵 अल्बम उघडा
+            </button>
+
+            <button type="button"
+                    class="btn btn-outline album-play-all">
+                ▶ संपूर्ण अल्बम ऐका
+            </button>
+
+
+            <div class="album-track-list">
+
+                <div class="album-track">
+                    <span>1. Track 1</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Om Kar Mhanata Lagli Samadhi/01-Track 1.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>2. Om Namo Om Namo Narayana Narayana</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Om Kar Mhanata Lagli Samadhi/02-Om Namo Om Namo Narayana Narayana.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>3. Yogiraja yave ata</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Om Kar Mhanata Lagli Samadhi/03-Yogiraja yave ata.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>4. Gururaya Swamiraya Padto Me Paya</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Om Kar Mhanata Lagli Samadhi/04-Gururaya Swamiraya Padto Me Paya.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>5. Yogiraj Swami Mala Bhet Dyavi</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Om Kar Mhanata Lagli Samadhi/05-Yogiraj Swami Mala Bhet Dyavi.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>6. Omkar Mhanata Lagli Samathi</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Om Kar Mhanata Lagli Samadhi/06-Omkar Mhanata Lagli Samathi.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>7. Ye Mauliya सद्गुरू दर्शनya HanstrithSwamiya</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Om Kar Mhanata Lagli Samadhi/07-Ye Mauliya सद्गुरू दर्शनya HanstrithSwamiya.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>8. Bhramharoop Dhyani YogirajSwami</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Om Kar Mhanata Lagli Samadhi/08-Bhramharoop Dhyani YogirajSwami.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>9. Narayanroopi Narayan</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Om Kar Mhanata Lagli Samadhi/09-Narayanroopi Narayan.mp3"></audio>
+                </div>
+
+            </div>
+
+
+            <button type="button"
+                    class="btn btn-maroon album-buy"
+                    data-album="ॐकार म्हणता लागली समाधी"
+                    data-file="downloads/albums/Om-Kar-Mhanata-Lagli-Samadhi.zip">
+                ₹100 — अल्बम डाउनलोड करा
+            </button>
+
+        </article>
+
+
+
+        <!-- ======================================
+             6. भावानंद ४
+        ======================================= -->
+
+        <article class="audio-album-card playable-album">
+
+            <img class="album-cover"
+                 src="assets/album-covers/bhawanand4.png"
+                 alt="भावानंद ४ अल्बम मुखपृष्ठ"
+                 loading="lazy"
+                 decoding="async">
+
+            <div class="album-icon">♫</div>
+
+            <h3>भावानंद ४</h3>
+
+            <p class="album-price">
+                डाउनलोड ₹100
+            </p>
+
+            <button type="button"
+                    class="album-toggle"
+                    aria-expanded="false">
+                🎵 अल्बम उघडा
+            </button>
+
+            <button type="button"
+                    class="btn btn-outline album-play-all">
+                ▶ संपूर्ण अल्बम ऐका
+            </button>
+
+
+            <div class="album-track-list">
+
+                <div class="album-track">
+                    <span>1. Ye G Renukai Maze Matapurche Aai</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Bhawanand4/01-Ye G Renukai Maze Matapurche Aai.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>2. Utsav Tuza Karu Amba Yei Mate Jagdambe</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Bhawanand4/02-Utsav Tuza Karu Amba Yei Mate Jagdambe.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>3. Aai Tuza Me Vas Me Vas</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Bhawanand4/03-Aai Tuza Me Vas Me Vas.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>4. Saktidandala Naman Maze</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Bhawanand4/04-Saktidandala Naman Maze.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>5. Ali Bhawani Bhaktasathi Darbari Dhawat</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Bhawanand4/05-Ali Bhawani Bhaktasathi Darbari Dhawat.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>6. Sagun Upasana Preame Hi</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Bhawanand4/06-Sagun Upasana Preame Hi.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>7. Jasi Tuzi Marji Asel Aai Tasech Karige Ata</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Bhawanand4/07-Jasi Tuzi Marji Asel Aai Tasech Karige Ata.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>8. Aaicha Aahe Sarva Adhar</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Bhawanand4/08-Aaicha Aahe Sarva Adhar.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>9. Ved Maz Mazya Krupalu Aaiche</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Bhawanand4/09-Ved Maz Mazya Krupalu Aaiche.mp3"></audio>
+                </div>
+
+            </div>
+
+
+            <button type="button"
+                    class="btn btn-maroon album-buy"
+                    data-album="भावानंद ४"
+                    data-file="downloads/albums/Bhawanand4.zip">
+                ₹100 — अल्बम डाउनलोड करा
+            </button>
+
+        </article>
+
+
+
+        <!-- ======================================
+             7. नित्य नेम नामी
+        ======================================= -->
+
+        <article class="audio-album-card playable-album">
+
+            <img class="album-cover"
+                 src="assets/album-covers/nitya-nem-nami.png"
+                 alt="नित्य नेम नामी अल्बम मुखपृष्ठ"
+                 loading="lazy"
+                 decoding="async">
+
+            <div class="album-icon">♫</div>
+
+            <h3>नित्य नेम नामी</h3>
+
+            <p class="album-price">
+                डाउनलोड ₹100
+            </p>
+
+            <button type="button"
+                    class="album-toggle"
+                    aria-expanded="false">
+                🎵 अल्बम उघडा
+            </button>
+
+            <button type="button"
+                    class="btn btn-outline album-play-all">
+                ▶ संपूर्ण अल्बम ऐका
+            </button>
+
+
+            <div class="album-track-list">
+
+                <div class="album-track">
+                    <span>1. Track 1</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Nitya Nem Nami/01-Track 1.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>2. Jagdamb Namsmaran</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Nitya Nem Nami/02-Jagdamb Namsmaran.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>3. Harihara Nandnathaya Aadre Adi Vanduya</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Nitya Nem Nami/03-Harihara Nandnathaya Aadre Adi Vanduya.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>4. Jay Ho Jay Shree Yati Raya</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Nitya Nem Nami/04-Jay Ho Jay Shree Yati Raya.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>5. Drisdh Kaditeg Mazya Harinandachi</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Nitya Nem Nami/05-Drisdh Kaditeg Mazya Harinandachi.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>6. Track 6</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Nitya Nem Nami/06-Track 6.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>7. Jay Jay Jay Hari Nanda Natha</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Nitya Nem Nami/07-Jay Jay Jay Hari Nanda Natha.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>8. Premanand Malala Aarti Karuya Bhaktimatela</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Nitya Nem Nami/08-Premanand Malala Aarti Karuya Bhaktimatela.mp3"></audio>
+                </div>
+
+                <div class="album-track">
+                    <span>9. Hanstrithy Yogiraja Yogiraja</span>
+                    <audio controls controlsList="nodownload" preload="none"
+                           src="assets/audio/Nitya Nem Nami/09-Hanstrithy Yogiraja Yogiraja.mp3"></audio>
+                </div>
+
+            </div>
+
+
+            <button type="button"
+                    class="btn btn-maroon album-buy"
+                    data-album="नित्य नेम नामी"
+                    data-file="downloads/albums/Nitya-Nem-Nami.zip">
+                ₹100 — अल्बम डाउनलोड करा
+            </button>
+
+        </article>
+
+    </div>
+
+
+    <!-- ==========================================
+         ALBUM PAYMENT BOX
+    =========================================== -->
+
+    <div class="album-payment-box"
+         id="albumPaymentBox"
+         hidden>
+
+        <button type="button"
+                class="album-close"
+                id="albumClose"
+                aria-label="बंद करा">
+            ×
+        </button>
+
+        <h3 id="albumPayTitle">
+            ऑडिओ अल्बम
+        </h3>
+
+        <p>
+            <b>डाउनलोड किंमत: ₹100</b>
+        </p>
+
+        <p>
+            अल्बम डाउनलोड करण्यासाठी खालील UPI पर्यायांपैकी एक वापरून ₹100 पेमेंट करा.
+        </p>
+
+
+        <div class="album-upi-payment">
+
+            <div class="album-upi-details">
+
+                <p class="pay-label">
+                    UPI ID
+                </p>
+
+                <div class="copy-row">
+
+                    <strong id="albumUpiId">
+                        anjanijoshi0804@okhdfcbank
+                    </strong>
+
+                    <button type="button"
+                            class="copy-btn"
+                            data-copy="anjanijoshi0804@okhdfcbank">
+                        कॉपी
+                    </button>
+
+                </div>
+
+
+                <div class="upi-actions payment-brand-actions">
+
+                    <a class="btn btn-maroon upi-pay"
+                       id="albumUpiPay"
+                       href="#">
+                        UPI ने ₹100 Pay करा
+                    </a>
+
+                    <a class="btn btn-outline upi-pay"
+                       id="albumGooglePay"
+                       href="#">
+                        Google Pay
+                    </a>
+
+                    <a class="btn btn-outline upi-pay"
+                       id="albumPhonePe"
+                       href="#">
+                        PhonePe
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <div class="album-qr-wrap">
+
+                <h4>
+                    ▦ UPI / QR
+                </h4>
+
+                <div class="dynamic-qr"
+                     id="albumDynamicUpiQr">
+
+                    <span>
+                        QR तयार होत आहे…
+                    </span>
+
+                </div>
+
+                <p>
+                    Scan &amp; Pay ₹100
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <label class="album-utr-label">
+
+            Transaction ID / UTR
+
+            <input id="albumUtr"
+                   type="text"
+                   inputmode="text"
+                   placeholder="उदा. 123456789012">
+
+        </label>
+
+
+        <button type="button"
+                class="btn btn-gold"
+                id="albumConfirm">
+
+            पेमेंट पूर्ण झाले — डाउनलोड करा
+
+        </button>
+
+
+        <p class="donation-note">
+            पेमेंट केल्यानंतर Transaction ID / UTR भरून डाउनलोड करा.
+        </p>
+
+    </div>
+
+</section>
 <section class="section-wrap reveal" id="seva-info">
 <div class="section-heading"><span>भक्तिसेवा</span><h2>॥ पूजा व अभिषेक सेवा ॥</h2><p>श्री रेणुका दरबार येथे भक्तांना श्रद्धापूर्वक पूजा व अभिषेक सेवांमध्ये सहभागी होता येते.</p></div>
 <div class="service-grid">
@@ -2931,6 +4097,123 @@ section[id], article[id]{scroll-margin-top:82px;}
   function restartAuto(){clearInterval(autoTimer);autoTimer=setInterval(autoSlide,4000);}
   var firstPhoto=document.querySelector('#gallery [data-kind-panel="photo"] .gallery-category-btn'); if(firstPhoto)showCategory('photo',firstPhoto.dataset.target);
   restartAuto();
+})();
+</script>
+<script>
+/* =====================================================
+   FINAL AUDIO ALBUM OPEN / CLOSE FIX
+   ===================================================== */
+(function () {
+
+    function initAlbums() {
+
+        const section = document.getElementById('bhajananand-section');
+        if (!section) return;
+
+        const albums = section.querySelectorAll('.playable-album');
+
+        albums.forEach(function (album) {
+
+            /* Add toggle button to old albums automatically */
+            let toggle = album.querySelector('.album-toggle');
+
+            if (!toggle) {
+
+                toggle = document.createElement('button');
+                toggle.type = 'button';
+                toggle.className = 'album-toggle';
+                toggle.setAttribute('aria-expanded', 'false');
+                toggle.textContent = '🎵 अल्बम उघडा';
+
+                const price = album.querySelector('.album-price');
+
+                if (price) {
+                    price.insertAdjacentElement('afterend', toggle);
+                }
+            }
+
+            /* Prevent duplicate listener */
+            if (toggle.dataset.ready === 'yes') return;
+            toggle.dataset.ready = 'yes';
+
+            toggle.addEventListener('click', function (event) {
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                const opening =
+                    !album.classList.contains('is-open');
+
+                /* Close every album first */
+                albums.forEach(function (otherAlbum) {
+
+                    otherAlbum.classList.remove('is-open');
+
+                    const otherToggle =
+                        otherAlbum.querySelector('.album-toggle');
+
+                    if (otherToggle) {
+                        otherToggle.textContent =
+                            '🎵 अल्बम उघडा';
+
+                        otherToggle.setAttribute(
+                            'aria-expanded',
+                            'false'
+                        );
+                    }
+
+                    /* Stop audio in closed albums */
+                    otherAlbum
+                        .querySelectorAll('audio')
+                        .forEach(function (audio) {
+                            audio.pause();
+                        });
+
+                });
+
+                /* Open clicked album */
+                if (opening) {
+
+                    album.classList.add('is-open');
+
+                    toggle.textContent =
+                        '▲ अल्बम बंद करा';
+
+                    toggle.setAttribute(
+                        'aria-expanded',
+                        'true'
+                    );
+
+                    setTimeout(function () {
+
+                        album.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+
+                    }, 100);
+                }
+
+            });
+
+        });
+
+    }
+
+    /* Works whether script loads before or after DOM */
+    if (document.readyState === 'loading') {
+
+        document.addEventListener(
+            'DOMContentLoaded',
+            initAlbums
+        );
+
+    } else {
+
+        initAlbums();
+
+    }
+
 })();
 </script>
 </body>
