@@ -1456,3 +1456,86 @@ finally{
   }
 
 })();
+
+
+// ===== Automatic Ashram Feed photo categories in Gallery - ONE shared category slider system =====
+(function(){
+  const FEED_API='https://script.google.com/macros/s/AKfycbwfDxJVMliTo_Q-1ZYqp6psawfv9ZPgYoUCug0tvtWupeA759HC-RS76fuH9F4wbtfOqg/exec';
+  const escHtml=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const categoryOf=p=>{
+    const explicit=String(p.galleryCategory||p.GalleryCategory||'').trim();
+    if(explicit)return explicit;
+    const m=String(p.caption||'').match(/^\[GalleryCategory:(.*?)\]\n?/);
+    return (m&&m[1]||p.date||'आश्रम उपक्रम').trim();
+  };
+
+  function activateCategory(photoPanel,tabs,target){
+    tabs.querySelectorAll('.gallery-category-btn').forEach(b=>{
+      b.classList.toggle('active',b.dataset.target===target);
+    });
+    photoPanel.querySelectorAll('.gallery-category-panel').forEach(panel=>{
+      panel.classList.toggle('active',panel.dataset.category===target);
+    });
+    const active=photoPanel.querySelector('.gallery-category-panel.active .event-media-slider');
+    if(active) active.scrollTo({left:0,behavior:'auto'});
+  }
+
+  async function initFeedGallery(){
+    try{
+      const photoPanel=document.querySelector('#gallery [data-kind-panel="photo"]');
+      if(!photoPanel)return;
+
+      const r=await fetch(FEED_API+'?action=getPosts&t='+Date.now(),{cache:'no-store'});
+      const d=await r.json();
+      if(!d.ok)return;
+
+      const posts=(d.posts||[]).filter(p=>Array.isArray(p.photos)&&p.photos.filter(Boolean).length);
+      if(!posts.length)return;
+
+      let tabs=photoPanel.querySelector('.gallery-category-tabs');
+      if(!tabs){
+        tabs=document.createElement('div');
+        tabs.className='gallery-category-tabs';
+        photoPanel.insertBefore(tabs,photoPanel.firstChild);
+      }
+
+      posts.forEach((p,n)=>{
+        const photos=p.photos.filter(Boolean);
+        const title=categoryOf(p);
+        const key='feed-'+String(p.postId||n).replace(/[^a-zA-Z0-9_-]/g,'');
+        if(photoPanel.querySelector('[data-category="'+key+'"]'))return;
+
+        const btn=document.createElement('button');
+        btn.type='button';
+        btn.className='gallery-category-btn feed-gallery-category';
+        btn.textContent=title;
+        btn.dataset.target=key;
+        tabs.appendChild(btn);
+
+        const section=document.createElement('section');
+        // IMPORTANT: feed photos use the SAME category-panel system as all existing gallery categories.
+        // This prevents a second independent slider from appearing below the selected slider.
+        section.className='event-gallery-block gallery-category-panel photo-category-panel feed-gallery-block';
+        section.dataset.category=key;
+        section.innerHTML=
+          '<div class="event-gallery-head"><div><span>छायाचित्रे • '+photos.length+'</span><h3>'+escHtml(title)+'</h3></div>'+
+          '<div class="event-slider-nav"><button type="button" class="event-prev" aria-label="मागील">‹</button><button type="button" class="event-next" aria-label="पुढील">›</button></div></div>'+
+          '<div class="event-media-slider feed-photo-slider">'+
+          photos.map((u,i)=>
+            '<button class="event-media-card photo-card feed-photo-card" type="button" data-gallery-src="'+escHtml(u)+'" data-gallery-alt="'+escHtml(title)+' - '+(i+1)+'"><img src="'+escHtml(u)+'" alt="'+escHtml(title)+' - '+(i+1)+'" loading="lazy" referrerpolicy="no-referrer"></button>'
+          ).join('')+'</div>';
+        photoPanel.appendChild(section);
+
+        const slider=section.querySelector('.event-media-slider');
+        const prev=section.querySelector('.event-prev');
+        const next=section.querySelector('.event-next');
+        if(prev)prev.addEventListener('click',()=>slider.scrollBy({left:-Math.max(280,slider.clientWidth),behavior:'smooth'}));
+        if(next)next.addEventListener('click',()=>slider.scrollBy({left: Math.max(280,slider.clientWidth),behavior:'smooth'}));
+        btn.addEventListener('click',()=>activateCategory(photoPanel,tabs,key));
+      });
+    }catch(e){console.warn('Ashram Feed Gallery:',e)}
+  }
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initFeedGallery);
+  else initFeedGallery();
+})();

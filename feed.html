@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="mr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#65080d">
+<title>आश्रम उपक्रम | श्री क्षेत्र रेणुका दरबार, सोनई</title>
+<link rel="stylesheet" href="style.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f4efe7;color:#321b17;font-family:"Noto Sans Devanagari","Mangal",system-ui,sans-serif}
+.feed-top{position:sticky;top:0;z-index:20;background:rgba(101,8,13,.97);color:#fff3cf;border-bottom:2px solid #d6a33a;box-shadow:0 4px 16px #3e020622}
+.feed-top-inner{width:min(680px,calc(100% - 24px));height:58px;margin:auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px}
+.feed-home{justify-self:start;color:#f7d77b;text-decoration:none;font-weight:900;padding:7px 10px;border-radius:10px}.feed-home:hover{background:#ffffff12;color:#fff3cf}
+.feed-title{font-weight:1000;font-size:23px;color:#fff3cf;text-align:center;white-space:nowrap}
+.feed-page{width:min(680px,calc(100% - 18px));margin:18px auto 60px}
+.profile-card{display:flex;align-items:center;gap:13px;background:#fff;border:1px solid #e5d3b5;border-radius:18px;padding:14px 16px;margin-bottom:14px;box-shadow:0 6px 22px rgba(70,20,12,.07)}
+.profile-logo{width:58px;height:58px;object-fit:contain;border:0;background:transparent}
+.profile-card b{display:block;color:#65080d;font-size:18px} .profile-card small{color:#7d665e}
+.social-post{background:#fff;border:1px solid #e2d1b5;border-radius:18px;overflow:hidden;margin:0 0 18px;box-shadow:0 8px 25px rgba(67,18,12,.08)}
+.sp-head{display:flex;align-items:center;gap:11px;padding:12px 14px}
+.sp-logo{width:45px;height:45px;object-fit:contain;border:0;background:transparent}
+.sp-name{font-weight:900;color:#65080d;font-size:15px} .sp-meta{font-size:12px;color:#816a61;margin-top:2px}
+.sp-media{position:relative;background:#3b0a0d;width:100%;display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:300px;max-height:680px}
+.sp-media img{display:block;width:100%;height:auto;max-height:680px;object-fit:contain;margin:auto;background:#2c0507}
+.sp-count{position:absolute;right:11px;top:11px;background:rgba(0,0,0,.68);color:#fff;padding:5px 9px;border-radius:999px;font-size:12px}
+.sp-arrow{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border:0;border-radius:50%;background:rgba(50,20,16,.72);color:#fff;font-size:26px;cursor:pointer;display:grid;place-items:center}
+.sp-prev{left:10px} .sp-next{right:10px}
+.sp-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:5px;padding:5px 7px;border-radius:999px;background:#0004}
+.sp-dot{width:7px;height:7px;border-radius:50%;background:#ffffff80} .sp-dot.on{background:#fff}
+.sp-body{padding:12px 14px 5px}
+.sp-caption{white-space:pre-line;line-height:1.72;font-size:15px;overflow-wrap:anywhere}
+.sp-stats{padding:9px 14px;color:#765d54;font-size:13px;border-top:1px solid #ecd7a4;border-bottom:1px solid #ecd7a4}
+.sp-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:10px 12px 12px;border-bottom:1px solid #eee1ce;background:#fffdf9}
+.sp-actions button{min-width:0;border:1px solid #ead7b7;background:#fffaf0;padding:10px 8px;font-weight:900;color:#761218;cursor:pointer;border-radius:999px;font-size:13px;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 2px 8px rgba(67,18,12,.06);transition:.2s ease}
+.sp-actions button:hover,.sp-actions button:focus{background:#fff0cf;border-color:#d6a33a;color:#65080d;transform:translateY(-1px)}
+.sp-actions button.liked{background:#fff0cf;border-color:#d6a33a;color:#9b1c18}
+.sp-actions button .action-icon{color:#c58c21;font-size:16px;line-height:1}
+@media(max-width:420px){.sp-actions{gap:6px;padding:9px 8px 10px}.sp-actions button{font-size:12px;padding:9px 5px;gap:4px}}
+.comments{padding:0 14px 14px;background:#fffdf9}
+.comment-form{display:grid;grid-template-columns:140px 1fr auto;gap:7px;padding-top:12px}
+.comment-form input{min-width:0;padding:10px;border:1px solid #ddcdb6;border-radius:10px;font:inherit}
+.comment-form button{border:0;border-radius:10px;background:#65080d;color:#fff;font-weight:900;padding:10px 13px;cursor:pointer}
+.comment-list{margin-top:10px} .comment{padding:9px 0;border-top:1px solid #f0e5d5;font-size:14px;line-height:1.55} .comment b{color:#65080d;margin-right:5px}
+.video-link{display:block;margin:10px 14px;color:#65080d;font-weight:900;text-decoration:none}
+.feed-empty{padding:40px;text-align:center;background:#fff;border-radius:18px}
+.feed-refresh{position:fixed;right:12px;bottom:12px;z-index:30;background:#65080d;color:#fff3cf;border:1px solid #d6a33a;border-radius:999px;padding:7px 11px;font-size:12px;box-shadow:0 4px 15px #3e020622;opacity:.92}
+@media(max-width:600px){
+ .feed-title{font-size:19px}.feed-top-inner{height:54px;grid-template-columns:82px 1fr 82px}.feed-home{font-size:12px;padding:6px 3px}
+ .feed-page{width:100%;margin-top:0} .profile-card{border-radius:0;margin-bottom:8px;border-left:0;border-right:0}
+ .social-post{border-radius:0;margin-bottom:10px;border-left:0;border-right:0}
+ .sp-media{min-height:240px;max-height:560px} .sp-media img{max-height:560px}
+ .comment-form{grid-template-columns:1fr} .feed-top-inner{width:calc(100% - 20px)} .feed-title{font-size:16px}
+}
+
+.feed-masthead{background:linear-gradient(90deg,#fffaf0,#fff0cf,#fffaf0);border-bottom:1px solid #d6a33a}
+.feed-masthead-inner{width:min(1320px,calc(100% - 32px));margin:auto;min-height:112px;display:grid;grid-template-columns:155px 1fr 155px;align-items:center;gap:18px}
+.feed-masthead-logo{width:125px;height:125px;object-fit:contain;justify-self:center}
+.feed-masthead-copy{text-align:center}
+.feed-masthead-copy .guru-line{font-weight:900;color:#7a493b;font-size:clamp(15px,1.45vw,23px);margin-bottom:7px}
+.feed-masthead-copy h1{margin:0;color:#72070c;font-weight:1000;font-size:clamp(25px,2.65vw,42px);line-height:1.16}
+@media(max-width:760px){
+ .feed-masthead-inner{min-height:auto;grid-template-columns:86px 1fr;padding:12px 0;gap:10px}
+ .feed-masthead-logo{width:82px;height:82px}
+ .feed-masthead-copy{text-align:left}
+ .feed-masthead-copy .guru-line{font-size:11px;line-height:1.35;margin-bottom:4px}
+ .feed-masthead-copy h1{font-size:clamp(18px,5vw,25px);line-height:1.25}
+}
+
+
+.shared-highlight{animation:sharedGlow 2.2s ease-out 1}
+@keyframes sharedGlow{0%{box-shadow:0 0 0 5px rgba(214,163,58,.55),0 8px 25px rgba(67,18,12,.08)}100%{box-shadow:0 8px 25px rgba(67,18,12,.08)}}
+</style>
+</head>
+<body>
+
+<section class="feed-masthead" aria-label="श्री क्षेत्र रेणुका दरबार">
+  <div class="feed-masthead-inner">
+    <img class="feed-masthead-logo" src="assets/sansthan-logo.png" alt="श्री क्षेत्र रेणुका दरबार">
+    <div class="feed-masthead-copy">
+      <div class="guru-line">प. पू. माता प्रेमानंदीनाथ महाराज पादुका चरित्रेवल ट्रस्ट संचालित</div>
+      <h1>श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ काचमंदीर सोनई</h1>
+    </div>
+    <span aria-hidden="true"></span>
+  </div>
+</section>
+
+<header class="feed-top"><div class="feed-top-inner"><a class="feed-home" href="index.html">← मुख्यपृष्ठ</a><div class="feed-title">🛕 आश्रम उपक्रम</div><span></span></div></header>
+<main class="feed-page">
+<div id="feed"><div class="feed-empty">पोस्ट लोड होत आहेत...</div></div>
+</main>
+<script>
+const API='https://script.google.com/macros/s/AKfycbwfDxJVMliTo_Q-1ZYqp6psawfv9ZPgYoUCug0tvtWupeA759HC-RS76fuH9F4wbtfOqg/exec';
+
+function esc(s){
+  return String(s ?? '').replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+function cleanCaption(s){
+  return String(s || '').replace(/^\[GalleryCategory:.*?\](?:\r?\n)?/, '');
+}
+
+let visitorId = 'V' + Date.now() + Math.random().toString(36).slice(2);
+try {
+  const savedVisitor = window.localStorage ? localStorage.getItem('rdFeedVisitor') : '';
+  if (savedVisitor) {
+    visitorId = savedVisitor;
+  } else if (window.localStorage) {
+    localStorage.setItem('rdFeedVisitor', visitorId);
+  }
+} catch (e) {
+  // Feed must still load when storage is blocked/private.
+}
+
+async function send(data){
+  const r = await fetch(API, {
+    method:'POST',
+    headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body:JSON.stringify(data)
+  });
+  const text = await r.text();
+  let d;
+  try { d = JSON.parse(text); }
+  catch(e){ throw new Error('Server response is not valid JSON.'); }
+  if (!d.ok) throw new Error(d.message || d.error || 'Request failed.');
+  return d;
+}
+
+function postCard(p){
+  const photos = Array.isArray(p.photos) ? p.photos.filter(Boolean) : [];
+  const caption = cleanCaption(p.caption);
+
+  const media = photos.length ? `
+    <div class="sp-media" data-i="0"
+         ontouchstart="touchStart(event)"
+         ontouchend="touchEnd(event,'${esc(p.postId)}')">
+      ${photos.map((u,i)=>`
+        <img ${i ? `data-src="${esc(u)}"` : `src="${esc(u)}"`}
+             alt="${esc(caption.slice(0,80))}"
+             loading="${i ? 'lazy' : 'eager'}"
+             style="${i ? 'display:none' : 'display:block'}">
+      `).join('')}
+      ${photos.length > 1 ? `
+        <button type="button" class="sp-arrow sp-prev" onclick="slide('${esc(p.postId)}',-1)" aria-label="Previous photo">‹</button>
+        <button type="button" class="sp-arrow sp-next" onclick="slide('${esc(p.postId)}',1)" aria-label="Next photo">›</button>
+        <div class="sp-count">1/${photos.length}</div>
+        <div class="sp-dots">${photos.map((_,i)=>`<i class="sp-dot ${i ? '' : 'on'}"></i>`).join('')}</div>
+      ` : ''}
+    </div>` : '';
+
+  return `
+    <article class="social-post" id="post-${esc(p.postId)}">
+      <div class="sp-head">
+        <img class="sp-logo" src="assets/sansthan-logo.png" alt="">
+        <div>
+          <div class="sp-name">श्री क्षेत्र रेणुका दरबार, सोनई</div>
+          <div class="sp-meta">${esc(p.location || 'सोनई, अहिल्यानगर')} • ${esc(p.date || '')}</div>
+        </div>
+      </div>
+
+      ${media}
+
+      ${p.videoURL ? `<a class="video-link" href="${esc(p.videoURL)}" target="_blank" rel="noopener">▶ Watch Video</a>` : ''}
+<div class="sp-body"><div class="sp-caption">${esc(caption)}</div></div>
+
+      <div class="sp-stats">
+        <span class="likes">❤️ 0 Likes</span> ·
+        <span class="cc">💬 0 Comments</span>
+      </div>
+
+      <div class="sp-actions">
+        <button type="button" onclick="likePost('${esc(p.postId)}',this)"><span class="action-icon">♡</span> Like</button>
+        <button type="button" onclick="toggleComments('${esc(p.postId)}')"><span class="action-icon">💬</span> Comment</button>
+        <button type="button" onclick="sharePost('${esc(p.postId)}')"><span class="action-icon">↗</span> Share</button>
+      </div>
+
+      <div class="comments" id="comments-${esc(p.postId)}" hidden></div>
+    </article>`;
+}
+
+const FEED_CACHE_KEY='rdAshramFeedCacheV1';
+const FEED_CACHE_MAX_AGE=10*60*1000;
+
+function renderPosts(posts){
+  const holder=document.getElementById('feed');
+  if(!holder)return;
+  holder.innerHTML=posts.length
+    ? posts.map(postCard).join('')
+    : '<div class="feed-empty">अजून पोस्ट नाहीत.</div>';
+
+  // Stats deliberately load after the visible post content.
+  setTimeout(()=>posts.forEach(p=>loadStats(p.postId)),150);
+
+  const hash=decodeURIComponent(location.hash||'');
+  if(hash.startsWith('#post-')){
+    setTimeout(()=>{
+      const el=document.getElementById(hash.slice(1));
+      if(el){
+        el.scrollIntoView({behavior:'smooth',block:'start'});
+        el.classList.add('shared-highlight');
+      }
+    },250);
+  }
+}
+
+function readFeedCache(){
+  try{
+    const raw=localStorage.getItem(FEED_CACHE_KEY);
+    if(!raw)return null;
+    const cached=JSON.parse(raw);
+    if(!cached || !Array.isArray(cached.posts))return null;
+    return cached;
+  }catch(e){return null}
+}
+
+function saveFeedCache(posts){
+  try{
+    localStorage.setItem(FEED_CACHE_KEY,JSON.stringify({savedAt:Date.now(),posts:posts}));
+  }catch(e){}
+}
+
+function refreshIndicator(show){
+  let el=document.getElementById('feedRefresh');
+  if(show){
+    if(!el){
+      el=document.createElement('div');
+      el.id='feedRefresh';
+      el.className='feed-refresh';
+      el.textContent='नवीन पोस्ट तपासत आहे…';
+      document.body.appendChild(el);
+    }
+  }else if(el){el.remove()}
+}
+
+async function fetchFreshPosts(showIndicator){
+  if(showIndicator)refreshIndicator(true);
+  try{
+    // No changing timestamp and no "no-store": browser/network caching may now help.
+    const r=await fetch(API+'?action=getPosts');
+    const d=await r.json();
+    if(!d.ok)throw new Error(d.message||'Feed could not be loaded.');
+    const posts=Array.isArray(d.posts)?d.posts:[];
+    saveFeedCache(posts);
+    renderPosts(posts);
+  }finally{
+    if(showIndicator)refreshIndicator(false);
+  }
+}
+
+async function loadFeed(){
+  const holder=document.getElementById('feed');
+  if(!holder)return;
+
+  const cached=readFeedCache();
+  if(cached){
+    // Show saved posts immediately, then silently refresh in background.
+    renderPosts(cached.posts);
+    fetchFreshPosts(false).catch(()=>{});
+    return;
+  }
+
+  holder.innerHTML='<div class="feed-empty">पोस्ट उघडत आहेत...</div>';
+  try{
+    await fetchFreshPosts(false);
+  }catch(e){
+    holder.innerHTML='<div class="feed-empty">पोस्ट लोड झाले नाहीत.<br><small>'+esc(e.message)+'</small></div>';
+  }
+}
+
+function slide(id, direction){
+  const article = document.getElementById('post-' + id);
+  if (!article) return;
+  const box = article.querySelector('.sp-media');
+  if (!box) return;
+  const imgs = [...box.querySelectorAll('img')];
+  if (imgs.length < 2) return;
+
+  let i = (Number(box.dataset.i || 0) + direction + imgs.length) % imgs.length;
+  box.dataset.i = i;
+  imgs.forEach((img,n) => {
+    if (n === i && !img.src && img.dataset.src) img.src = img.dataset.src;
+    img.style.display = n === i ? 'block' : 'none';
+  });
+
+  const count = box.querySelector('.sp-count');
+  if (count) count.textContent = (i + 1) + '/' + imgs.length;
+  box.querySelectorAll('.sp-dot').forEach((dot,n) => dot.classList.toggle('on', n === i));
+}
+
+let touchX = 0;
+function touchStart(e){
+  touchX = e.changedTouches[0].clientX;
+}
+function touchEnd(e,id){
+  const dx = e.changedTouches[0].clientX - touchX;
+  if (Math.abs(dx) > 45) slide(id, dx < 0 ? 1 : -1);
+}
+
+async function loadStats(id){
+  try {
+    const r = await fetch(API + '?action=getSocial&postId=' + encodeURIComponent(id) + '&t=' + Date.now(), {cache:'no-store'});
+    const d = await r.json();
+    const article = document.getElementById('post-' + id);
+    if (d.ok && article) {
+      article.querySelector('.likes').textContent = '❤️ ' + Number(d.likes || 0) + ' Likes';
+      article.querySelector('.cc').textContent = '💬 ' + Number(d.comments || 0) + ' Comments';
+    }
+  } catch(e) {}
+}
+
+async function likePost(id, button){
+  try {
+    const d = await send({action:'likePost',postId:id,visitorId:visitorId});
+    button.classList.add('liked');
+    button.innerHTML = '<span class="action-icon">♥</span> Liked';
+
+    const article = document.getElementById('post-' + id);
+    if (article) {
+      article.querySelector('.likes').textContent = '❤️ ' + Number(d.likes || 0) + ' Likes';
+      article.querySelector('.cc').textContent = '💬 ' + Number(d.comments || 0) + ' Comments';
+    }
+  } catch(e) {
+    alert('Like failed: ' + e.message);
+  }
+}
+
+async function toggleComments(id){
+  const box = document.getElementById('comments-' + id);
+  if (!box) return;
+
+  box.hidden = !box.hidden;
+  if (box.hidden) return;
+
+  try {
+    const r = await fetch(API + '?action=getComments&postId=' + encodeURIComponent(id) + '&t=' + Date.now(), {cache:'no-store'});
+    const d = await r.json();
+    if (!d.ok) throw new Error(d.message || 'Comments could not be loaded.');
+
+    box.innerHTML = `
+      <div class="comment-form">
+        <input class="cn" maxlength="60" placeholder="Your name">
+        <input class="ct" maxlength="1000" placeholder="Write a comment...">
+        <button type="button" onclick="addComment('${esc(id)}')">Post</button>
+      </div>
+      <div class="comment-list">
+        ${(d.comments || []).map(c => `<div class="comment"><b>${esc(c.name)}</b> ${esc(c.comment)}</div>`).join('')}
+      </div>`;
+  } catch(e) {
+    box.innerHTML = '<div class="comment">Comment failed: ' + esc(e.message) + '</div>';
+  }
+}
+
+async function addComment(id){
+  const box = document.getElementById('comments-' + id);
+  const name = box.querySelector('.cn').value.trim();
+  const comment = box.querySelector('.ct').value.trim();
+
+  if (!name || !comment) {
+    alert('Please enter your name and comment.');
+    return;
+  }
+
+  try {
+    await send({action:'addComment',postId:id,name:name,comment:comment});
+    box.hidden = true;
+    await toggleComments(id);
+    loadStats(id);
+  } catch(e) {
+    alert('Comment failed: ' + e.message);
+  }
+}
+
+async function sharePost(id){
+  const url = location.href.split('#')[0] + '#post-' + encodeURIComponent(id);
+  const shareText = 'श्री क्षेत्र रेणुका दरबार, सोनई - आश्रम उपक्रम';
+
+  try {
+    if (navigator.share) {
+      await navigator.share({
+        title: shareText,
+        text: shareText,
+        url: url
+      });
+      return;
+    }
+
+    const whatsappUrl = 'https://wa.me/?text=' + encodeURIComponent(shareText + ' ' + url);
+
+    if (confirm('Share on WhatsApp?\n\nPress Cancel to copy the post link.')) {
+      window.open(whatsappUrl, '_blank', 'noopener');
+      return;
+    }
+
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(url);
+      alert('Post link copied.');
+      return;
+    }
+
+    const ta = document.createElement('textarea');
+    ta.value = url;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    ta.remove();
+    alert('Post link copied.');
+  } catch(e) {
+    if (e.name !== 'AbortError') alert('Share failed: ' + e.message);
+  }
+}
+
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', loadFeed);
+} else {
+  loadFeed();
+}
+</script>
+</body></html>

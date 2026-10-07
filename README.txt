@@ -1,20 +1,19 @@
-Shri Kshetra Renuka Darbar — Creative V2
+RENUKA DARBAR - ASHRAM UPAKRAM UPDATE
 
-Upload these items together to GitHub Pages:
-- index.html
-- style.css
-- script.js
-- assets/
+FILES:
+1. index.html
+2. style.css
+3. script-mobile-v4.js
+4. feed.html (NEW)
+5. feed-admin.html
+6. Code.gs (Ashram Feed Apps Script ONLY)
 
-V2 additions:
-- scroll progress indicator
-- elegant hero glass ribbon
-- sacred devotional keyword ribbon
-- desktop floating quick-action rail
-- expanded responsive photo gallery using existing original images only
-- click-to-open gallery lightbox
-- YouTube button connected to the official channel URL already used in the site
-- fixed mobile quick-action dock for Darshan, Events, Directions and YouTube
-- performance improvements with lazy loading for below-the-fold images
-
-No original person/deity/temple image was edited or replaced in this version.
+IMPORTANT:
+- Do NOT change your Registration Apps Script.
+- Replace Code.gs only in the separate Ashram Feed Apps Script project.
+- Deploy the Ashram Feed Apps Script as a NEW VERSION after replacing Code.gs.
+- FeedLikes and FeedComments sheets are created automatically when first used.
+- Existing AshramFeed rows remain unchanged.
+- Existing Gallery categories remain unchanged.
+- New feed photo categories are generated dynamically from posts with photos.
+- Upload the 5 website files to the same website root. feed.html must sit beside index.html.
