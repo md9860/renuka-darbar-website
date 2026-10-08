@@ -1,4 +1,333 @@
-<!doctype html><html lang="mr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>आश्रम उपक्रम व्यवस्थापन</title><style>*{box-sizing:border-box}body{margin:0;font-family:Arial,'Noto Sans Devanagari',sans-serif;background:#fff7e8;color:#432b25}.wrap{width:min(900px,calc(100% - 24px));margin:32px auto}h1{text-align:center;color:#68151b}.card{background:#fff;border:1px solid #ead8b5;border-radius:20px;padding:22px;box-shadow:0 12px 30px #5b17151a;margin-bottom:22px}label{display:block;font-weight:700;color:#68151b;margin:14px 0 6px}input,textarea{width:100%;padding:12px;border:1px solid #d7c4a7;border-radius:10px;font:inherit}textarea{min-height:150px;resize:vertical}button{border:0;border-radius:10px;padding:11px 16px;font-weight:800;cursor:pointer}.primary{background:#68151b;color:#fff}.gold{background:#c7922e;color:#fff}.danger{background:#8b1e1e;color:#fff}.muted{background:#eee3d3;color:#68151b}.row{display:flex;gap:10px;flex-wrap:wrap}.photo-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin:8px 0}.note{font-size:13px;color:#756050;line-height:1.6}.status{margin-top:12px;font-weight:700}.post{border-top:1px solid #eee0c8;padding:16px 0}.post:first-child{border-top:0}.post small{color:#806b5b}.post p{white-space:pre-line}@media(max-width:600px){.wrap{margin:16px auto}.card{padding:16px}}.temple-admin-head{width:min(900px,calc(100% - 24px));margin:22px auto 4px;text-align:center;padding:22px 16px 18px;border-radius:22px;background:linear-gradient(145deg,#fffdf7,#fff0cc);border:1px solid #dfbd72;box-shadow:0 10px 28px #5b17151a}.temple-admin-logo{width:104px;height:104px;object-fit:contain;padding:0;background:transparent;border:0;box-shadow:none}.temple-admin-trust{margin:10px 0 4px;color:#8a5a28;font-size:14px;font-weight:800}.temple-admin-name{margin:0;color:#68151b;font-size:clamp(21px,3vw,31px);line-height:1.35;font-weight:900}.temple-admin-sub{margin:7px 0 0;color:#756050;font-weight:700}@media(max-width:600px){.temple-admin-head{margin:12px auto 0;padding:16px 10px}.temple-admin-logo{width:82px;height:82px}.temple-admin-trust{font-size:11px}.temple-admin-name{font-size:19px}.temple-admin-sub{font-size:13px}}</style></head><body><header class="temple-admin-head"><img class="temple-admin-logo" src="assets/sansthan-logo.png" alt="श्री क्षेत्र रेणुका दरबार लोगो"><p class="temple-admin-trust">प. पू. माता प्रेमानंदीनाथ महाराज पब्लिक चॅरिटेबल ट्रस्ट संचालित</p><h1 class="temple-admin-name">श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ काचमंदीर सोनई</h1><p class="temple-admin-sub">॥ आश्रम उपक्रम व्यवस्थापन ॥</p></header><main class="wrap"><section class="card"><input type="hidden" id="postId"><label>दिनांक</label><input id="date" type="date"><label>ठिकाण</label><input id="location" value="सोनई, अहिल्यानगर"><label>Gallery Category / कार्यक्रमाचे नाव</label><input id="category" placeholder="उदा. शारदीय नवरात्रोत्सव २०२६"><label>पोस्टचा मजकूर</label><textarea id="caption" placeholder="मराठी पोस्ट मजकूर येथे लिहा..."></textarea><label>फोटो</label><input id="photoFiles" type="file" accept="image/*" multiple><p class="note">एकाच वेळी अनेक फोटो निवडू शकता.</p><div id="existingPhotos" class="note"></div><label>व्हिडिओ (Optional)</label><input id="videoFile" type="file" accept="video/*"><p class="note">व्हिडिओ Google Drive मध्ये upload होईल. मोठ्या व्हिडिओसाठी Google Drive / YouTube लिंक वापरा.</p><label>Google Drive / YouTube Video लिंक (Optional)</label><input id="videoURL" type="url" placeholder="https://..."><div class="row" style="margin-top:18px"><button class="primary" id="save" type="button">पोस्ट करा</button><button class="muted" id="cancel" type="button" hidden>रद्द करा</button></div><div class="status" id="status"></div></section><section class="card"><h2 style="color:#68151b">आपले पोस्ट</h2><div id="posts">लोड होत आहेत...</div></section></main><script>
+<!doctype html><html lang="mr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>आश्रम उपक्रम व्यवस्थापन</title><style>*{box-sizing:border-box}body{margin:0;font-family:Arial,'Noto Sans Devanagari',sans-serif;background:#fff7e8;color:#432b25}.wrap{width:min(900px,calc(100% - 24px));margin:32px auto}h1{text-align:center;color:#68151b}.card{background:#fff;border:1px solid #ead8b5;border-radius:20px;padding:22px;box-shadow:0 12px 30px #5b17151a;margin-bottom:22px}label{display:block;font-weight:700;color:#68151b;margin:14px 0 6px}input,textarea{width:100%;padding:12px;border:1px solid #d7c4a7;border-radius:10px;font:inherit}textarea{min-height:150px;resize:vertical}button{border:0;border-radius:10px;padding:11px 16px;font-weight:800;cursor:pointer}.primary{background:#68151b;color:#fff}.gold{background:#c7922e;color:#fff}.danger{background:#8b1e1e;color:#fff}.muted{background:#eee3d3;color:#68151b}.row{display:flex;gap:10px;flex-wrap:wrap}.photo-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin:8px 0}.note{font-size:13px;color:#756050;line-height:1.6}.status{margin-top:12px;font-weight:700}.post{border-top:1px solid #eee0c8;padding:16px 0}.post:first-child{border-top:0}.post small{color:#806b5b}.post p{white-space:pre-line}@media(max-width:600px){.wrap{margin:16px auto}.card{padding:16px}}.temple-admin-head{width:min(900px,calc(100% - 24px));margin:22px auto 4px;text-align:center;padding:22px 16px 18px;border-radius:22px;background:linear-gradient(145deg,#fffdf7,#fff0cc);border:1px solid #dfbd72;box-shadow:0 10px 28px #5b17151a}.temple-admin-logo{width:104px;height:104px;object-fit:contain;padding:0;background:transparent;border:0;box-shadow:none}.temple-admin-trust{margin:10px 0 4px;color:#8a5a28;font-size:14px;font-weight:800}.temple-admin-name{margin:0;color:#68151b;font-size:clamp(21px,3vw,31px);line-height:1.35;font-weight:900}.temple-admin-sub{margin:7px 0 0;color:#756050;font-weight:700}@media(max-width:600px){.temple-admin-head{margin:12px auto 0;padding:16px 10px}.temple-admin-logo{width:82px;height:82px}.temple-admin-trust{font-size:11px}.temple-admin-name{font-size:19px}.temple-admin-sub{font-size:13px}}</style><style>
+:root{--rd-ink:#541b2b;--rd-gold:#b88944;--rd-paper:#faf7f2;--rd-line:#e8ded4}
+html{scroll-behavior:smooth}body{background:var(--rd-paper);font-family:"Noto Sans Devanagari",Mangal,system-ui,sans-serif}
+:focus-visible{outline:3px solid #b88944;outline-offset:4px}button,a,input,textarea{touch-action:manipulation}button:disabled{opacity:.6;cursor:wait}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+
+.wrap{width:min(1180px,calc(100% - 40px));display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:24px;align-items:start;margin-top:24px}.temple-admin-head{width:min(1180px,calc(100% - 40px));background:#541b2b;color:#fff3df;border:0;box-shadow:none;padding:28px}.temple-admin-name,.temple-admin-trust,.temple-admin-sub{color:inherit}.temple-admin-logo{background:transparent;border:0;border-radius:0;box-shadow:none;padding:0;width:92px;height:auto;object-fit:contain}.temple-admin-name{font-size:25px;line-height:1.65}.temple-admin-trust{font-size:12px;color:#e1c5a4}.card{border:1px solid #e8ded4;box-shadow:none;border-radius:18px;padding:26px;min-width:0}.card h2{font-size:21px;margin:0 0 18px;color:#541b2b}.admin-nav{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:20px}.admin-nav a{color:#f9e6c4;text-decoration:none;border:1px solid #ffffff35;border-radius:9px;padding:9px 16px;font-size:13px}label{font-size:13px;margin-top:20px}input,textarea{background:#fcfaf7;border-color:#e2d6c9;padding:13px}input[type=file]{font-size:12px}.primary{background:#541b2b}.muted{background:#f1e8dc}.gold{background:#eee1cd;color:#6e4828}.danger{background:#faebea;color:#8b1e1e}.post{padding:22px 0}.post p{font-size:14px;line-height:1.8;overflow-wrap:anywhere}.status{line-height:1.7;font-size:14px}.admin-intro{font-size:13px;color:#806b5b;line-height:1.8}.preview-grid{display:flex;gap:9px;overflow-x:auto;padding:12px 0}.preview-grid img{width:84px;height:84px;object-fit:cover;border-radius:9px;border:1px solid #e6d7c4}.note{overflow-wrap:anywhere}@media(max-width:760px){.wrap{display:block;width:calc(100% - 28px)}.temple-admin-head{width:calc(100% - 28px);padding:22px 16px}.temple-admin-name{font-size:19px}.card{padding:20px}.row button{min-height:44px}}
+</style><style id="rd-combined-theme">
+:root{
+  --rd-maroon:#5b070b;
+  --rd-dark:#470307;
+  --rd-cream:#fffaf0;
+  --rd-cream-soft:#fff4dc;
+  --rd-gold:#c8952f;
+  --rd-border:#e2c58e;
+  --rd-text:#5f382d;
+}
+
+body{
+  background:var(--rd-cream)!important;
+  color:var(--rd-text);
+}
+
+/* Temple header and navigation */
+.feed-top,
+.temple-admin-head{
+  background:var(--rd-maroon)!important;
+  border-bottom:2px solid var(--rd-gold)!important;
+}
+
+.feed-top a,
+.feed-top .feed-title,
+.feed-top .feed-top-end,
+.temple-admin-head h1,
+.temple-admin-head p{
+  color:#fff4dc!important;
+}
+
+.feed-masthead{
+  background:linear-gradient(
+    100deg,#fffaf0,#f7e6bd,#fffaf0
+  )!important;
+  border-color:var(--rd-gold)!important;
+}
+
+.feed-masthead h1{
+  color:var(--rd-maroon)!important;
+}
+
+/* Devotional hero */
+.community-hero{
+  background:linear-gradient(
+    135deg,#fffaf0,#f4e2bd
+  )!important;
+  border:1px solid var(--rd-border)!important;
+  box-shadow:0 12px 30px rgba(91,7,11,.07);
+}
+
+.community-hero h2,
+.community-hero h2 em{
+  color:var(--rd-maroon)!important;
+}
+
+/* Cards and feed */
+.side-card,
+.feed-tools,
+.social-post,
+.rd-social-panel,
+body .wrap .card{
+  background:#fffcf6!important;
+  border-color:var(--rd-border)!important;
+}
+
+.sp-name,
+.side-card h2,
+.feed-tools label,
+body .wrap .card h2{
+  color:var(--rd-maroon)!important;
+}
+
+/* Temple identity card */
+.community-sidebar .side-identity{
+  position:relative;
+  overflow:hidden;
+  background:radial-gradient(
+    circle at 50% 4%,#f7dfac,#fffaf0 70%
+  )!important;
+  border:1px solid var(--rd-gold)!important;
+  box-shadow:0 14px 32px rgba(91,7,11,.10);
+  padding:34px 18px!important;
+}
+
+.community-sidebar .side-identity:before{
+  content:"";
+  position:absolute;
+  width:130px;
+  height:94px;
+  top:10px;
+  left:50%;
+  transform:translateX(-50%);
+  border:2px solid rgba(200,149,47,.38);
+  border-bottom:0;
+  border-radius:95px 95px 0 0;
+  pointer-events:none;
+}
+
+.side-identity .side-avatar{
+  width:96px!important;
+  height:96px!important;
+  position:relative;
+  filter:drop-shadow(0 5px 10px rgba(120,70,20,.22));
+  transition:transform .3s ease;
+}
+
+@media(hover:hover){
+ .side-identity:hover .side-avatar{
+   transform:scale(1.05);
+ }
+}
+
+/* Navigation */
+.community-sidebar nav.side-card a{
+  border-radius:9px;
+  transition:background .2s,transform .2s;
+}
+
+.community-sidebar nav.side-card a:hover{
+  background:#f4e3bf!important;
+  transform:translateX(3px);
+}
+
+/* Social network cards */
+.rd-social-panel .rd-network{
+  background:#fff8e7!important;
+  border:1px solid var(--rd-border)!important;
+  border-radius:12px;
+  box-shadow:0 5px 16px rgba(91,7,11,.07);
+}
+
+/* Upcoming program */
+.event-spotlight{
+  background:linear-gradient(
+    140deg,#fffaf0,#f4e2bb
+  )!important;
+  border:1px solid var(--rd-gold)!important;
+  border-radius:20px;
+  box-shadow:0 12px 28px rgba(91,7,11,.08);
+}
+
+.event-spotlight h2{
+  color:var(--rd-maroon)!important;
+}
+
+.event-date-tile{
+  background:#f1dbaf!important;
+  border:1px solid var(--rd-gold)!important;
+  color:var(--rd-maroon)!important;
+}
+
+.event-preview-layout{
+  display:grid;
+  grid-template-columns:64px minmax(0,1fr) 94px;
+  gap:14px;
+  align-items:center;
+}
+
+.event-poster-thumb{
+  width:94px;
+  height:106px;
+  object-fit:cover;
+  border:2px solid white;
+  border-radius:11px;
+  box-shadow:0 5px 16px rgba(91,7,11,.13);
+}
+
+.event-detail-link{
+  color:var(--rd-maroon)!important;
+  border-color:var(--rd-gold)!important;
+  font-weight:800;
+}
+
+/* Feed filters and actions */
+.feed-tools button[aria-pressed="true"]{
+  background:var(--rd-maroon)!important;
+  color:white!important;
+  border-color:var(--rd-maroon)!important;
+}
+
+.sp-actions button:hover,
+.sp-actions button.liked{
+  background:#f5e4c2!important;
+  color:var(--rd-maroon)!important;
+}
+
+.feed-bottom{
+  background:#fffaf0!important;
+  border-color:var(--rd-border)!important;
+}
+
+/* Keep dark service cards dark */
+.community-right .side-card.side-accent,
+.legacy-service{
+  background:linear-gradient(
+    145deg,#5b070b,#7b1116
+  )!important;
+  border-color:#a06d45!important;
+}
+
+.community-right .side-card.side-accent h2,
+.community-right .side-card.side-accent p,
+.community-right .side-card.side-accent a,
+.legacy-service h2,
+.legacy-service p,
+.legacy-service a{
+  color:#fff4de!important;
+}
+
+/* Admin forms */
+.temple-admin-head{
+  box-shadow:0 8px 25px rgba(91,7,11,.12)!important;
+}
+
+body .wrap input,
+body .wrap textarea{
+  border-color:#ddc6a3!important;
+  background:#fffcf7!important;
+}
+
+body .wrap button.primary{
+  background:var(--rd-maroon)!important;
+  color:#fff5e4!important;
+}
+
+body .wrap button.gold{
+  background:#f1dbae!important;
+  color:var(--rd-maroon)!important;
+}
+
+body .wrap input:focus,
+body .wrap textarea:focus{
+  outline:2px solid var(--rd-gold);
+}
+
+/* Embedded feed videos */
+.rd-inline-video{
+  background:#241215;
+  width:100%;
+  overflow:hidden;
+}
+
+.rd-inline-video iframe,
+.rd-inline-video video{
+  display:block;
+  width:100%;
+  aspect-ratio:16/9;
+  background:#241215;
+  border:0;
+}
+
+.rd-inline-video.rd-vertical{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+.rd-inline-video.rd-vertical iframe{
+  width:min(100%,390px);
+  aspect-ratio:9/16;
+  max-height:680px;
+}
+
+.rd-video-help{
+  width:100%;
+  padding:8px 14px;
+  color:#f6e8d4;
+  font-size:12px;
+}
+
+.rd-video-help a{
+  color:#ffda88;
+}
+
+.rd-video-fallback{
+  padding:14px;
+  background:#fff1d4;
+}
+
+.rd-video-fallback a{
+  color:var(--rd-maroon);
+  font-weight:800;
+}
+
+.rd-album-link{
+  display:inline-block;
+  margin:5px 18px 15px;
+  padding:9px 14px;
+  color:var(--rd-maroon)!important;
+  background:#fff1d6;
+  border:1px solid var(--rd-gold);
+  border-radius:10px;
+  font-size:13px;
+  font-weight:800;
+  text-decoration:none;
+}
+
+/* Responsive */
+@media(max-width:600px){
+  .event-preview-layout{
+    grid-template-columns:56px minmax(0,1fr);
+  }
+
+  .event-poster-thumb{
+    grid-column:1/-1;
+    width:100%;
+    height:160px;
+  }
+
+  .rd-inline-video.rd-vertical iframe{
+    max-height:75vh;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .side-identity .side-avatar,
+  .community-sidebar nav.side-card a{
+    transition:none!important;
+  }
+}
+</style>
+<style id="rd-admin-logo-original">.temple-admin-head .temple-admin-logo{display:block;margin:0 auto 12px;width:100px;height:auto;object-fit:contain;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:0!important}.temple-admin-head{text-align:center}.temple-admin-name,.temple-admin-trust,.temple-admin-sub{text-align:center}@media(max-width:600px){.temple-admin-head .temple-admin-logo{width:82px}}</style></head><body><header class="temple-admin-head"><img class="temple-admin-logo" src="assets/sansthan-logo.png" alt="श्री क्षेत्र रेणुका दरबार लोगो"><p class="temple-admin-trust">प. पू. माता प्रेमानंदीनाथ महाराज पब्लिक चॅरिटेबल ट्रस्ट संचालित</p><h1 class="temple-admin-name">श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ काचमंदीर सोनई</h1><p class="temple-admin-sub">॥ आश्रम उपक्रम व्यवस्थापन ॥</p><nav class="admin-nav"><a href="index.html">← मुख्यपृष्ठ</a><a href="feed.html" target="_blank" rel="noopener">सार्वजनिक पोस्ट पहा ↗</a></nav></header><main class="wrap"><section class="card"><h2>नवीन आठवण शेअर करा</h2><p class="admin-intro">कार्यक्रमाची माहिती लिहा, फोटो जोडा आणि भक्त परिवाराशी शेअर करा.</p><input type="hidden" id="postId"><label>दिनांक</label><input id="date" type="date"><label>ठिकाण</label><input id="location" value="सोनई, अहिल्यानगर"><label>Gallery Category / कार्यक्रमाचे नाव</label><input id="category" placeholder="उदा. शारदीय नवरात्रोत्सव २०२६"><label>पोस्टचा मजकूर</label><textarea id="caption" placeholder="मराठी पोस्ट मजकूर येथे लिहा..."></textarea><label>फोटो</label><input id="photoFiles" type="file" accept="image/*" multiple><p class="note">एकाच वेळी अनेक फोटो निवडू शकता.</p><div id="photoPreview" class="preview-grid" aria-label="निवडलेले फोटो"></div><div id="existingPhotos" class="note"></div><label>व्हिडिओ (Optional)</label><input id="videoFile" type="file" accept="video/*"><p class="note">व्हिडिओ Google Drive मध्ये upload होईल. मोठ्या व्हिडिओसाठी Google Drive / YouTube लिंक वापरा.</p><label>Google Drive / YouTube Video लिंक (Optional)</label><input id="videoURL" type="url" placeholder="https://..."><div class="row" style="margin-top:18px"><button class="primary" id="save" type="button">पोस्ट करा</button><button class="muted" id="cancel" type="button" hidden>रद्द करा</button></div><div class="status" id="status" role="status" aria-live="polite"></div></section><section class="card"><h2 style="color:#68151b">आपले पोस्ट</h2><div id="posts">लोड होत आहेत...</div></section></main><script>
 const API='https://script.google.com/macros/s/AKfycbwfDxJVMliTo_Q-1ZYqp6psawfv9ZPgYoUCug0tvtWupeA759HC-RS76fuH9F4wbtfOqg/exec';
 const $=id=>document.getElementById(id);let cache=[],existingPhotos=[];
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
@@ -6,7 +335,7 @@ async function send(data){const r=await fetch(API,{method:'POST',headers:{'Conte
 function fileData(file){return new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=no;r.readAsDataURL(file)})}
 async function upload(file,kind){const dataUrl=await fileData(file);const x=await send({action:'uploadMedia',fileName:file.name,mimeType:file.type,kind,dataUrl});if(!x.ok)throw Error(x.message||'Upload failed');return x.url}
 async function media(){let photos=[...existingPhotos],fs=[...$('photoFiles').files];for(let i=0;i<fs.length;i++){$('status').textContent=`फोटो upload होत आहे ${i+1}/${fs.length}...`;photos.push(await upload(fs[i],'photo'))}let videoURL=$('videoURL').value.trim(),v=$('videoFile').files[0];if(v){$('status').textContent='व्हिडिओ upload होत आहे...';videoURL=await upload(v,'video')}return{photos,videoURL}}
-function reset(){$('postId').value='';$('date').value='';$('location').value='सोनई, अहिल्यानगर';$('caption').value='';$('category').value='';$('videoURL').value='';$('photoFiles').value='';$('videoFile').value='';$('existingPhotos').textContent='';existingPhotos=[];$('save').textContent='पोस्ट करा';$('cancel').hidden=true}
+function reset(){$('postId').value='';$('date').value='';$('location').value='सोनई, अहिल्यानगर';$('caption').value='';$('category').value='';$('videoURL').value='';$('photoFiles').value='';$('videoFile').value='';$('existingPhotos').textContent='';clearPreviews();existingPhotos=[];$('save').textContent='पोस्ट करा';$('cancel').hidden=true}
 $('cancel').onclick=reset;
 $('save').onclick=async()=>{if(!$('date').value||!$('caption').value.trim())return $('status').textContent='दिनांक आणि पोस्टचा मजकूर आवश्यक आहे.';$('save').disabled=true;try{const m=await media(),x=await send({action:$('postId').value?'updatePost':'addPost',postId:$('postId').value,date:$('date').value,location:$('location').value.trim(),caption:('[GalleryCategory:'+($('category').value.trim()||$('date').value)+']\n'+$('caption').value.trim()),photos:m.photos,videoURL:m.videoURL});if(!x.ok)throw Error(x.message);$('status').textContent='पोस्ट यशस्वीरीत्या सेव्ह झाला.';reset();await load()}catch(e){$('status').textContent='Error: '+e.message}finally{$('save').disabled=false}};
 async function load(){try{const r=await fetch(API+'?action=getPosts&t='+Date.now(),{cache:'no-store'}),d=await r.json();if(!d.ok)throw Error(d.message);cache=d.posts||[];$('posts').innerHTML=cache.length?cache.map((p,i)=>`<article class="post"><small>${esc(p.date)} • ${esc(p.location)}</small><p>${esc(p.caption)}</p><div class="note">${(p.photos||[]).length} फोटो${p.videoURL?' • व्हिडिओ':''}</div><div class="row" style="margin-top:10px"><button class="gold" onclick="editPost(${i})">Edit</button><button class="danger" onclick="delPost('${esc(p.postId)}')">Delete</button></div></article>`).join(''):'अजून पोस्ट नाहीत.'}catch(e){$('posts').textContent='पोस्ट लोड झाले नाहीत: '+e.message}}
@@ -14,4 +343,9 @@ window.editPost=i=>{const p=cache[i];$('postId').value=p.postId;$('date').value=
 $('category').value=cm?cm[1]:'';
 $('caption').value=cm?String(p.caption||'').replace(cm[0],''):p.caption;$('videoURL').value=p.videoURL||'';existingPhotos=[...(p.photos||[])];$('existingPhotos').textContent=existingPhotos.length?'सध्याचे फोटो: '+existingPhotos.length:'';$('save').textContent='बदल सेव्ह करा';$('cancel').hidden=false;scrollTo({top:0,behavior:'smooth'})};
 window.delPost=async id=>{if(!confirm('हा पोस्ट Delete करायचा आहे का?'))return;const x=await send({action:'deletePost',postId:id});if(!x.ok)return alert(x.message||'Delete failed');load()};load();
+
+let previewURLs=[];
+function clearPreviews(){previewURLs.forEach(u=>URL.revokeObjectURL(u));previewURLs=[];$('photoPreview').replaceChildren();}
+$('photoFiles').addEventListener('change',()=>{clearPreviews();[...$('photoFiles').files].forEach(file=>{const image=document.createElement('img');const u=URL.createObjectURL(file);previewURLs.push(u);image.src=u;image.alt=file.name;$('photoPreview').appendChild(image);});});
+document.querySelectorAll('label').forEach(label=>{const field=label.nextElementSibling;if(field&&field.id)label.htmlFor=field.id;});
 </script></body></html>
