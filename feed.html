@@ -1892,12 +1892,11 @@ function rdGalleryLink(post) {
 
     if (!photos.length) return '';
 
+    // Do not link to an album unless this post has a chosen Gallery category.
     const match = String(post.caption || '')
         .match(/^\[GalleryCategory:([^\]]+)\]/);
-
-    const category = match && match[1].trim()
-        ? match[1].trim()
-        : 'Ashram Activities';
+    if (!match || !match[1].trim()) return '';
+    const category = match[1].trim();
 
     const href = 'index.html?rd_album=' +
         encodeURIComponent(category) +
@@ -1909,7 +1908,11 @@ function rdGalleryLink(post) {
         '</a>';
 }
 function postCard(p){
-  const photos = Array.isArray(p.photos) ? p.photos.filter(Boolean) : [];
+  // The photos stay saved on the post for the homepage Gallery.
+  // If a link or uploaded video exists, the Feed displays the linked media
+  // instead of showing the same uploaded photos again.
+  const hasLinkedMedia = Boolean(String(p.videoURL || '').trim());
+  const photos = !hasLinkedMedia && Array.isArray(p.photos) ? p.photos.filter(Boolean) : [];
   const caption = cleanCaption(p.caption);
 
   const media = photos.length ? `
@@ -1948,7 +1951,7 @@ ${caption && caption !== '[InstagramEmbed]' ? `
 <div class="sp-body">
   <div class="sp-caption">${esc(caption)}</div>
 </div>` : ''}
-${rdGalleryLink(p)}
+${!hasLinkedMedia ? rdGalleryLink(p) : ''}
 
 
       <div class="sp-stats">
@@ -2000,7 +2003,7 @@ function rdProcessInstagramEmbeds(){
 
 function applyFilters(){
   const term=document.getElementById('feedSearch').value.trim().toLocaleLowerCase();
-  const posts=allPosts.filter(p=>(activeFilter==='all'||(activeFilter==='photos'&&Array.isArray(p.photos)&&p.photos.length)||(activeFilter==='videos'&&p.videoURL))&&[p.caption,p.location,p.date].join(' ').toLocaleLowerCase().includes(term));
+  const posts=allPosts.filter(p=>(activeFilter==='all'||(activeFilter==='photos'&&!String(p.videoURL||'').trim()&&Array.isArray(p.photos)&&p.photos.length)||(activeFilter==='videos'&&p.videoURL))&&[p.caption,p.location,p.date].join(' ').toLocaleLowerCase().includes(term));
   document.getElementById('resultCount').textContent=posts.length+' पोस्ट'+(term?' · शोध परिणाम':'');
   const holder=document.getElementById('feed');
   if(!holder)return;
