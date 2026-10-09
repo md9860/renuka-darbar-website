@@ -1642,6 +1642,28 @@ html, body {
 
 </style>
 
+<style id="rd-instagram-captioned-native-2026">
+/* Instagram official embed adjusts iframe height as its photo/video/caption loads. */
+#feed .rd-instagram-native {
+  width:100%; min-width:0; padding:10px 12px;
+  background:#fff; display:flex; justify-content:center;
+  align-items:flex-start; overflow:visible;
+}
+#feed .rd-instagram-native .instagram-media {
+  display:block; width:100%; max-width:540px; min-width:0;
+  margin:0 auto !important; border:0 !important;
+  background:#fff; box-shadow:none !important;
+}
+#feed .rd-instagram-native iframe {
+  max-width:100% !important;
+  border:0 !important;
+}
+#feed .social-post:has(.rd-instagram-native) .sp-body:empty {display:none}
+@media(max-width:600px) {
+  #feed .rd-instagram-native {padding:5px 0}
+  #feed .rd-instagram-native .instagram-media {max-width:100%;}
+}
+</style>
 </head>
 
 <style id="rd-matching-heading-size">
@@ -1817,10 +1839,17 @@ function rdInlineVideo(raw){
   if(host==='instagram.com'){
     const m=u.pathname.match(/^\/(reel|p|tv)\/([A-Za-z0-9_-]+)/);
     if(m){
-      return iframe(
-        'https://www.instagram.com/'+m[1]+'/'+m[2]+'/embed/',
-        m[1]==='reel'
-      );
+      const permalink='https://www.instagram.com/'+m[1]+'/'+m[2]+'/';
+      return `
+        <div class="rd-instagram-native" data-instagram-post="true">
+          <blockquote class="instagram-media"
+            data-instgrm-captioned
+            data-instgrm-permalink="${esc(permalink)}"
+            data-instgrm-version="14">
+            <a href="${esc(permalink)}" target="_blank"
+               rel="noopener noreferrer">Instagram पोस्ट पहा</a>
+          </blockquote>
+        </div>`;
     }
   }
 
@@ -1910,9 +1939,10 @@ function postCard(p){
 
       ${rdInlineVideo(p.videoURL)}
 
+${caption && caption !== '[InstagramEmbed]' ? `
 <div class="sp-body">
   <div class="sp-caption">${esc(caption)}</div>
-</div>
+</div>` : ''}
 ${rdGalleryLink(p)}
 
 
@@ -1939,6 +1969,30 @@ function renderPosts(posts){
   allPosts=posts;
   applyFilters();
 }
+let rdInstagramScriptPromise=null;
+function rdProcessInstagramEmbeds(){
+  if(window.instgrm && window.instgrm.Embeds){
+    window.instgrm.Embeds.process();
+    return;
+  }
+  if(!rdInstagramScriptPromise){
+    rdInstagramScriptPromise=new Promise((resolve,reject)=>{
+      const script=document.createElement('script');
+      script.async=true;
+      script.src='https://www.instagram.com/embed.js';
+      script.onload=resolve;
+      script.onerror=reject;
+      document.head.appendChild(script);
+    });
+  }
+  rdInstagramScriptPromise.then(()=>{
+    if(window.instgrm && window.instgrm.Embeds) window.instgrm.Embeds.process();
+  }).catch(()=>{
+    // The original Instagram permalink remains available if embeds are blocked.
+    rdInstagramScriptPromise=null;
+  });
+}
+
 function applyFilters(){
   const term=document.getElementById('feedSearch').value.trim().toLocaleLowerCase();
   const posts=allPosts.filter(p=>(activeFilter==='all'||(activeFilter==='photos'&&Array.isArray(p.photos)&&p.photos.length)||(activeFilter==='videos'&&p.videoURL))&&[p.caption,p.location,p.date].join(' ').toLocaleLowerCase().includes(term));
@@ -1948,6 +2002,10 @@ function applyFilters(){
   holder.innerHTML=posts.length
     ? posts.map(postCard).join('')
     : '<div class="feed-empty">'+(allPosts.length?'या शोधासाठी पोस्ट सापडल्या नाहीत. दुसरा शब्द किंवा पोस्ट प्रकार निवडा.':'अजून पोस्ट नाहीत. लवकरच नवीन उपक्रम येथे पाहा.')+'</div>';
+
+  // Process dynamically added Instagram posts. The official script resizes
+  // captioned embeds to their actual height (unlike fixed-height iframes).
+  if(holder.querySelector('.instagram-media')) rdProcessInstagramEmbeds();
 
   // Stats deliberately load after the visible post content.
   setTimeout(()=>posts.forEach(p=>loadStats(p.postId)),150);

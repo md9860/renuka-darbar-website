@@ -327,21 +327,60 @@ body .wrap textarea:focus{
   }
 }
 </style>
-<style id="rd-admin-logo-original">.temple-admin-head .temple-admin-logo{display:block;margin:0 auto 12px;width:100px;height:auto;object-fit:contain;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:0!important}.temple-admin-head{text-align:center}.temple-admin-name,.temple-admin-trust,.temple-admin-sub{text-align:center}@media(max-width:600px){.temple-admin-head .temple-admin-logo{width:82px}}</style></head><body><header class="temple-admin-head"><img class="temple-admin-logo" src="assets/sansthan-logo.png" alt="श्री क्षेत्र रेणुका दरबार लोगो"><p class="temple-admin-trust">प. पू. माता प्रेमानंदीनाथ महाराज पब्लिक चॅरिटेबल ट्रस्ट संचालित</p><h1 class="temple-admin-name">श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ काचमंदीर सोनई</h1><p class="temple-admin-sub">॥ आश्रम उपक्रम व्यवस्थापन ॥</p><nav class="admin-nav"><a href="index.html">← मुख्यपृष्ठ</a><a href="feed.html" target="_blank" rel="noopener">सार्वजनिक पोस्ट पहा ↗</a></nav></header><main class="wrap"><section class="card"><h2>नवीन आठवण शेअर करा</h2><p class="admin-intro">कार्यक्रमाची माहिती लिहा, फोटो जोडा आणि भक्त परिवाराशी शेअर करा.</p><input type="hidden" id="postId"><label>दिनांक</label><input id="date" type="date"><label>ठिकाण</label><input id="location" value="सोनई, अहिल्यानगर"><label>Gallery Category / कार्यक्रमाचे नाव</label><input id="category" placeholder="उदा. शारदीय नवरात्रोत्सव २०२६"><label>पोस्टचा मजकूर</label><textarea id="caption" placeholder="मराठी पोस्ट मजकूर येथे लिहा..."></textarea><label>फोटो</label><input id="photoFiles" type="file" accept="image/*" multiple><p class="note">एकाच वेळी अनेक फोटो निवडू शकता.</p><div id="photoPreview" class="preview-grid" aria-label="निवडलेले फोटो"></div><div id="existingPhotos" class="note"></div><label>व्हिडिओ (Optional)</label><input id="videoFile" type="file" accept="video/*"><p class="note">व्हिडिओ Google Drive मध्ये upload होईल. मोठ्या व्हिडिओसाठी Google Drive / YouTube लिंक वापरा.</p><label>Google Drive / YouTube Video लिंक (Optional)</label><input id="videoURL" type="url" placeholder="https://..."><div class="row" style="margin-top:18px"><button class="primary" id="save" type="button">पोस्ट करा</button><button class="muted" id="cancel" type="button" hidden>रद्द करा</button></div><div class="status" id="status" role="status" aria-live="polite"></div></section><section class="card"><h2 style="color:#68151b">आपले पोस्ट</h2><div id="posts">लोड होत आहेत...</div></section></main><script>
+<style id="rd-admin-logo-original">.temple-admin-head .temple-admin-logo{display:block;margin:0 auto 12px;width:100px;height:auto;object-fit:contain;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;padding:0!important}.temple-admin-head{text-align:center}.temple-admin-name,.temple-admin-trust,.temple-admin-sub{text-align:center}@media(max-width:600px){.temple-admin-head .temple-admin-logo{width:82px}}</style></head><body><header class="temple-admin-head"><img class="temple-admin-logo" src="assets/sansthan-logo.png" alt="श्री क्षेत्र रेणुका दरबार लोगो"><p class="temple-admin-trust">प. पू. माता प्रेमानंदीनाथ महाराज पब्लिक चॅरिटेबल ट्रस्ट संचालित</p><h1 class="temple-admin-name">श्री क्षेत्र रेणुका दरबार, सद्गुरू शक्तिपीठ काचमंदीर सोनई</h1><p class="temple-admin-sub">॥ आश्रम उपक्रम व्यवस्थापन ॥</p><nav class="admin-nav"><a href="index.html">← मुख्यपृष्ठ</a><a href="feed.html" target="_blank" rel="noopener">सार्वजनिक पोस्ट पहा ↗</a></nav></header><main class="wrap"><section class="card"><h2>नवीन आठवण शेअर करा</h2><p class="admin-intro">कार्यक्रमाची माहिती लिहा, फोटो जोडा आणि भक्त परिवाराशी शेअर करा.</p><input type="hidden" id="postId"><label>दिनांक</label><input id="date" type="date"><label>ठिकाण</label><input id="location" value="सोनई, अहिल्यानगर"><label>Gallery Category / कार्यक्रमाचे नाव</label><input id="category" placeholder="उदा. शारदीय नवरात्रोत्सव २०२६"><label>पोस्टचा मजकूर</label><textarea id="caption" placeholder="मराठी पोस्ट मजकूर येथे लिहा..."></textarea><label>फोटो</label><input id="photoFiles" type="file" accept="image/*" multiple><p class="note">एकाच वेळी अनेक फोटो निवडू शकता.</p><div id="photoPreview" class="preview-grid" aria-label="निवडलेले फोटो"></div><div id="existingPhotos" class="note"></div><label>व्हिडिओ (Optional)</label><input id="videoFile" type="file" accept="video/*"><p class="note">व्हिडिओ Google Drive मध्ये upload होईल. मोठ्या व्हिडिओसाठी Google Drive / YouTube लिंक वापरा.</p><label for="videoURL">Instagram Post / Reel लिंक (किंवा YouTube / Drive)</label><input id="videoURL" type="url" placeholder="https://www.instagram.com/p/.../"><p class="note">फक्त Instagram लिंक Paste करा आणि पोस्ट करा. Public Instagram Post चा फोटो/व्हिडिओ आणि उपलब्ध मूळ Caption आपोआप Feed मध्ये दिसेल. वेगळा Caption किंवा फोटो Upload करणे आवश्यक नाही.</p><div id="rdInstagramLinkStatus" class="note" role="status" aria-live="polite"></div><div class="row" style="margin-top:18px"><button class="primary" id="save" type="button">पोस्ट करा</button><button class="muted" id="cancel" type="button" hidden>रद्द करा</button></div><div class="status" id="status" role="status" aria-live="polite"></div></section><section class="card"><h2 style="color:#68151b">आपले पोस्ट</h2><div id="posts">लोड होत आहेत...</div></section></main><script>
 const API='https://script.google.com/macros/s/AKfycbwfDxJVMliTo_Q-1ZYqp6psawfv9ZPgYoUCug0tvtWupeA759HC-RS76fuH9F4wbtfOqg/exec';
 const $=id=>document.getElementById(id);let cache=[],existingPhotos=[];
+function rdInstagramLink(value){
+  try{
+    const url=new URL(String(value||'').trim());
+    if(!['https:','http:'].includes(url.protocol))return false;
+    if(!['instagram.com','www.instagram.com'].includes(url.hostname.toLowerCase()))return false;
+    return /^\/(?:p|reel|tv)\/[A-Za-z0-9_-]+\/?/.test(url.pathname);
+  }catch(e){return false}
+}
+function rdToday(){
+  const d=new Date();
+  return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
+}
+function rdUpdateInstagramHint(){
+  const valid=rdInstagramLink($('videoURL').value);
+  $('rdInstagramLinkStatus').textContent=valid
+    ? '✓ Instagram लिंक ओळखली. Caption आणि Media Feed मध्ये Instagram कडून दाखवले जातील. आता पोस्ट करा.'
+    : '';
+  if(valid && !$('date').value)$('date').value=rdToday();
+}
+$('videoURL').addEventListener('input',rdUpdateInstagramHint);
+if(!$('date').value)$('date').value=rdToday();
+
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 async function send(data){const r=await fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(data)});return r.json()}
 function fileData(file){return new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result);r.onerror=no;r.readAsDataURL(file)})}
 async function upload(file,kind){const dataUrl=await fileData(file);const x=await send({action:'uploadMedia',fileName:file.name,mimeType:file.type,kind,dataUrl});if(!x.ok)throw Error(x.message||'Upload failed');return x.url}
 async function media(){let photos=[...existingPhotos],fs=[...$('photoFiles').files];for(let i=0;i<fs.length;i++){$('status').textContent=`फोटो upload होत आहे ${i+1}/${fs.length}...`;photos.push(await upload(fs[i],'photo'))}let videoURL=$('videoURL').value.trim(),v=$('videoFile').files[0];if(v){$('status').textContent='व्हिडिओ upload होत आहे...';videoURL=await upload(v,'video')}return{photos,videoURL}}
-function reset(){$('postId').value='';$('date').value='';$('location').value='सोनई, अहिल्यानगर';$('caption').value='';$('category').value='';$('videoURL').value='';$('photoFiles').value='';$('videoFile').value='';$('existingPhotos').textContent='';clearPreviews();existingPhotos=[];$('save').textContent='पोस्ट करा';$('cancel').hidden=true}
+function reset(){$('postId').value='';$('date').value=rdToday();$('location').value='सोनई, अहिल्यानगर';$('caption').value='';$('category').value='';$('videoURL').value='';$('photoFiles').value='';$('videoFile').value='';$('existingPhotos').textContent='';$('rdInstagramLinkStatus').textContent='';clearPreviews();existingPhotos=[];$('save').textContent='पोस्ट करा';$('cancel').hidden=true}
 $('cancel').onclick=reset;
-$('save').onclick=async()=>{if(!$('date').value||!$('caption').value.trim())return $('status').textContent='दिनांक आणि पोस्टचा मजकूर आवश्यक आहे.';$('save').disabled=true;try{const m=await media(),x=await send({action:$('postId').value?'updatePost':'addPost',postId:$('postId').value,date:$('date').value,location:$('location').value.trim(),caption:('[GalleryCategory:'+($('category').value.trim()||$('date').value)+']\n'+$('caption').value.trim()),photos:m.photos,videoURL:m.videoURL});if(!x.ok)throw Error(x.message);$('status').textContent='पोस्ट यशस्वीरीत्या सेव्ह झाला.';reset();await load()}catch(e){$('status').textContent='Error: '+e.message}finally{$('save').disabled=false}};
+$('save').onclick=async()=>{
+  const instagram=rdInstagramLink($('videoURL').value);
+  if(!$('date').value)$('date').value=rdToday();
+  if(!instagram && !$('caption').value.trim()){
+    $('status').textContent='पोस्टचा मजकूर लिहा किंवा Instagram लिंक Paste करा.';
+    return;
+  }
+  $('save').disabled=true;
+  try{
+    const m=await media();
+    const captionText=$('caption').value.trim() || (instagram?'[InstagramEmbed]':'');
+    const x=await send({action:$('postId').value?'updatePost':'addPost',postId:$('postId').value,date:$('date').value,location:$('location').value.trim(),caption:('[GalleryCategory:'+($('category').value.trim()||$('date').value)+']\n'+captionText),photos:m.photos,videoURL:m.videoURL});
+    if(!x.ok)throw Error(x.message);
+    $('status').textContent='पोस्ट यशस्वीरीत्या सेव्ह झाला.';
+    reset();await load();
+  }catch(e){$('status').textContent='Error: '+e.message}
+  finally{$('save').disabled=false}
+};
 async function load(){try{const r=await fetch(API+'?action=getPosts&t='+Date.now(),{cache:'no-store'}),d=await r.json();if(!d.ok)throw Error(d.message);cache=d.posts||[];$('posts').innerHTML=cache.length?cache.map((p,i)=>`<article class="post"><small>${esc(p.date)} • ${esc(p.location)}</small><p>${esc(p.caption)}</p><div class="note">${(p.photos||[]).length} फोटो${p.videoURL?' • व्हिडिओ':''}</div><div class="row" style="margin-top:10px"><button class="gold" onclick="editPost(${i})">Edit</button><button class="danger" onclick="delPost('${esc(p.postId)}')">Delete</button></div></article>`).join(''):'अजून पोस्ट नाहीत.'}catch(e){$('posts').textContent='पोस्ट लोड झाले नाहीत: '+e.message}}
 window.editPost=i=>{const p=cache[i];$('postId').value=p.postId;$('date').value=p.date;$('location').value=p.location;const cm=String(p.caption||'').match(/^\[GalleryCategory:(.*?)\]\n?/);
 $('category').value=cm?cm[1]:'';
-$('caption').value=cm?String(p.caption||'').replace(cm[0],''):p.caption;$('videoURL').value=p.videoURL||'';existingPhotos=[...(p.photos||[])];$('existingPhotos').textContent=existingPhotos.length?'सध्याचे फोटो: '+existingPhotos.length:'';$('save').textContent='बदल सेव्ह करा';$('cancel').hidden=false;scrollTo({top:0,behavior:'smooth'})};
+$('caption').value=(cm?String(p.caption||'').replace(cm[0],''):p.caption)==='[InstagramEmbed]'?'':(cm?String(p.caption||'').replace(cm[0],''):p.caption);$('videoURL').value=p.videoURL||'';existingPhotos=[...(p.photos||[])];$('existingPhotos').textContent=existingPhotos.length?'सध्याचे फोटो: '+existingPhotos.length:'';$('save').textContent='बदल सेव्ह करा';$('cancel').hidden=false;rdUpdateInstagramHint();scrollTo({top:0,behavior:'smooth'})};
 window.delPost=async id=>{if(!confirm('हा पोस्ट Delete करायचा आहे का?'))return;const x=await send({action:'deletePost',postId:id});if(!x.ok)return alert(x.message||'Delete failed');load()};load();
 
 let previewURLs=[];
