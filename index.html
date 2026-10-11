@@ -3822,6 +3822,24 @@ section[id], article[id]{scroll-margin-top:82px;}
     .toLocaleLowerCase('mr')
     .replace(/योगपिठासन/g,'योगपीठासन')
     .replace(/ब्रह्मीभूत/g,'ब्रम्हीभूत');
+  // Match categories with small Marathi spelling variations, but never merge different years.
+  function sameCategory(a,b){
+    const x=key(a),y=key(b);
+    if(x===y)return true;
+    const years=t=>[...String(t).matchAll(/[०-९0-9]{4}/g)].map(m=>m[0].replace(/[०-९]/g,c=>String(c.charCodeAt(0)-0x0966))).join('|');
+    if(years(a)!==years(b))return false;
+    if(Math.min(x.length,y.length)<18 || Math.abs(x.length-y.length)>3)return false;
+    let prev=Array.from({length:y.length+1},(_,i)=>i);
+    for(let i=1;i<=x.length;i++){
+      const next=[i];
+      for(let j=1;j<=y.length;j++)next[j]=Math.min(next[j-1]+1,prev[j]+1,prev[j-1]+(x[i-1]===y[j-1]?0:1));
+      prev=next;
+    }
+    return prev[y.length]<=2;
+  }
+  function existingCategory(name){
+    return Array.from(categories.values()).find(obj=>sameCategory(obj.name,name))||null;
+  }
   const safeSrc=u=>{try{const x=new URL(String(u||'').trim(),location.href);return (x.protocol==='https:' || x.origin===location.origin)?x.href:''}catch(e){return ''}};
   function driveId(u){
     try{const x=new URL(u);if(!/(^|\.)drive\.google\.com$/i.test(x.hostname))return '';
@@ -3863,11 +3881,11 @@ section[id], article[id]{scroll-margin-top:82px;}
     const cleanName=String(name||'').normalize('NFKC').replace(/[\p{Cf}]/gu,'').trim();
     const categoryKey=key(cleanName);
     if(!categoryKey)return null;
-    const existing=categories.get(categoryKey);if(existing)return existing;
+    const existing=existingCategory(cleanName);if(existing)return existing;
     // A second copy of a button may be present from an older deployment.
     // Prefer merging existing panels before adding another button.
     consolidateCategories();
-    const afterMerge=categories.get(categoryKey);if(afterMerge)return afterMerge;
+    const afterMerge=existingCategory(cleanName);if(afterMerge)return afterMerge;
     const id='rd-feed-photo-'+(categories.size+1)+'-'+Math.random().toString(36).slice(2,7);
     const btn=document.createElement('button');btn.type='button';btn.className='gallery-category-btn';btn.dataset.target=id;btn.textContent=cleanName;tabs.appendChild(btn);
     const block=document.createElement('section');block.className='event-gallery-block gallery-category-panel photo-category-panel';block.dataset.category=id;
@@ -3917,11 +3935,12 @@ section[id], article[id]{scroll-margin-top:82px;}
       const block=Array.from(photoPanel.querySelectorAll('.photo-category-panel'))
         .find(el=>el.dataset.category===btn.dataset.target);
       if(!k || !block)return;
-      if(!retained.has(k)){
+      const matchingKey=Array.from(retained.keys()).find(old=>sameCategory(retained.get(old).name,btn.textContent));
+      if(!matchingKey){
         retained.set(k,{name:btn.textContent.trim(),btn,block});
         return;
       }
-      const first=retained.get(k);
+      const first=retained.get(matchingKey);
       const slider=first.block.querySelector('.event-media-slider');
       const otherSlider=block.querySelector('.event-media-slider');
       if(slider&&otherSlider){
@@ -3956,7 +3975,7 @@ section[id], article[id]{scroll-margin-top:82px;}
   document.addEventListener('keydown',e=>{if(e.key==='Escape')closeGallery()});
   function focusRequestedCategory(){
     const requested=new URLSearchParams(location.search).get('rd_album');if(!requested)return;
-    const obj=categories.get(key(requested));if(!obj)return;
+    const obj=existingCategory(requested);if(!obj)return;
     gallery.querySelector('.gallery-main-tab[data-kind="photo"]')?.click();obj.btn.click();
     document.getElementById('rd-shared-albums')?.scrollIntoView({behavior:'auto',block:'start'});
   }
@@ -3976,7 +3995,7 @@ section[id], article[id]{scroll-margin-top:82px;}
         const match=String(p.caption||'').match(/^\[GalleryCategory:([^\]\r\n]+)\]/);
         if(!match||!match[1].trim())return;
         const name=match[1].trim();
-        const group=categories.get(key(name))||createCategory(name);
+        const group=existingCategory(name)||createCategory(name);
         if(!group)return;
         const k=key(group.name);
         if(!duplicateMap.has(k))duplicateMap.set(k,new Set());
