@@ -3826,8 +3826,21 @@ section[id], article[id]{scroll-margin-top:82px;}
   function sameCategory(a,b){
     const x=key(a),y=key(b);
     if(x===y)return true;
-    const years=t=>[...String(t).matchAll(/[०-९0-9]{4}/g)].map(m=>m[0].replace(/[०-९]/g,c=>String(c.charCodeAt(0)-0x0966))).join('|');
+    // Never merge events held in different years. Normalize Marathi/ASCII numerals.
+    const years=t=>[...String(t).matchAll(/[०-९0-9]{4}/g)]
+      .map(m=>m[0].replace(/[०-९]/g,c=>String(c.charCodeAt(0)-0x0966))).join('|');
     if(years(a)!==years(b))return false;
+    // Stable event identity for the three production duplicates. These names
+    // may contain honorifics, punctuation, or variant Marathi spellings.
+    const eventType=t=>{
+      const z=key(t);
+      if(z.includes('शारदीय')&&z.includes('नवरात्र'))return 'sharadiya-navratra';
+      if(z.includes('शंकराचार्य')&&z.includes('आगमन'))return 'shankaracharya-arrival';
+      if((z.includes('कृष्णानंद')||z.includes('कृष्णानंद'))&&z.includes('सरस्वती')&&z.includes('पुण्यतिथी'))return 'krishnanand-punyatithi';
+      return '';
+    };
+    const typeA=eventType(a),typeB=eventType(b);
+    if(typeA&&typeA===typeB)return true;
     if(Math.min(x.length,y.length)<18 || Math.abs(x.length-y.length)>3)return false;
     let prev=Array.from({length:y.length+1},(_,i)=>i);
     for(let i=1;i<=x.length;i++){
@@ -4011,6 +4024,22 @@ section[id], article[id]{scroll-margin-top:82px;}
   consolidateCategories();
   categories.forEach(refreshCount);
   load();
+  // Production safety net: merge any categories inserted after the initial load
+  // by other scripts. Observe additions only; disconnect during consolidation
+  // to avoid recursive updates and unnecessary reflows.
+  let pending=false;
+  const observer=new MutationObserver(records=>{
+    if(pending || !records.some(r=>r.addedNodes.length))return;
+    pending=true;
+    queueMicrotask(()=>{
+      observer.disconnect();
+      try{consolidateCategories();}finally{
+        observer.observe(photoPanel,{childList:true,subtree:true});
+        pending=false;
+      }
+    });
+  });
+  observer.observe(photoPanel,{childList:true,subtree:true});
 })();
 </script>
 <script>
