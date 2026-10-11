@@ -3829,7 +3829,30 @@ section[id], article[id]{scroll-margin-top:82px;}
     }catch(e){return ''}
   }
   function photoURL(u){const id=driveId(u);return id?'https://drive.google.com/thumbnail?id='+encodeURIComponent(id)+'&sz=w1600':u}
-  function photoKey(u){return driveId(u)||String(u).split('#')[0].replace(/&t=\d+$/,'')}
+  function photoKey(u){
+    const raw=String(u||'').trim();
+    const id=driveId(raw);
+    if(id)return 'drive:'+id;
+    try{
+      const x=new URL(raw,location.href);
+      // Different cache-busting/query parameter variants of the same image
+      // should not create additional Gallery entries.
+      ['t','timestamp','cache','cb','v'].forEach(k=>x.searchParams.delete(k));
+      x.hash='';
+      const sorted=[...x.searchParams.entries()].sort((a,b)=>a[0].localeCompare(b[0]));
+      x.search='';sorted.forEach(([k,v])=>x.searchParams.append(k,v));
+      return x.href;
+    }catch(e){return raw.split('#')[0]}
+  }
+  function removeDuplicatePhotos(obj){
+    const seen=new Set();
+    obj.block.querySelectorAll('.photo-card').forEach(card=>{
+      const src=card.dataset.gallerySrc||card.querySelector('img')?.src||'';
+      const id=photoKey(src);
+      if(id && seen.has(id)){card.remove();return;}
+      if(id)seen.add(id);
+    });
+  }
   const categories=new Map();
   tabs.querySelectorAll('.gallery-category-btn').forEach(btn=>{
     const name=btn.textContent.trim(), k=key(name);
@@ -3859,12 +3882,16 @@ section[id], article[id]{scroll-margin-top:82px;}
     const obj={name:cleanName,btn,block};categories.set(categoryKey,obj);return obj;
   }
   function refreshCount(obj){
+    removeDuplicatePhotos(obj);
     const count=obj.block.querySelector('.event-gallery-head span');
     if(count)count.textContent='छायाचित्रे • '+obj.block.querySelectorAll('.photo-card').length;
   }
   function appendPhoto(obj,link,seen){
     const url=safeSrc(link);if(!url)return;
-    const fingerprint=photoKey(url);if(seen.has(fingerprint))return;seen.add(fingerprint);
+    const fingerprint=photoKey(url);
+    // Recheck the visible cards, including photos already bundled in HTML.
+    if(seen.has(fingerprint)||Array.from(obj.block.querySelectorAll('.photo-card')).some(card=>photoKey(card.dataset.gallerySrc||card.querySelector('img')?.src||'')===fingerprint))return;
+    seen.add(fingerprint);
     const viewSrc=photoURL(url);
     const label=obj.name+' - '+(obj.block.querySelectorAll('.photo-card').length+1);
     const btn=document.createElement('button');btn.type='button';btn.className='event-media-card photo-card rd-feed-gallery-photo';
@@ -3963,6 +3990,7 @@ section[id], article[id]{scroll-margin-top:82px;}
   // Repair legacy duplicate category buttons immediately, even when the
   // network is offline or the Google Apps Script API returns an error.
   consolidateCategories();
+  categories.forEach(refreshCount);
   load();
 })();
 </script>
