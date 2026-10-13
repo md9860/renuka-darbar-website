@@ -4129,6 +4129,30 @@ section[id], article[id]{scroll-margin-top:82px;}
   // network is offline or the Google Apps Script API returns an error.
   consolidateCategories();
   categories.forEach(refreshCount);
+  // Keep the photo gallery consistent even when another legacy script, a
+  // delayed feed response, or browser-restored DOM inserts category tabs later.
+  // Observe ONLY the photo gallery, and coalesce changes into one pass.
+  let repairing=false;
+  let repairQueued=false;
+  const repairGallery=()=>{
+    if(repairQueued||repairing)return;
+    repairQueued=true;
+    queueMicrotask(()=>{
+      repairQueued=false;
+      if(repairing||!photoPanel.isConnected)return;
+      repairing=true;
+      observer.disconnect();
+      try{consolidateCategories();categories.forEach(refreshCount)}
+      finally{repairing=false;observer.observe(photoPanel,{childList:true,subtree:true})}
+    });
+  };
+  const observer=new MutationObserver(records=>{
+    // React only to added/removed elements, not image loading or text updates.
+    if(records.some(r=>r.addedNodes.length||r.removedNodes.length))repairGallery();
+  });
+  observer.observe(photoPanel,{childList:true,subtree:true});
+  window.addEventListener('pageshow',repairGallery);
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)repairGallery()});
   load();
 })();
 </script>
