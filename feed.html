@@ -2617,16 +2617,45 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.13.2/fireba
 import { getMessaging, getToken, deleteToken, isSupported } from 'https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging.js';
 const firebaseConfig={apiKey:'AIzaSyANrYNYOV56wVFEzo-hDHkVBSNbP3LFlCI',authDomain:'renuka-darbar-notifications.firebaseapp.com',projectId:'renuka-darbar-notifications',storageBucket:'renuka-darbar-notifications.firebasestorage.app',messagingSenderId:'986882733768',appId:'1:986882733768:web:a6bbb2acb438045af557fd'};
 const vapidKey='BA1RFvSmZmLDIBuhhtJL_ehp4j8gVkiv3LEwsC1LsQQ_IcAkUZEldViNYGrTRfn9Yic3Ar7CUt6g2cmMlBssk2I';
-const button=document.getElementById('rdFollowButton');const status=document.getElementById('rdFollowStatus');
-const key='rd_feed_fcm_test_token';let messaging=null;let worker=null;
-function render(){const followed=!!localStorage.getItem(key);button.textContent=followed?'✓ Following — Unfollow':'🔔 Follow';status.textContent=followed?'या Browser वर Firebase Token तयार झाला आहे. प्रत्यक्ष Notifications साठी Server-side Sender आणि Subscriber Storage जोडणे बाकी आहे.':'चाचणी आवृत्ती: Follow केल्यावर या Browser साठी Firebase Token तयार होईल. प्रत्यक्ष सूचना अजून सुरू नाहीत.'}
-async function init(){try{if(!('serviceWorker' in navigator)||!('Notification' in window)||!(await isSupported())){button.disabled=true;status.textContent='या Browser मध्ये Web Push समर्थित नाही. iPhone वर Home Screen मधून उघडणे आवश्यक असू शकते.';return;}// GitHub Pages project site: always register within /renuka-darbar-website/,
-// never at the account root (/firebase-messaging-sw.js).
-const siteBase = new URL('./', window.location.href);
-const swUrl = new URL('firebase-messaging-sw.js?v=2', siteBase);
-worker = await navigator.serviceWorker.register(swUrl.href, {scope: siteBase.pathname, updateViaCache: 'none'});
-await worker.update();
-messaging=getMessaging(initializeApp(firebaseConfig));render();}catch(e){button.disabled=true;status.textContent='Firebase प्रारंभ करता आला नाही (Service Worker फाइल GitHub वर योग्य ठिकाणी आहे का तपासा): '+e.message;}}
-button.addEventListener('click',async()=>{if(!messaging)return;button.disabled=true;try{if(localStorage.getItem(key)){await deleteToken(messaging);localStorage.removeItem(key);render();}else{const permission=await Notification.requestPermission();if(permission!=='granted')throw new Error('Notification Permission दिलेली नाही.');const token=await getToken(messaging,{vapidKey,serviceWorkerRegistration:worker});if(!token)throw new Error('Firebase Token मिळाला नाही.');localStorage.setItem(key,token);render();}}catch(e){status.textContent='त्रुटी: '+e.message;}finally{button.disabled=false;}});
+const button=document.getElementById('rdFollowButton');
+const status=document.getElementById('rdFollowStatus');
+const key='rd_feed_fcm_test_token';
+const version='V3 / GitHub Pages project scope';
+const siteBase=new URL('/renuka-darbar-website/',location.origin);
+const workerUrl=new URL('firebase-messaging-sw.js?v=3',siteBase);
+let messaging,worker;
+function render(){const followed=!!localStorage.getItem(key);button.textContent=followed?'✓ Following — Unfollow':'🔔 Follow';status.textContent=version+' | '+(followed?'Firebase Token या Browser मध्ये तयार झाला आहे. Server-side Subscription अजून जोडलेले नाही.':'Follow क्लिक करून Notification Permission द्या.');}
+async function init(){
+ try{
+  button.disabled=true;
+  status.textContent=version+' | Service Worker तपासत आहे…';
+  if(!('serviceWorker' in navigator)||!('Notification' in window)||!(await isSupported()))throw new Error('या Browser मध्ये Web Push समर्थित नाही.');
+  const check=await fetch(workerUrl.href,{cache:'no-store'});
+  if(!check.ok)throw new Error('Service Worker URL वर HTTP '+check.status+': '+workerUrl.pathname+' — GitHub वर फाइल Upload करा.');
+  worker=await navigator.serviceWorker.register(workerUrl.href,{scope:siteBase.pathname,updateViaCache:'none'});
+  await navigator.serviceWorker.ready;
+  messaging=getMessaging(initializeApp(firebaseConfig));
+  button.disabled=false;render();
+ }catch(e){status.textContent=version+' | प्रारंभ त्रुटी: '+e.message;button.disabled=true;}
+}
+button.addEventListener('click',async()=>{
+ if(!messaging||!worker)return;
+ button.disabled=true;
+ try{
+  if(localStorage.getItem(key)){
+   await deleteToken(messaging);
+   localStorage.removeItem(key);
+  }else{
+   const permission=await Notification.requestPermission();
+   if(permission!=='granted')throw new Error('Notification Permission मिळाली नाही.');
+   // Explicit project-scoped worker registration prevents Firebase's root-level default.
+   const token=await getToken(messaging,{vapidKey:vapidKey,serviceWorkerRegistration:worker});
+   if(!token)throw new Error('Firebase Token मिळाला नाही.');
+   localStorage.setItem(key,token);
+  }
+  render();
+ }catch(e){status.textContent=version+' | त्रुटी: '+e.message+' | Worker: '+worker.scope;}
+ finally{button.disabled=false;}
+});
 init();
 </script></body></html>

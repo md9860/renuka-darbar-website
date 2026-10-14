@@ -1,4 +1,4 @@
-/* Firebase Messaging service worker — Renuka Darbar test */
+/* Firebase Messaging service worker — Renuka Darbar test V3 */
 importScripts('https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-compat.js');
 firebase.initializeApp({apiKey:'AIzaSyANrYNYOV56wVFEzo-hDHkVBSNbP3LFlCI',authDomain:'renuka-darbar-notifications.firebaseapp.com',projectId:'renuka-darbar-notifications',storageBucket:'renuka-darbar-notifications.firebasestorage.app',messagingSenderId:'986882733768',appId:'1:986882733768:web:a6bbb2acb438045af557fd'});
