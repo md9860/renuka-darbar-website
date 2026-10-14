@@ -2620,45 +2620,54 @@ const vapidKey='BA1RFvSmZmLDIBuhhtJL_ehp4j8gVkiv3LEwsC1LsQQ_IcAkUZEldViNYGrTRfn9
 const button=document.getElementById('rdFollowButton');
 const status=document.getElementById('rdFollowStatus');
 const key='rd_feed_fcm_test_token';
-const version='V4 / Unfollow service worker fix';
+const API='https://script.google.com/macros/s/AKfycbwfDxJVMliTo_Q-1ZYqp6psawfv9ZPgYoUCug0tvtWupeA759HC-RS76fuH9F4wbtfOqg/exec';
 const siteBase=new URL('/renuka-darbar-website/',location.origin);
 const workerUrl=new URL('firebase-messaging-sw.js?v=4',siteBase);
 let messaging,worker;
-function render(){const followed=!!localStorage.getItem(key);button.textContent=followed?'✓ Following — Unfollow':'🔔 Follow';status.textContent=version+' | '+(followed?'Firebase Token या Browser मध्ये तयार झाला आहे. Server-side Subscription अजून जोडलेले नाही.':'Follow क्लिक करून Notification Permission द्या.');}
+function render(){const followed=!!localStorage.getItem(key);button.textContent=followed?'✓ Following — Unfollow':'🔔 Follow';status.textContent='';}
+async function saveSubscription(action,token){
+ const response=await fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action,token})});
+ if(!response.ok)throw new Error('Subscriber Server HTTP '+response.status);
+ const result=await response.json();
+ if(!result.ok)throw new Error(result.message||'Subscriber Storage अयशस्वी.');
+ return result;
+}
 async function init(){
  try{
-  button.disabled=true;
-  status.textContent=version+' | Service Worker तपासत आहे…';
+  button.disabled=true;status.textContent='';
   if(!('serviceWorker' in navigator)||!('Notification' in window)||!(await isSupported()))throw new Error('या Browser मध्ये Web Push समर्थित नाही.');
   const check=await fetch(workerUrl.href,{cache:'no-store'});
-  if(!check.ok)throw new Error('Service Worker URL वर HTTP '+check.status+': '+workerUrl.pathname+' — GitHub वर फाइल Upload करा.');
+  if(!check.ok)throw new Error('Service Worker HTTP '+check.status+' — firebase-messaging-sw.js Upload करा.');
   worker=await navigator.serviceWorker.register(workerUrl.href,{scope:siteBase.pathname,updateViaCache:'none'});
   await navigator.serviceWorker.ready;
   messaging=getMessaging(initializeApp(firebaseConfig));
   button.disabled=false;render();
- }catch(e){status.textContent=version+' | प्रारंभ त्रुटी: '+e.message;button.disabled=true;}
+ }catch(e){status.textContent='प्रारंभ त्रुटी: '+e.message;button.disabled=true;}
 }
 button.addEventListener('click',async()=>{
  if(!messaging||!worker)return;
  button.disabled=true;
  try{
-  if(localStorage.getItem(key)){
-   // Bind FCM to the project-scoped worker before deletion; otherwise Firebase
-   // may try its default root-level worker and return a 404 on GitHub Pages.
-   await getToken(messaging,{vapidKey,serviceWorkerRegistration:worker});
-   const deleted=await deleteToken(messaging);
-   if(!deleted)throw new Error('Firebase Token हटवता आला नाही.');
+  const existing=localStorage.getItem(key);
+  if(existing){
+   // Remove server subscription FIRST so an FCM deletion error cannot leave a subscribed token.
+   await saveSubscription('unsubscribePush',existing);
    localStorage.removeItem(key);
+   render();
+   try{
+    if(Notification.permission==='granted')await getToken(messaging,{vapidKey,serviceWorkerRegistration:worker});
+    await deleteToken(messaging);
+   }catch(err){console.warn('Local FCM token cleanup:',err);}
   }else{
    const permission=await Notification.requestPermission();
    if(permission!=='granted')throw new Error('Notification Permission मिळाली नाही.');
-   // Explicit project-scoped worker registration prevents Firebase's root-level default.
-   const token=await getToken(messaging,{vapidKey:vapidKey,serviceWorkerRegistration:worker});
+   const token=await getToken(messaging,{vapidKey,serviceWorkerRegistration:worker});
    if(!token)throw new Error('Firebase Token मिळाला नाही.');
+   await saveSubscription('subscribePush',token);
    localStorage.setItem(key,token);
+   render();
   }
-  render();
- }catch(e){status.textContent=version+' | त्रुटी: '+e.message+' | Worker: '+worker.scope;}
+ }catch(e){status.textContent='त्रुटी: '+e.message;}
  finally{button.disabled=false;}
 });
 init();
