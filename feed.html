@@ -2637,17 +2637,36 @@ async function saveSubscription(action,token){
  if(!result.ok)throw new Error(result.message||'Subscriber Storage अयशस्वी.');
  return result;
 }
+function isIOS(){return /iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);}
+function isInstalledWebApp(){return window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;}
+function unavailable(message){button.disabled=true;button.textContent='🔔 Follow';status.textContent=message;}
 async function init(){
  try{
-  button.disabled=true;status.textContent='';
-  if(!('serviceWorker' in navigator)||!('Notification' in window)||!(await isSupported())){button.disabled=true;button.textContent='🔔 सूचना उपलब्ध नाहीत';if(/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.matchMedia('(display-mode: standalone)').matches){status.textContent='iPhone वर सूचना मिळवण्यासाठी Safari मधून ही वेबसाइट Home Screen वर जोडा आणि तेथून उघडा.';}return;}
+  button.disabled=true;
+  status.textContent='';
+  // iOS Web Push requires an installed Home Screen web app, not a Safari tab.
+  if(isIOS()&&!isInstalledWebApp()){
+   unavailable('On iPhone, open this site from its Home Screen icon (Safari → Share → Add to Home Screen).');
+   return;
+  }
+  if(!window.isSecureContext||!('serviceWorker' in navigator)||!('Notification' in window)||!('PushManager' in window)){
+   unavailable('Web Push is not available in this browser or installed app. iPhone requires iOS 16.4 or later.');
+   return;
+  }
+  if(!(await isSupported())){
+   unavailable('Firebase Messaging is not supported in this browser or installed app.');
+   return;
+  }
   const check=await fetch(workerUrl.href,{cache:'no-store'});
-  if(!check.ok)throw new Error('Service Worker HTTP '+check.status+' — firebase-messaging-sw.js Upload करा.');
+  if(!check.ok)throw new Error('Service Worker HTTP '+check.status);
   worker=await navigator.serviceWorker.register(workerUrl.href,{scope:siteBase.pathname,updateViaCache:'none'});
-  await navigator.serviceWorker.ready;
   messaging=getMessaging(initializeApp(firebaseConfig));
-  button.disabled=false;render();
- }catch(e){console.warn('Push initialization:',e);status.textContent='';button.disabled=true;button.textContent='🔔 सूचना उपलब्ध नाहीत';}
+  button.disabled=false;
+  render();
+ }catch(e){
+  console.warn('Push initialization:',e);
+  unavailable('Notification setup could not load. Check the service worker and reload the app.');
+ }
 }
 button.addEventListener('click',async()=>{
  if(!messaging||!worker)return;
@@ -2665,14 +2684,14 @@ button.addEventListener('click',async()=>{
    }catch(err){console.warn('Local FCM token cleanup:',err);}
   }else{
    const permission=await Notification.requestPermission();
-   if(permission!=='granted')throw new Error('Notification Permission मिळाली नाही.');
+   if(permission!=='granted')throw new Error('Notification permission was not granted.');
    const token=await getToken(messaging,{vapidKey,serviceWorkerRegistration:worker});
-   if(!token)throw new Error('Firebase Token मिळाला नाही.');
+   if(!token)throw new Error('Firebase could not create a push token.');
    await saveSubscription('subscribePush',token);
    localStorage.setItem(key,token);
    render();
   }
- }catch(e){console.warn('Push action:',e);status.textContent='सूचना सुरू करता आल्या नाहीत. कृपया पुन्हा प्रयत्न करा.';}
+ }catch(e){console.warn('Push action:',e);status.textContent='Could not update notifications: '+(e&&e.message?e.message:'Please try again.');}
  finally{button.disabled=false;}
 });
 init();
