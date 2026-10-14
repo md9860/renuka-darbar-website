@@ -1,0 +1,18 @@
+{
+  "name": "श्री क्षेत्र रेणुका दरबार – आश्रम उपक्रम",
+  "short_name": "Renuka Darbar",
+  "description": "आश्रम उपक्रम आणि नवीन कार्यक्रम",
+  "start_url": "./feed.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fffaf0",
+  "theme_color": "#5b070b",
+  "icons": [
+    {
+      "src": "assets/sansthan-logo.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

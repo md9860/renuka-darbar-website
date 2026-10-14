@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#65080d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Renuka Darbar">
 <title>आश्रम उपक्रम | श्री क्षेत्र रेणुका दरबार, सोनई</title>
 
 <style>
@@ -2638,7 +2641,7 @@ async function saveSubscription(action,token){
  return result;
 }
 function isIOS(){return /iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);}
-function isInstalledWebApp(){return window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;}
+function isInstalledWebApp(){return window.matchMedia('(display-mode: standalone)').matches||window.matchMedia('(display-mode: fullscreen)').matches||navigator.standalone===true;}
 function unavailable(message){button.disabled=true;button.textContent='🔔 Follow';status.textContent=message;}
 async function init(){
  try{
@@ -2646,7 +2649,7 @@ async function init(){
   status.textContent='';
   // iOS Web Push requires an installed Home Screen web app, not a Safari tab.
   if(isIOS()&&!isInstalledWebApp()){
-   unavailable('On iPhone, open this site from its Home Screen icon (Safari → Share → Add to Home Screen).');
+   unavailable('This page is not detected as a Home Screen web app. In Safari choose Share → Add to Home Screen → Open as Web App, then launch the new icon.');
    return;
   }
   if(!window.isSecureContext||!('serviceWorker' in navigator)||!('Notification' in window)||!('PushManager' in window)){
@@ -2654,7 +2657,7 @@ async function init(){
    return;
   }
   if(!(await isSupported())){
-   unavailable('Firebase Messaging is not supported in this browser or installed app.');
+   unavailable(isIOS() ? 'This iPhone web app supports a different Web Push method than Firebase Messaging. Apple Web Push requires a separate subscription and sender setup.' : 'Firebase Messaging is not supported in this browser or installed app.');
    return;
   }
   const check=await fetch(workerUrl.href,{cache:'no-store'});
@@ -2665,7 +2668,7 @@ async function init(){
   render();
  }catch(e){
   console.warn('Push initialization:',e);
-  unavailable('Notification setup could not load. Check the service worker and reload the app.');
+  unavailable('Notification setup could not load: '+(e&&e.message?e.message:'Check the service worker and reload the app.'));
  }
 }
 button.addEventListener('click',async()=>{
