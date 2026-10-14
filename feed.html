@@ -2620,7 +2620,13 @@ const vapidKey='BA1RFvSmZmLDIBuhhtJL_ehp4j8gVkiv3LEwsC1LsQQ_IcAkUZEldViNYGrTRfn9
 const button=document.getElementById('rdFollowButton');const status=document.getElementById('rdFollowStatus');
 const key='rd_feed_fcm_test_token';let messaging=null;let worker=null;
 function render(){const followed=!!localStorage.getItem(key);button.textContent=followed?'✓ Following — Unfollow':'🔔 Follow';status.textContent=followed?'या Browser वर Firebase Token तयार झाला आहे. प्रत्यक्ष Notifications साठी Server-side Sender आणि Subscriber Storage जोडणे बाकी आहे.':'चाचणी आवृत्ती: Follow केल्यावर या Browser साठी Firebase Token तयार होईल. प्रत्यक्ष सूचना अजून सुरू नाहीत.'}
-async function init(){try{if(!('serviceWorker' in navigator)||!('Notification' in window)||!(await isSupported())){button.disabled=true;status.textContent='या Browser मध्ये Web Push समर्थित नाही. iPhone वर Home Screen मधून उघडणे आवश्यक असू शकते.';return;}worker=await navigator.serviceWorker.register('./firebase-messaging-sw.js',{scope:'./'});messaging=getMessaging(initializeApp(firebaseConfig));render();}catch(e){button.disabled=true;status.textContent='Firebase प्रारंभ करता आला नाही: '+e.message;}}
+async function init(){try{if(!('serviceWorker' in navigator)||!('Notification' in window)||!(await isSupported())){button.disabled=true;status.textContent='या Browser मध्ये Web Push समर्थित नाही. iPhone वर Home Screen मधून उघडणे आवश्यक असू शकते.';return;}// GitHub Pages project site: always register within /renuka-darbar-website/,
+// never at the account root (/firebase-messaging-sw.js).
+const siteBase = new URL('./', window.location.href);
+const swUrl = new URL('firebase-messaging-sw.js?v=2', siteBase);
+worker = await navigator.serviceWorker.register(swUrl.href, {scope: siteBase.pathname, updateViaCache: 'none'});
+await worker.update();
+messaging=getMessaging(initializeApp(firebaseConfig));render();}catch(e){button.disabled=true;status.textContent='Firebase प्रारंभ करता आला नाही (Service Worker फाइल GitHub वर योग्य ठिकाणी आहे का तपासा): '+e.message;}}
 button.addEventListener('click',async()=>{if(!messaging)return;button.disabled=true;try{if(localStorage.getItem(key)){await deleteToken(messaging);localStorage.removeItem(key);render();}else{const permission=await Notification.requestPermission();if(permission!=='granted')throw new Error('Notification Permission दिलेली नाही.');const token=await getToken(messaging,{vapidKey,serviceWorkerRegistration:worker});if(!token)throw new Error('Firebase Token मिळाला नाही.');localStorage.setItem(key,token);render();}}catch(e){status.textContent='त्रुटी: '+e.message;}finally{button.disabled=false;}});
 init();
 </script></body></html>
